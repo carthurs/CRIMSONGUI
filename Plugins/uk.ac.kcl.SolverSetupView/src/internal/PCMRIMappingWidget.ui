@@ -1,0 +1,1169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PCMRIMappingWidget</class>
+ <widget class="QWidget" name="PCMRIMappingWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>662</width>
+    <height>1195</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1000</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_9">
+   <item>
+    <widget class="QGroupBox" name="objectSelectionGroup">
+     <property name="title">
+      <string>Object selection</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>PCMRI Magnitude image</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QmitkDataStorageComboBox" name="pcmriImageComboBox">
+          <property name="maximumSize">
+           <size>
+            <width>700</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="toolTip">
+           <string>PCMRI image to extract the velocity profile from - Magnitude component</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>MRA Image</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QmitkDataStorageComboBox" name="mraImageComboBox">
+          <property name="toolTip">
+           <string>MRA image used to generate the geometric model</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Mesh</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QmitkDataStorageComboBox" name="meshNodeComboBox">
+          <property name="toolTip">
+           <string>Mesh to fit the velocity profile to</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QmitkDataStorageComboBox" name="pcmriPhaseComboBox">
+          <property name="toolTip">
+           <string>PCMRI image to extract the velocity profile from - Phase component</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>PCMRI Phase image</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+     <zorder></zorder>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Existing contours</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0,0">
+      <item>
+       <widget class="QListWidget" name="contourThumbnailListWidget">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>140</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Thumbnails of existing contours (double-click the icon to navigate to a contour)</string>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::ExtendedSelection</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>64</width>
+          <height>64</height>
+         </size>
+        </property>
+        <property name="movement">
+         <enum>QListView::Static</enum>
+        </property>
+        <property name="resizeMode">
+         <enum>QListView::Adjust</enum>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+        <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
+        <item>
+         <widget class="ctkCollapsibleGroupBox" name="contourInfoGroupBox">
+          <property name="title">
+           <string>Current contour information</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <item>
+            <widget class="QTextBrowser" name="contourInfoTextBrowser">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Information about the current contour</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QToolButton" name="deleteContoursButton">
+              <property name="toolTip">
+               <string>Delete selected contours</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/delete.png</normaloff>:/vesselSeg/icons/delete.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+S</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::MinimumExpanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="contourEditingGroup">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Contour editing</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QToolButton" name="duplicateButton">
+          <property name="toolTip">
+           <string>Duplicate the closest contour at current slice</string>
+          </property>
+          <property name="text">
+           <string>Duplicate</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources/vesselSegmentation.qrc">
+            <normaloff>:/vesselSeg/icons/duplicate.png</normaloff>:/vesselSeg/icons/duplicate.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="interpolateButton">
+          <property name="toolTip">
+           <string>Interpolate the neighboring contours to create a contour in current slice</string>
+          </property>
+          <property name="text">
+           <string>Interpolate</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources/vesselSegmentation.qrc">
+            <normaloff>:/vesselSeg/icons/interpolate.png</normaloff>:/vesselSeg/icons/interpolate.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="interpolateAllButton">
+          <property name="toolTip">
+           <string>Interpolate between manually placed contours to create new contours in remaining slices</string>
+          </property>
+          <property name="text">
+           <string>Interpolate All</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources/vesselSegmentation.qrc">
+            <normaloff>:/vesselSeg/icons/interpolateAll.png</normaloff>:/vesselSeg/icons/interpolateAll.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tabWidgetPage1">
+         <attribute name="title">
+          <string>Manual</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QToolButton" name="addPolygonButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Create a polygon at current slice</string>
+              </property>
+              <property name="text">
+               <string>Polygon</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/polygon.png</normaloff>:/vesselSeg/icons/polygon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="addCircleButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Create a circle at current slice</string>
+              </property>
+              <property name="text">
+               <string>Circle</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/circle.png</normaloff>:/vesselSeg/icons/circle.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="addEllipseButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Create an ellipse at current slice</string>
+              </property>
+              <property name="text">
+               <string>Ellipse</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/ellipse.png</normaloff>:/vesselSeg/icons/ellipse.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="addPointButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="visible">
+               <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Create a point section at current slice (for first and last sections only)</string>
+              </property>
+              <property name="text">
+               <string>Point</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/point.png</normaloff>:/vesselSeg/icons/point.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tabWidgetPage2">
+         <attribute name="title">
+          <string>Segmentation</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QToolButton" name="createSegmentedButton">
+              <property name="toolTip">
+               <string>Create segmented contour</string>
+              </property>
+              <property name="text">
+               <string>New segmentation</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/add.png</normaloff>:/vesselSeg/icons/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Smoothness:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="smoothnessSlider">
+              <property name="value">
+               <number>99</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QmitkToolGUIArea" name="segToolsGUIArea" native="true"/>
+          </item>
+          <item>
+           <widget class="QmitkToolSelectionBox" name="segToolsSelectionBox" native="true"/>
+          </item>
+         </layout>
+         <zorder>segToolsGUIArea</zorder>
+         <zorder>segToolsSelectionBox</zorder>
+         <zorder></zorder>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="correspondingPointsGroup">
+     <property name="title">
+      <string>MRA &amp;&amp; PCMRI anatomical co-registration</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QToolButton" name="MRAPointButton">
+        <property name="toolTip">
+         <string>Place a corresponding point in MRA image</string>
+        </property>
+        <property name="text">
+         <string>MRA landmark</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextOnly</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="PCMRIPointButton">
+        <property name="toolTip">
+         <string>Place a corresponding point in PCMRI image current slice</string>
+        </property>
+        <property name="text">
+         <string>PCMRI landmark</string>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextOnly</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="toolTip">
+      <string>Manufacturer- and format-specific PC-MRI image properties</string>
+     </property>
+     <property name="title">
+      <string>Manufacturer/format-specific PC-MRI properties</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_7">
+      <item>
+       <widget class="QTabWidget" name="manufacturerTabs">
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="linear">
+         <attribute name="title">
+          <string>Philips (DICOM) or Other</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_12">
+            <item>
+             <widget class="QLabel" name="label_22">
+              <property name="toolTip">
+               <string>In DICOM header: (0040,9225) </string>
+              </property>
+              <property name="text">
+               <string>Rescale Slope</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="rescaleSlopeSpinBox">
+              <property name="toolTip">
+               <string>In DICOM header: (0040,9225) </string>
+              </property>
+              <property name="decimals">
+               <number>5</number>
+              </property>
+              <property name="maximum">
+               <double>9999.000000000000000</double>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_21">
+              <property name="toolTip">
+               <string>In DICOM header: (0040,9224) </string>
+              </property>
+              <property name="text">
+               <string>Rescale Intercept</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="rescaleInterceptSpinBox">
+              <property name="toolTip">
+               <string>In DICOM header: (0040,9224) </string>
+              </property>
+              <property name="minimum">
+               <number>-9999</number>
+              </property>
+              <property name="maximum">
+               <number>9999</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_11">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>226</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="philips">
+         <attribute name="title">
+          <string>Philips (PAR/REC)</string>
+         </attribute>
+         <widget class="QWidget" name="">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>591</width>
+            <height>34</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <item>
+            <widget class="QLabel" name="label_7">
+             <property name="toolTip">
+              <string>In image header: &quot;Velocity encoding (venc) (Private_0019_10cc)&quot;</string>
+             </property>
+             <property name="text">
+              <string>Phase encoding velocity [cm/s]</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="vencPSpinBox">
+             <property name="toolTip">
+              <string>Phase encoding velocity</string>
+             </property>
+             <property name="maximum">
+              <number>9999</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>133</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="ge">
+         <attribute name="title">
+          <string>GE</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="toolTip">
+             <string>In DICOM header: (Private_0019_10cc)</string>
+            </property>
+            <property name="text">
+             <string>Velocity encoding
+ [cm/s]</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="vencGSpinBox">
+            <property name="toolTip">
+             <string>In DICOM header: (Private_0019_10cc)</string>
+            </property>
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_6">
+            <property name="toolTip">
+             <string>In DICOM header: (Private_0019_10e2)</string>
+            </property>
+            <property name="text">
+             <string>Venscale</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="venscaleSpinBox">
+            <property name="toolTip">
+             <string>In DICOM header: (Private_0019_10e2)</string>
+            </property>
+            <property name="decimals">
+             <number>5</number>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="maskCheckBox">
+            <property name="toolTip">
+             <string>In DICOM header: (Private_0019_10a9)</string>
+            </property>
+            <property name="text">
+             <string>Magnitude mask</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>133</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="siemens">
+         <attribute name="title">
+          <string>Siemens</string>
+         </attribute>
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <item>
+           <widget class="QLabel" name="label_15">
+            <property name="toolTip">
+             <string>In DICOM header: (0051,1014)</string>
+            </property>
+            <property name="text">
+             <string>Velocity encoding
+ [cm/s]</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="vencSSpinBox">
+            <property name="toolTip">
+             <string>In DICOM header: (0051,1014)</string>
+            </property>
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_17">
+            <property name="toolTip">
+             <string>In DICOM header: (0028,1053)</string>
+            </property>
+            <property name="text">
+             <string>Rescale
+ Slope</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QDoubleSpinBox" name="rescaleSlopeSSpinBox">
+            <property name="toolTip">
+             <string>In DICOM header: (0028,1053)</string>
+            </property>
+            <property name="decimals">
+             <number>5</number>
+            </property>
+            <property name="maximum">
+             <double>9999.000000000000000</double>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_16">
+            <property name="toolTip">
+             <string>In DICOM header: (0028,1052)</string>
+            </property>
+            <property name="text">
+             <string>Rescale
+ Intercept</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="rescaleInterceptSSpinBox">
+            <property name="toolTip">
+             <string>In DICOM header: (0028,1052)</string>
+            </property>
+            <property name="minimum">
+             <number>-9999</number>
+            </property>
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_18">
+            <property name="toolTip">
+             <string>In DICOM header: (0028,0101)</string>
+            </property>
+            <property name="text">
+             <string>Quantization 
+ Level</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="quantizationSpinBox">
+            <property name="toolTip">
+             <string>In DICOM header: (0028,0101)</string>
+            </property>
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Cardiac frequency</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="freqSpinBox">
+          <property name="maximum">
+           <number>999</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="imageOrientationGroup">
+     <property name="title">
+      <string>Advanced settings </string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QCheckBox" name="flipImageCheckBox">
+        <property name="toolTip">
+         <string>Rotates the PC-MRI image 180 degrees about x axis.</string>
+        </property>
+        <property name="text">
+         <string>Flip PC-MRI image</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="gaussianDoubleSpinBox">
+        <property name="toolTip">
+         <string>Variance of the Gaussian filter which smooths the PC-MRI image before mapping. 1.00 = no smoothing</string>
+        </property>
+        <property name="maximum">
+         <double>10.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.100000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labeGaussian">
+        <property name="text">
+         <string>Profile smoothness</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QToolButton" name="mapButton">
+       <property name="toolTip">
+        <string>Map the velocity profile to mesh inflow face </string>
+       </property>
+       <property name="text">
+        <string>Map PCMRI data</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/vesselSegmentation.qrc">
+         <normaloff>:/vesselSeg/icons/DataManagerIcon_Map.png</normaloff>:/vesselSeg/icons/DataManagerIcon_Map.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="cancelMapButton">
+       <property name="toolTip">
+        <string>Cancel the current mapping operation</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/vesselSegmentation.qrc">
+         <normaloff>:/vesselSeg/icons/stop.png</normaloff>:/vesselSeg/icons/stop.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="timeOptionsButton">
+       <property name="toolTip">
+        <string>Preview and adjust settings for time interpolation of the velocity profile</string>
+       </property>
+       <property name="text">
+        <string>Time interpolation settings</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="flowDirectionCheckBox">
+       <property name="text">
+        <string>Flip flow direction</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout"/>
+     </item>
+    </layout>
+   </item>
+  </layout>
+  <zorder>contourEditingGroup</zorder>
+  <zorder>objectSelectionGroup</zorder>
+  <zorder>groupBox_2</zorder>
+  <zorder>imageOrientationGroup</zorder>
+  <zorder>correspondingPointsGroup</zorder>
+  <zorder>groupBox</zorder>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QmitkDataStorageComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">QmitkDataStorageComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>QmitkToolGUIArea</class>
+   <extends>QWidget</extends>
+   <header location="global">QmitkToolGUIArea.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QmitkToolSelectionBox</class>
+   <extends>QWidget</extends>
+   <header location="global">QmitkToolSelectionBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ctkCollapsibleGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header location="global">ctkCollapsibleGroupBox.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>contourThumbnailListWidget</tabstop>
+  <tabstop>contourInfoTextBrowser</tabstop>
+  <tabstop>deleteContoursButton</tabstop>
+  <tabstop>duplicateButton</tabstop>
+  <tabstop>interpolateButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>addPolygonButton</tabstop>
+  <tabstop>addCircleButton</tabstop>
+  <tabstop>addEllipseButton</tabstop>
+  <tabstop>mapButton</tabstop>
+  <tabstop>cancelMapButton</tabstop>
+  <tabstop>createSegmentedButton</tabstop>
+  <tabstop>smoothnessSlider</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../resources/vesselSegmentation.qrc"/>
+  <include location="../../resources/SolverSetup.qrc"/>
+ </resources>
+ <connections/>
+</ui>

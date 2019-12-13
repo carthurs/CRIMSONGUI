@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+  <extension point="org.blueberry.ui.views">
+    <view id="org.mitk.views.vesselpathplanningview"
+          category="CRIMSON"
+          name="CRIMSON Vessel Path Editing"
+          class="VesselPathPlanningView"
+          icon="resources/Icon_VesselTreeView.png" />
+  </extension>
+
+  <extension point="org.blueberry.ui.views">
+    <view
+      id="org.mitk.views.VesselDrivenResliceView"
+      category="CRIMSON"
+      name="CRIMSON Vessel Reslice"
+      class="VesselDrivenResliceView"
+      icon="resources/Icon_VesselDrivenResliceView.png" />
+  </extension>
+
+  <extension point="org.blueberry.ui.views">
+    <view
+      id="org.mitk.views.ContourModelingView"
+      category="CRIMSON"
+      name="CRIMSON Vessel Contour Modeling"
+      class="ContourModelingView"
+      icon="resources/Icon_ContourModelingView.png" />
+  </extension>
+
+  <extension point="org.blueberry.ui.views">
+    <view
+      id="org.mitk.views.VesselBlendingView"
+      category="CRIMSON"
+      name="CRIMSON Vessel Blending"
+      class="VesselBlendingView"
+      icon="resources/Icon_VesselBlendingView.png" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="VesselPathData" label="Create loft" icon=":/VascularModeling/icons/DataManagerIcon_Loft.png" class="LoftAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="VesselForestData" label="Create blend" icon=":/VascularModeling/icons/DataManagerIcon_Blend.png" class="BlendAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="VesselPathData" label="Hide contours" icon=":/VascularModeling/icons/vis_off.png" class="HideContoursAction" />
+  </extension>
+  
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="VesselPathData" label="Show contours" icon=":/VascularModeling/icons/vis_on.png" class="ShowContoursAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="VesselForestData" label="Change parent" icon=":/VascularModeling/icons/hierarchy.png" class="ReparentAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="VesselPathData" label="Change parent" icon=":/VascularModeling/icons/hierarchy.png" class="ReparentAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="VesselForestData" label="Export vessels" icon=":/VascularModeling/icons/go-up.svg" class="ExportVesselsAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="VesselForestData" label="Import vessels" icon=":/VascularModeling/icons/go-down.svg" class="ImportVesselsAction" />
+  </extension>
+
+  </plugin>

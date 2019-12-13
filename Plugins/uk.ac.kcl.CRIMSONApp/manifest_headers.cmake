@@ -1,0 +1,5 @@
+set(Plugin-Name "uk.ac.kcl.CRIMSONApp")
+set(Plugin-Version "0.1")
+set(Plugin-Vendor "KCL")
+set(Plugin-ContactAddress "")
+set(Require-Plugin org.mitk.gui.common org.mitk.gui.qt.ext)

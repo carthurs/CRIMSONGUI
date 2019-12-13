@@ -1,0 +1,14 @@
+berry--QCTabBar::tab:selected {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #8e8e8e, stop:1 #5e5e5e);
+}
+
+berry--QCTabBar::tab:selected:hover
+{
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    background-color: QLinearGradient(x1:0, y1:0, x2:0, y2:1, stop:1 #5e5e5e, stop:0.2 #8e8e8e, stop:0.1 #ffaa00);
+}
+
+QFrame#ViewFormContentFrame {
+    border: 2px solid #5e5e5e
+}

@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>VesselBlendingWidget</class>
+ <widget class="QWidget" name="VesselBlendingWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>705</width>
+    <height>840</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QFrame" name="vesselTreeNameFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="chooseVesselsButton">
+       <property name="toolTip">
+        <string>Choose which vessels participate in blending</string>
+       </property>
+       <property name="text">
+        <string>Choose vessels</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="autodetectButton">
+       <property name="toolTip">
+        <string>Detect which vessels are intersecting</string>
+       </property>
+       <property name="text">
+        <string>Autodetect</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="blendButton">
+       <property name="toolTip">
+        <string>Compute the blended result</string>
+       </property>
+       <property name="text">
+        <string>Blend all</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/vesselSegmentation.qrc">
+         <normaloff>:/vesselSeg/icons/DataManagerIcon_Blend.png</normaloff>:/vesselSeg/icons/DataManagerIcon_Blend.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="cancelAsyncOpButton">
+       <property name="toolTip">
+        <string>Cancel a running blending operation</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/vesselSegmentation.qrc">
+         <normaloff>:/vesselSeg/icons/stop.png</normaloff>:/vesselSeg/icons/stop.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="useParallelBlendingCheckBox">
+     <property name="toolTip">
+      <string>Blend the vessels in parallel</string>
+     </property>
+     <property name="text">
+      <string>Use parallel blending</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="filletSizesTableWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>4</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::ActionsContextMenu</enum>
+     </property>
+     <property name="toolTip">
+      <string>Change the fillet sizes between the vessels</string>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Vessel name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Vessel name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Fillet size</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Operation type</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="customBooleansEnabledCheckBox">
+     <property name="toolTip">
+      <string>Enable custom boolean operations (fuse, cut, common)</string>
+     </property>
+     <property name="text">
+      <string>Enable custom boolean operations (advanced)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="customBooleansFrame">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>11</number>
+      </property>
+      <item>
+       <widget class="QToolButton" name="moveUpButton">
+        <property name="toolTip">
+         <string>Move selected rows up</string>
+        </property>
+        <property name="text">
+         <string>Move up</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../resources/vesselSegmentation.qrc">
+          <normaloff>:/vesselSeg/icons/up.png</normaloff>:/vesselSeg/icons/up.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="moveDownButton">
+        <property name="toolTip">
+         <string>Move selected rows down</string>
+        </property>
+        <property name="text">
+         <string>Move down</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../resources/vesselSegmentation.qrc">
+          <normaloff>:/vesselSeg/icons/down.png</normaloff>:/vesselSeg/icons/down.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="swapArgumentsButton">
+        <property name="toolTip">
+         <string>Swap the order of arguments of the boolean operations</string>
+        </property>
+        <property name="text">
+         <string>Swap arguments</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="filletSizesTableWidget_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="contextMenuPolicy">
+      <enum>Qt::ActionsContextMenu</enum>
+     </property>
+     <property name="toolTip">
+      <string>Change the fillet sizes at ends of the vessels</string>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Vessel name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Flow face</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Fillet size</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+  <action name="actionPreview">
+   <property name="text">
+    <string>Preview</string>
+   </property>
+   <property name="toolTip">
+    <string>Preview the blend on selected items</string>
+   </property>
+  </action>
+  <action name="actionShow">
+   <property name="icon">
+    <iconset resource="../../resources/vesselSegmentation.qrc">
+     <normaloff>:/vesselSeg/icons/vis_on.png</normaloff>:/vesselSeg/icons/vis_on.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show</string>
+   </property>
+   <property name="toolTip">
+    <string>Show selected shapes</string>
+   </property>
+  </action>
+  <action name="actionHide">
+   <property name="icon">
+    <iconset resource="../../resources/vesselSegmentation.qrc">
+     <normaloff>:/vesselSeg/icons/vis_off.png</normaloff>:/vesselSeg/icons/vis_off.png</iconset>
+   </property>
+   <property name="text">
+    <string>Hide</string>
+   </property>
+   <property name="toolTip">
+    <string>Hide selected shapes</string>
+   </property>
+  </action>
+  <action name="actionShow_all">
+   <property name="icon">
+    <iconset resource="../../resources/vesselSegmentation.qrc">
+     <normaloff>:/vesselSeg/icons/vis_on.png</normaloff>:/vesselSeg/icons/vis_on.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show all</string>
+   </property>
+   <property name="toolTip">
+    <string>Show all shapes</string>
+   </property>
+  </action>
+  <action name="actionHide_all">
+   <property name="icon">
+    <iconset resource="../../resources/vesselSegmentation.qrc">
+     <normaloff>:/vesselSeg/icons/vis_off.png</normaloff>:/vesselSeg/icons/vis_off.png</iconset>
+   </property>
+   <property name="text">
+    <string>Hide all</string>
+   </property>
+   <property name="toolTip">
+    <string>Hide all shapes</string>
+   </property>
+  </action>
+  <action name="actionShow_only">
+   <property name="icon">
+    <iconset resource="../../resources/vesselSegmentation.qrc">
+     <normaloff>:/vesselSeg/icons/vis_on.png</normaloff>:/vesselSeg/icons/vis_on.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show only</string>
+   </property>
+  </action>
+  <action name="actionRedo_preview">
+   <property name="text">
+    <string>Redo preview</string>
+   </property>
+   <property name="toolTip">
+    <string>Preview blend result for the vessels used for previous preview.</string>
+   </property>
+  </action>
+  <action name="actionShow_blend">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../resources/vesselSegmentation.qrc">
+     <normaloff>:/vesselSeg/icons/vis_on.png</normaloff>
+     <normalon>:/vesselSeg/icons/vis_off.png</normalon>:/vesselSeg/icons/vis_on.png</iconset>
+   </property>
+   <property name="text">
+    <string>Toggle blend result visibility</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle blend result visibility</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>chooseVesselsButton</tabstop>
+  <tabstop>autodetectButton</tabstop>
+  <tabstop>blendButton</tabstop>
+  <tabstop>cancelAsyncOpButton</tabstop>
+  <tabstop>useParallelBlendingCheckBox</tabstop>
+  <tabstop>filletSizesTableWidget</tabstop>
+  <tabstop>customBooleansEnabledCheckBox</tabstop>
+  <tabstop>moveUpButton</tabstop>
+  <tabstop>moveDownButton</tabstop>
+  <tabstop>swapArgumentsButton</tabstop>
+  <tabstop>filletSizesTableWidget_2</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../resources/vesselSegmentation.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -1,0 +1,6 @@
+hp-knee.mat is a matrix that creates tremendous fill.
+lower.mat exploits slack in threshold pivoting to cause huge growth, causing overflow
+upper.mat exploits slack in threshold pivoting to cause huge growth, causing overflow
+mat10.mat is singular
+mat9.mat is zero
+moni.mat is singular

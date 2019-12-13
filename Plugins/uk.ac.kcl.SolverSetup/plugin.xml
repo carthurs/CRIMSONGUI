@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="SolverRoot" label="Change parent" icon=":/VascularModeling/icons/hierarchy.png" class="ReparentAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="ISolverParametersData" label="Change parent" icon=":/VascularModeling/icons/hierarchy.png" class="ReparentAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="ISolverStudyData" label="Change parent" icon=":/VascularModeling/icons/hierarchy.png" class="ReparentAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="IBoundaryConditionSet" label="Change parent" icon=":/VascularModeling/icons/hierarchy.png" class="ReparentAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="IBoundaryCondition" label="Change parent" icon=":/VascularModeling/icons/hierarchy.png" class="ReparentAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="IMaterialData" label="Change parent" icon=":/VascularModeling/icons/hierarchy.png" class="ReparentAction" />
+  </extension>
+  
+</plugin>

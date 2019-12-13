@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ContourModelingWidget</class>
+ <widget class="QWidget" name="ContourModelingWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>681</width>
+    <height>1376</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_9">
+   <item>
+    <widget class="QGroupBox" name="vesselPathControlGroup">
+     <property name="title">
+      <string>Vessel path control</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="QFrame" name="vesselNameFrame">
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="computePathThroughCentersButton">
+           <property name="toolTip">
+            <string>Modify the vessel path to pass through the centers of existing contours</string>
+           </property>
+           <property name="text">
+            <string>...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../resources/vesselSegmentation.qrc">
+             <normaloff>:/vesselSeg/icons/throughCenters.png</normaloff>:/vesselSeg/icons/throughCenters.png</iconset>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="updateContourGeometriesCheckBox">
+        <property name="text">
+         <string>Update contour positions on vessel path change</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_10">
+        <item>
+         <widget class="QCheckBox" name="useInflowAsWall">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Use inflow as part of the wall</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="useOutflowAsWall">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Use outflow as part of the wall</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Existing contours</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_8" stretch="1,0">
+      <item>
+       <widget class="QListWidget" name="contourThumbnailListWidget">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>140</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Thumbnails of existing contours (double-click the icon to navigate to a contour)</string>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::ExtendedSelection</enum>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>64</width>
+          <height>64</height>
+         </size>
+        </property>
+        <property name="movement">
+         <enum>QListView::Static</enum>
+        </property>
+        <property name="resizeMode">
+         <enum>QListView::Adjust</enum>
+        </property>
+        <property name="viewMode">
+         <enum>QListView::IconMode</enum>
+        </property>
+        <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_10">
+        <item>
+         <widget class="ctkCollapsibleGroupBox" name="contourInfoGroupBox">
+          <property name="title">
+           <string>Current contour information</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>2</number>
+           </property>
+           <property name="topMargin">
+            <number>2</number>
+           </property>
+           <property name="rightMargin">
+            <number>2</number>
+           </property>
+           <property name="bottomMargin">
+            <number>2</number>
+           </property>
+           <item>
+            <widget class="QTextBrowser" name="contourInfoTextBrowser">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>Information about the current contour</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <item>
+             <widget class="QToolButton" name="contourVisibilityButton">
+              <property name="toolTip">
+               <string>Show/hide all the contours in 3D window</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/vis_off.png</normaloff>
+                <normalon>:/vesselSeg/icons/vis_on.png</normalon>:/vesselSeg/icons/vis_off.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="deleteContoursButton">
+              <property name="toolTip">
+               <string>Delete selected contours</string>
+              </property>
+              <property name="text">
+               <string>...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/delete.png</normaloff>:/vesselSeg/icons/delete.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="shortcut">
+               <string>Ctrl+S</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::MinimumExpanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="contourEditingGroup">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Contour editing</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QToolButton" name="duplicateButton">
+          <property name="toolTip">
+           <string>Duplicate the closest contour at current slice</string>
+          </property>
+          <property name="text">
+           <string>Duplicate</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources/vesselSegmentation.qrc">
+            <normaloff>:/vesselSeg/icons/duplicate.png</normaloff>:/vesselSeg/icons/duplicate.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="interpolateButton">
+          <property name="toolTip">
+           <string>Interpolate the neighboring contours to create a contour in current slice</string>
+          </property>
+          <property name="text">
+           <string>Interpolate</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources/vesselSegmentation.qrc">
+            <normaloff>:/vesselSeg/icons/interpolate.png</normaloff>:/vesselSeg/icons/interpolate.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>48</width>
+            <height>48</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tabWidgetPage1">
+         <attribute name="title">
+          <string>Manual</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QToolButton" name="addPolygonButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Create a polygon at current slice</string>
+              </property>
+              <property name="text">
+               <string>Polygon</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/polygon.png</normaloff>:/vesselSeg/icons/polygon.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="addCircleButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Create a circle at current slice</string>
+              </property>
+              <property name="text">
+               <string>Circle</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/circle.png</normaloff>:/vesselSeg/icons/circle.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="addEllipseButton">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Create an ellipse at current slice</string>
+              </property>
+              <property name="text">
+               <string>Ellipse</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/ellipse.png</normaloff>:/vesselSeg/icons/ellipse.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="addPointButton">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="visible">
+               <bool>false</bool>
+              </property>
+              <property name="toolTip">
+               <string>Create a point section at current slice (for first and last sections only)</string>
+              </property>
+              <property name="text">
+               <string>Point</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/point.png</normaloff>:/vesselSeg/icons/point.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
+               <bool>false</bool>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tabWidgetPage2">
+         <attribute name="title">
+          <string>Segmentation</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QToolButton" name="createSegmentedButton">
+              <property name="toolTip">
+               <string>Create segmented contour</string>
+              </property>
+              <property name="text">
+               <string>New segmentation</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/vesselSegmentation.qrc">
+                <normaloff>:/vesselSeg/icons/add.png</normaloff>:/vesselSeg/icons/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Smoothness:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSlider" name="smoothnessSlider">
+              <property name="value">
+               <number>99</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QmitkToolGUIArea" name="segToolsGUIArea" native="true"/>
+          </item>
+          <item>
+           <widget class="QmitkToolSelectionBox" name="segToolsSelectionBox" native="true"/>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+         <zorder>segToolsGUIArea</zorder>
+         <zorder>segToolsSelectionBox</zorder>
+         <zorder>verticalSpacer_2</zorder>
+         <zorder></zorder>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QToolButton" name="loftButton">
+       <property name="toolTip">
+        <string>Create a lofted model using all the contours (Alt+L)</string>
+       </property>
+       <property name="text">
+        <string>Loft</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/vesselSegmentation.qrc">
+         <normaloff>:/vesselSeg/icons/DataManagerIcon_Loft.png</normaloff>:/vesselSeg/icons/DataManagerIcon_Loft.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>24</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <property name="toolButtonStyle">
+        <enum>Qt::ToolButtonTextBesideIcon</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="cancelLoftButton">
+       <property name="toolTip">
+        <string>Cancel the current lofting operation</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/vesselSegmentation.qrc">
+         <normaloff>:/vesselSeg/icons/stop.png</normaloff>:/vesselSeg/icons/stop.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Lofting algorithm:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="loftingAlgorithmComboBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>80</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Lofting algorithm&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Loft&lt;/span&gt; 		produces less complex and quicker lofts (recommended).&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Sweep	&lt;/span&gt;takes the vessel path into account when lofting. &lt;/p&gt;&lt;p&gt;			The results are more complex and may lead to difficulties when meshing.&lt;/p&gt;&lt;p&gt;			However, &lt;span style=&quot; font-style:italic;&quot;&gt;Sweep&lt;/span&gt; algorithm can handle more tortuous vessels.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Loft</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Sweep</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Seam edge rotation:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="seamEdgeRotationSpinBox">
+         <property name="toolTip">
+          <string>Rotate the seam edge of the resulting loft</string>
+         </property>
+         <property name="suffix">
+          <string>°</string>
+         </property>
+         <property name="minimum">
+          <number>-180</number>
+         </property>
+         <property name="maximum">
+          <number>180</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="contourInfoGroupBox_2">
+     <property name="title">
+      <string>Lofting preview</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0,0">
+      <property name="spacing">
+       <number>4</number>
+      </property>
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>4</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QToolButton" name="previewButton">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="toolTip">
+           <string>Preview a lofted model using all the contours (Alt+P)</string>
+          </property>
+          <property name="text">
+           <string>Preview</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources/vesselSegmentation.qrc">
+            <normaloff>:/vesselSeg/icons/LoftPreview.png</normaloff>:/vesselSeg/icons/LoftPreview.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonTextBesideIcon</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="livePreviewCheckBox">
+          <property name="toolTip">
+           <string>Generate preview every time a countour changes</string>
+          </property>
+          <property name="text">
+           <string>Live preview</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="previewErrorLabel">
+          <property name="toolTip">
+           <string>An error occured when generating loft preview!</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="../../resources/vesselSegmentation.qrc">:/vesselSeg/icons/warning.png</pixmap>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="previewVisibilityButton">
+          <property name="toolTip">
+           <string>Show/hide loft preview</string>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../resources/vesselSegmentation.qrc">
+            <normaloff>:/vesselSeg/icons/vis_off.png</normaloff>
+            <normalon>:/vesselSeg/icons/vis_on.png</normalon>:/vesselSeg/icons/vis_off.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Contour every:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="contourDistanceSpingBox">
+          <property name="toolTip">
+           <string>Distance between contours in the loft preview</string>
+          </property>
+          <property name="suffix">
+           <string>mm</string>
+          </property>
+          <property name="minimum">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>1000.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>10.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QmitkToolGUIArea</class>
+   <extends>QWidget</extends>
+   <header location="global">QmitkToolGUIArea.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QmitkToolSelectionBox</class>
+   <extends>QWidget</extends>
+   <header location="global">QmitkToolSelectionBox.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ctkCollapsibleGroupBox</class>
+   <extends>QGroupBox</extends>
+   <header location="global">ctkCollapsibleGroupBox.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>computePathThroughCentersButton</tabstop>
+  <tabstop>updateContourGeometriesCheckBox</tabstop>
+  <tabstop>useInflowAsWall</tabstop>
+  <tabstop>useOutflowAsWall</tabstop>
+  <tabstop>contourThumbnailListWidget</tabstop>
+  <tabstop>contourInfoTextBrowser</tabstop>
+  <tabstop>contourVisibilityButton</tabstop>
+  <tabstop>deleteContoursButton</tabstop>
+  <tabstop>duplicateButton</tabstop>
+  <tabstop>interpolateButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>addPolygonButton</tabstop>
+  <tabstop>addCircleButton</tabstop>
+  <tabstop>addEllipseButton</tabstop>
+  <tabstop>loftButton</tabstop>
+  <tabstop>cancelLoftButton</tabstop>
+  <tabstop>loftingAlgorithmComboBox</tabstop>
+  <tabstop>previewButton</tabstop>
+  <tabstop>livePreviewCheckBox</tabstop>
+  <tabstop>previewVisibilityButton</tabstop>
+  <tabstop>contourDistanceSpingBox</tabstop>
+  <tabstop>createSegmentedButton</tabstop>
+  <tabstop>smoothnessSlider</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../resources/vesselSegmentation.qrc"/>
+ </resources>
+ <connections/>
+</ui>

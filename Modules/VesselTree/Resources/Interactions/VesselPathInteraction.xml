@@ -1,0 +1,80 @@
+<statemachine NAME="VesselPathInteractor">
+  <state name="Start" startstate="true">
+    <transition event_class="MousePressEvent" event_variant="AddPointClick" target="Start" >
+      <condition name="vessel_path_is_current" />
+      <condition name="is_over_path" />
+      <condition name="is_over_point" inverted="true"/>
+      <action name="add_new_point_on_path" />
+    </transition>
+
+    <transition event_class="MouseMoveEvent" event_variant="AddPointHover" target="Start" >
+      <condition name="vessel_path_is_current" />
+      <condition name="is_over_path" />
+      <condition name="is_over_point" inverted="true"/>
+      <action name="set_cursor_insertpoint" />
+    </transition>
+    
+
+    <transition event_class="MousePressEvent" event_variant="AddPointClick" target="Start" >
+      <condition name="vessel_path_is_current" />
+      <action name="add_new_point_end" />
+    </transition>
+    
+    <transition event_class="MouseMoveEvent" event_variant="AddPointHover" target="Start" >
+      <condition name="vessel_path_is_current" />
+      <action name="set_cursor_addpoint" />
+    </transition>
+
+
+    
+    
+    <transition event_class="MousePressEvent" event_variant="RemovePointClick" target="Start" >
+      <condition name="is_over_point" />
+      <action name="remove_point" />
+    </transition>
+
+    <transition event_class="MouseMoveEvent" event_variant="RemovePointHover" target="Start" >
+      <condition name="vessel_path_is_current" />
+      <condition name="is_over_point" />
+      <action name="set_cursor_removepoint" />
+    </transition>
+
+
+
+    <transition event_class="MousePressEvent" event_variant="PrimaryButtonPressed" target="ControlPointSelected" >
+      <condition name="vessel_path_is_current" />
+      <condition name="is_over_point" />
+      <action name="select_point" />
+    </transition>
+
+    <transition event_class="MouseMoveEvent" event_variant="MouseMove" target="Start">
+      <condition name="vessel_path_is_current" />
+      <condition name="is_over_point" />
+      <action name="set_cursor_movepoint" />
+    </transition>
+
+    <transition event_class="MouseMoveEvent" event_variant="MouseMove" target="Start">
+      <condition name="vessel_path_is_current" />
+      <action name="set_cursor_normal" />
+    </transition>
+    
+    <!-- This transition is reached if the remove point action is selected, but we do not hover over a point -->
+    <transition event_class="MouseMoveEvent" event_variant="RemovePointHover" target="Start">
+      <condition name="vessel_path_is_current" />
+      <action name="set_cursor_normal" />
+    </transition>
+
+    </state>
+  
+  <state name="ControlPointSelected">
+    <transition event_class="MouseMoveEvent" event_variant="PrimaryButtonPressedAndMouseMove" target="ControlPointSelected" >
+      <action name="move_selected_point" /> 
+    </transition>
+
+    <transition event_class="MouseReleaseEvent" event_variant="PrimaryButtonReleased" target="Start" >
+      <action name="deselect_point" /> 
+    </transition>
+  </state>
+  
+  
+</statemachine>

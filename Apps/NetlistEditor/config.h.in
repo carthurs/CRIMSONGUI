@@ -1,0 +1,10 @@
+#ifndef CONFIG_H
+#define CONFIG_H
+
+#define SETTINGS_ORGANIZATION "${SETTINGS_ORGANIZATION}"
+#define SETTINGS_APPLICATION "${SETTINGS_APPLICATION}"
+
+#cmakedefine WIN32_SYS 1
+#cmakedefine UNIX_SYS 1
+
+#endif /* CONFIG_H */

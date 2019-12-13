@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>refresh.png</file>
+    <file>DataManagerIcon_Loft.png</file>
+    <file>DataManagerIcon_Mesh.png</file>
+    <file>stop.png</file>
+    <file>info.png</file>
+  </qresource>
+</RCC>

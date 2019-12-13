@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+  <extension point="org.blueberry.ui.preferencePages">
+    <page id="uk.ac.kcl.PythonSolverSetupPreferencePage" name="Python solver setup" class="crimson::PythonSolverSetupPreferencePage">
+      <keywordreference id="uk.ac.kcl.PythonSolverSetupPreferenceKeywords"></keywordreference>
+    </page>
+  </extension>
+
+
+</plugin>

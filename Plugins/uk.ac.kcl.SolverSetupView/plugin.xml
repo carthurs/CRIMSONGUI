@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+  <extension point="org.blueberry.ui.views">
+    <view id="org.mitk.views.SolverSetupView"
+          category="CRIMSON"
+          name="CRIMSON Solver Setup"
+          class="SolverSetupView"
+          icon="resources/Icon_SolverSetupView.png" />
+  </extension>
+
+  <extension point="org.blueberry.ui.views">
+    <view id="org.mitk.views.MeshAdaptView"
+          category="CRIMSON"
+          name="CRIMSON Mesh Adapt"
+          class="MeshAdaptView"
+          icon="resources/Icon_MeshAdaptView.png" />
+  </extension>
+
+    <extension point="org.blueberry.ui.views">
+    <view
+      id="org.mitk.views.ResliceView"
+      category="CRIMSON"
+      name="CRIMSON PCMRI Vessel Reslice"
+      class="ResliceView"
+      icon="resources/Icon_PCMRIMappingWidget.png" />
+  </extension>
+
+</plugin>

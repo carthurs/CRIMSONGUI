@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.4 r9939"
+   width="48"
+   height="16"
+   version="1.0"
+   sodipodi:docname="volumeTrackingPressureChamber.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="D:\Dev\QSapecNG-2.0.0-source\src\gui\images\symbols\volumeTrackingPressureChamber.png"
+   inkscape:export-xdpi="202.98541"
+   inkscape:export-ydpi="202.98541">
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs5">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="744.09448 : 526.18109 : 1"
+       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
+       id="perspective9" />
+    <inkscape:perspective
+       id="perspective57"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-height="724"
+     inkscape:window-width="1270"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     guidetolerance="10.0"
+     gridtolerance="10.0"
+     objecttolerance="10.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base"
+     showgrid="false"
+     inkscape:zoom="16"
+     inkscape:cx="19.614317"
+     inkscape:cy="8.2009775"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:current-layer="svg2"
+     inkscape:window-maximized="0" />
+  <g
+     id="g71">
+    <path
+       id="path2384"
+       d="m 44.2832,7.987927 c 0,-1.1025212 -1.590458,-1.3010778 -8.3125,-1.0687496 l -8.3125,0.2671875 0,-3.384375 c 0,-1.873084 -0.4275,-3.4140629 -0.95,-3.4140629 -0.554166,0 -0.95,3.1666667 -0.95,7.6 0,4.433333 0.395834,7.599999 0.95,7.599999 0.5225,0 0.95,-1.540978 0.95,-3.414062 l 0,-3.384375 8.3125,0.267187 c 6.722042,0.232329 8.3125,0.03377 8.3125,-1.068749 z m -0.475,0 c 0,0.522499 -0.4275,0.949999 -0.95,0.949999 -0.5225,0 -0.95,-0.4275 -0.95,-0.949999 0,-0.5224996 0.4275,-0.9499996 0.95,-0.9499996 0.5225,0 0.95,0.4275 0.95,0.9499996 z"
+       style="fill:#000000" />
+    <path
+       id="path2384-3"
+       d="m 3.7167979,8.012072 c 0,-1.1025219 1.5904576,-1.3010786 8.3124991,-1.0687504 l 8.3125,0.2671875 0,-3.384375 c 0,-1.8730832 0.4275,-3.4140621 0.95,-3.4140621 0.554166,0 0.95,3.166666 0.95,7.6 0,4.433334 -0.395834,7.600001 -0.95,7.600001 -0.5225,0 -0.95,-1.540979 -0.95,-3.414063 l 0,-3.384376 -8.3125,0.267188 C 5.3072555,9.31315 3.7167979,9.114592 3.7167979,8.012072 z m 0.475,0 c 0,0.5225 0.4274999,0.95 0.9499999,0.95 0.5225,0 0.95,-0.4275 0.95,-0.95 0,-0.5225004 -0.4275,-0.9500004 -0.95,-0.9500004 -0.5225,0 -0.9499999,0.4275 -0.9499999,0.9500004 z"
+       style="fill:#000000" />
+  </g>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 21.237544,15.111198 5.510228,-0.02745"
+     id="path2986"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 21.260894,0.91554844 5.437021,-0.0332408"
+     id="path2986-1"
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="cc" />
+</svg>

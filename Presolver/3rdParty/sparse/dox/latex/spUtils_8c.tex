@@ -1,0 +1,325 @@
+\section{sp\-Utils.c File Reference}
+\label{spUtils_8c}\index{spUtils.c@{spUtils.c}}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include \char`\"{}sp\-Config.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Matrix.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Defs.h\char`\"{}}\par
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\index{spINSIDE_SPARSE@{spINSIDE\_\-SPARSE}!spUtils.c@{spUtils.c}}\index{spUtils.c@{spUtils.c}!spINSIDE_SPARSE@{spINSIDE\_\-SPARSE}}
+\#define {\bf sp\-INSIDE\_\-SPARSE}\label{spUtils_8c_a0}
+
+\item 
+\index{NORM@{NORM}!spUtils.c@{spUtils.c}}\index{spUtils.c@{spUtils.c}!NORM@{NORM}}
+\#define {\bf NORM}(a)\ (nr = ABS((a).Real), ni = ABS((a).Imag), MAX (nr,ni))\label{spUtils_8c_a1}
+
+\item 
+\index{SLACK@{SLACK}!spUtils.c@{spUtils.c}}\index{spUtils.c@{spUtils.c}!SLACK@{SLACK}}
+\#define {\bf SLACK}\ 1e4\label{spUtils_8c_a2}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void {\bf sp\-MNA\_\-Preorder} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+void {\bf sp\-Scale} ({\bf sp\-Matrix} e\-Matrix, sp\-REAL RHS\_\-Scale\-Factors[$\,$], sp\-REAL Solution\-Scale\-Factors[$\,$])
+\item 
+void {\bf sp\-Multiply} ({\bf sp\-Matrix} e\-Matrix, sp\-REAL RHS[$\,$], sp\-REAL Solution[$\,$])
+\item 
+void {\bf sp\-Mult\-Transposed} ({\bf sp\-Matrix} e\-Matrix, sp\-REAL RHS[$\,$], sp\-REAL Solution[$\,$])
+\item 
+void {\bf sp\-Determinant} ({\bf sp\-Matrix} e\-Matrix, int $\ast$p\-Exponent, sp\-REAL $\ast$p\-Determinant, sp\-REAL $\ast$pi\-Determinant)
+\item 
+void {\bf sp\-Strip\-Fills} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+void {\bf sp\-Delete\-Row\-And\-Col} ({\bf sp\-Matrix} e\-Matrix, int Row, int Col)
+\item 
+sp\-REAL {\bf sp\-Pseudo\-Condition} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+sp\-REAL {\bf sp\-Condition} ({\bf sp\-Matrix} e\-Matrix, sp\-REAL Norm\-Of\-Matrix, int $\ast$p\-Error)
+\item 
+sp\-REAL {\bf sp\-Norm} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+sp\-REAL {\bf sp\-Largest\-Element} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+sp\-REAL {\bf sp\-Roundoff} ({\bf sp\-Matrix} e\-Matrix, sp\-REAL Rho)
+\item 
+void {\bf sp\-Error\-Message} ({\bf sp\-Matrix} e\-Matrix, FILE $\ast$Stream, char $\ast$Originator)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+ This file contains various optional utility routines.
+
+Objects that begin with the {\em spc} prefix are considered private and should not be used.
+
+\begin{Desc}
+\item[Author: ]\par
+ Kenneth S. Kundert $<${\tt kundert@users.sourceforge.net}$>$\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{spUtils.c@{sp\-Utils.c}!spCondition@{spCondition}}
+\index{spCondition@{spCondition}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sp\-Condition ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em Norm\-Of\-Matrix}, int $\ast$ {\em p\-Error})}\label{spUtils_8c_a20}
+
+
+Computes an estimate of the condition number using a variation on the LINPACK condition number estimation algorithm. This quantity is an indicator of ill-conditioning in the matrix. To avoid problems with overflow, the reciprocal of the condition number is returned. If this number is small, and if the matrix is scaled such that uncertainties in the RHS and the matrix entries are equilibrated, then the matrix is ill-conditioned. If the this number is near one, the matrix is well conditioned. This routine must only be used after a matrix has been factored by {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} or {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} and before it is cleared by {\bf sp\-Clear}() {\rm (p.\,\pageref{spBuild_8c_a10})} or {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})}.
+
+Unlike the LINPACK condition number estimator, this routines returns the L infinity condition number. This is an artifact of Sparse placing ones on the diagonal of the upper triangular matrix rather than the lower. This difference should be of no importance.
+
+{\bf References}:
+
+A.K. Cline, C.B. Moler, G.W. Stewart, J.H. Wilkinson. An estimate for the condition number of a matrix. SIAM Journal on Numerical Analysis. Vol. 16, No. 2, pages 368-375, April 1979.
+
+J.J. Dongarra, C.B. Moler, J.R. Bunch, G.W. Stewart. LINPACK User's Guide. SIAM, 1979.
+
+Roger G. Grimes, John G. Lewis. Condition number estimation for sparse matrices. SIAM Journal on Scientific and Statistical Computing. Vol. 2, No. 4, pages 384-388, December 1981.
+
+Dianne Prost O'Leary. Estimating matrix condition numbers. SIAM Journal on Scientific and Statistical Computing. Vol. 1, No. 2, pages 205-209, June 1980.
+
+\begin{Desc}
+\item[Returns :]\par
+ The reciprocal of the condition number. If the matrix was singular, zero is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+Norm\-Of\-Matrix}]The L-infinity norm of the unfactored matrix as computed by {\bf sp\-Norm}() {\rm (p.\,\pageref{spUtils_8c_a21})}. \item[{\em 
+p\-Error}]Used to return error code. Possible errors include {\em sp\-SINGULAR} or {\em sp\-NO\_\-MEMORY}. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spDeleteRowAndCol@{spDeleteRowAndCol}}
+\index{spDeleteRowAndCol@{spDeleteRowAndCol}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Delete\-Row\-And\-Col ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Row}, int {\em Col})}\label{spUtils_8c_a18}
+
+
+Deletes a row and a column from a matrix.
+
+Sparse will abort if an attempt is made to delete a row or column that doesn't exist.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix in which the row and column are to be deleted. \item[{\em 
+Row}]Row to be deleted. \item[{\em 
+Col}]Column to be deleted. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spDeterminant@{spDeterminant}}
+\index{spDeterminant@{spDeterminant}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Determinant ({\bf sp\-Matrix} {\em e\-Matrix}, int $\ast$ {\em p\-Exponent}, sp\-REAL $\ast$ {\em p\-Determinant}, sp\-REAL $\ast$ {\em pi\-Determinant})}\label{spUtils_8c_a16}
+
+
+This routine in capable of calculating the determinant of the matrix once the LU factorization has been performed. Hence, only use this routine after {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} and before {\bf sp\-Clear}() {\rm (p.\,\pageref{spBuild_8c_a10})}. The determinant equals the product of all the diagonal elements of the lower triangular matrix L, except that this product may need negating. Whether the product or the negative product equals the determinant is determined by the number of row and column interchanges performed. Note that the determinants of matrices can be very large or very small. On large matrices, the determinant can be far larger or smaller than can be represented by a floating point number. For this reason the determinant is scaled to a reasonable value and the logarithm of the scale factor is returned.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]A pointer to the matrix for which the determinant is desired. \item[{\em 
+p\-Exponent}]The logarithm base 10 of the scale factor for the determinant. To find the actual determinant, Exponent should be added to the exponent of Determinant. \item[{\em 
+p\-Determinant}]The real portion of the determinant. This number is scaled to be greater than or equal to 1.0 and less than 10.0. \item[{\em 
+pi\-Determinant}]The imaginary portion of the determinant. When the matrix is real this pointer need not be supplied, nothing will be returned. This number is scaled to be greater than or equal to 1.0 and less than 10.0. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spErrorMessage@{spErrorMessage}}
+\index{spErrorMessage@{spErrorMessage}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Error\-Message ({\bf sp\-Matrix} {\em e\-Matrix}, FILE $\ast$ {\em Stream}, char $\ast$ {\em Originator})}\label{spUtils_8c_a24}
+
+
+This routine prints a short message describing the error error state of sparse. No message is produced if there is no error. The error state is cleared.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Matrix for which the error message is to be printed. \item[{\em 
+Stream}]Stream to which the error message is to be printed. \item[{\em 
+Originator}]Name of originator of error message. If NULL, `sparse' is used. If zero-length string, no originator is printed. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spLargestElement@{spLargestElement}}
+\index{spLargestElement@{spLargestElement}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sp\-Largest\-Element ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spUtils_8c_a22}
+
+
+This routine, along with {\bf sp\-Roundoff}() {\rm (p.\,\pageref{spUtils_8c_a23})}, are used to gauge the stability of a factorization. If the factorization is determined to be too unstable, then the matrix should be reordered. The routines compute quantities that are needed in the computation of a bound on the error attributed to any one element in the matrix during the factorization. In other words, there is a matrix $ E = [e_{ij}] $ of error terms such that $ A+E = LU $. This routine finds a bound on $ |e_{ij}| $. Erisman \& Reid [1] showed that $ |e_{ij}| < 3.01 u \rho m_{ij} $, where $ u $ is the machine rounding unit, $ \rho = \max a_{ij} $ where the max is taken over every row $ i $, column $ j $, and step $ k $, and $ m_{ij} $ is the number of multiplications required in the computation of $ l_{ij} $ if $ i > j $ or $ u_{ij} $ otherwise. Barlow [2] showed that $ \rho < \max_i || l_i ||_p \max_j || u_j ||_q $ where $ 1/p + 1/q = 1 $.
+
+{\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})} finds the magnitude on the largest element in the matrix. If the matrix has not yet been factored, the largest element is found by direct search. If the matrix is factored, a bound on the largest element in any of the reduced submatrices is computed using Barlow with $ p = \infty $ and $ q = 1 $. The ratio of these two numbers is the growth, which can be used to determine if the pivoting order is adequate. A large growth implies that considerable error has been made in the factorization and that it is probably a good idea to reorder the matrix. If a large growth in encountered after using {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})}, reconstruct the matrix and refactor using {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. If a large growth is encountered after using {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}, refactor using {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} with the pivot threshold increased, say to 0.1.
+
+Using only the size of the matrix as an upper bound on $ m_{ij} $ and Barlow's bound, the user can estimate the size of the matrix error terms $ e_{ij} $ using the bound of Erisman and Reid. {\bf sp\-Roundoff}() {\rm (p.\,\pageref{spUtils_8c_a23})}  computes a tighter bound (with more work) based on work by Gear [3], $ |e_{ij}| < 1.01 u \rho (t c^3 + (1 + t)c^2) $ where $ t $ is the threshold and $ c $ is the maximum number of off-diagonal elements in any row of $ L $. The expensive part of computing this bound is determining the maximum number of off-diagonals in $ L $, which changes only when the order of the matrix changes. This number is computed and saved, and only recomputed if the matrix is reordered.
+
+[1] A. M. Erisman, J. K. Reid. Monitoring the stability of the triangular factorization of a sparse matrix. Numerische Mathematik. Vol. 22, No. 3, 1974, pp 183-186.
+
+[2] J. L. Barlow. A note on monitoring the stability of triangular decomposition of sparse matrices. \char`\"{}SIAM Journal of Scientific and Statistical Computing.\char`\"{} Vol. 7, No. 1, January 1986, pp 166-168.
+
+[3] I. S. Duff, A. M. Erisman, J. K. Reid. \char`\"{}Direct Methods for Sparse Matrices.\char`\"{} Oxford 1986. pp 99.
+
+\begin{Desc}
+\item[Returns :]\par
+ If matrix is not factored, returns the magnitude of the largest element in the matrix. If the matrix is factored, a bound on the magnitude of the largest element in any of the reduced submatrices is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spMNA_Preorder@{spMNA\_\-Preorder}}
+\index{spMNA_Preorder@{spMNA\_\-Preorder}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-MNA\_\-Preorder ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spUtils_8c_a11}
+
+
+This routine massages modified node admittance matrices to remove zeros from the diagonal. It takes advantage of the fact that the row and column associated with a zero diagonal usually have structural ones placed symmetricly. This routine should be used only on modified node admittance matrices and should be executed after the matrix has been built but before the factorization begins. It should be executed for the initial factorization only and should be executed before the rows have been linked. Thus it should be run before using {\bf sp\-Scale}() {\rm (p.\,\pageref{spUtils_8c_a12})}, {\bf sp\-Multiply}() {\rm (p.\,\pageref{spUtils_8c_a14})}, {\bf sp\-Delete\-Row\-And\-Col}() {\rm (p.\,\pageref{spUtils_8c_a18})}, or {\bf sp\-Norm}() {\rm (p.\,\pageref{spUtils_8c_a21})}.
+
+This routine exploits the fact that the structural ones are placed in the matrix in symmetric twins. For example, the stamps for grounded and a floating voltage sources are 
+
+\footnotesize\begin{verbatim}  grounded:              floating:
+  [  x   x   1 ]         [  x   x   1 ]
+  [  x   x     ]         [  x   x  -1 ]
+  [  1         ]         [  1  -1     ]
+\end{verbatim}\normalsize 
+ Notice for the grounded source, there is one set of twins, and for the floating, there are two sets. We remove the zero from the diagonal by swapping the rows associated with a set of twins. For example: 
+
+\footnotesize\begin{verbatim}  grounded:              floating 1:            floating 2:
+  [  1         ]         [  1  -1     ]         [  x   x   1 ]
+  [  x   x     ]         [  x   x  -1 ]         [  1  -1     ]
+  [  x   x   1 ]         [  x   x   1 ]         [  x   x  -1 ]
+\end{verbatim}\normalsize 
+
+
+It is important to deal with any zero diagonals that only have one set of twins before dealing with those that have more than one because swapping row destroys the symmetry of any twins in the rows being swapped, which may limit future moves. Consider 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [  x   x  -1   1 ]
+  [  1  -1         ]
+  [      1         ]
+\end{verbatim}\normalsize 
+ There is one set of twins for diagonal 4 and two for diagonal 3. Dealing with diagonal 4 first requires swapping rows 2 and 4. 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [      1         ]
+  [  1  -1         ]
+  [  x   x  -1   1 ]
+\end{verbatim}\normalsize 
+ We can now deal with diagonal 3 by swapping rows 1 and 3. 
+
+\footnotesize\begin{verbatim}  [  1  -1         ]
+  [      1         ]
+  [  x   x   1     ]
+  [  x   x  -1   1 ]
+\end{verbatim}\normalsize 
+ And we are done, there are no zeros left on the diagonal. However, if we originally dealt with diagonal 3 first, we could swap rows 2 and 3 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [  1  -1         ]
+  [  x   x  -1   1 ]
+  [      1         ]
+\end{verbatim}\normalsize 
+ Diagonal 4 no longer has a symmetric twin and we cannot continue.
+
+So we always take care of lone twins first. When none remain, we choose arbitrarily a set of twins for a diagonal with more than one set and swap the rows corresponding to that twin. We then deal with any lone twins that were created and repeat the procedure until no zero diagonals with symmetric twins remain.
+
+In this particular implementation, columns are swapped rather than rows. The algorithm used in this function was developed by Ken Kundert and Tom Quarles.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix to be preordered. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spMultiply@{spMultiply}}
+\index{spMultiply@{spMultiply}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Multiply ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spUtils_8c_a14}
+
+
+Multiplies matrix by solution vector to find source vector. Assumes matrix has not been factored. This routine can be used as a test to see if solutions are correct. It should not be used before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spUtils_8c_a11})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+RHS}]RHS is the right hand side. This is what is being solved for. \item[{\em 
+Solution}]Solution is the vector being multiplied by the matrix. \item[{\em 
+i\-RHS}]i\-RHS is the imaginary portion of the right hand side. This is what is being solved for. This is only necessary if the matrix is complex and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \item[{\em 
+i\-Solution}]i\-Solution is the imaginary portion of the vector being multiplied by the matrix. This is only necessary if the matrix is complex and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spMultTransposed@{spMultTransposed}}
+\index{spMultTransposed@{spMultTransposed}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Mult\-Transposed ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spUtils_8c_a15}
+
+
+Multiplies transposed matrix by solution vector to find source vector. Assumes matrix has not been factored. This routine can be used as a test to see if solutions are correct. It should not be used before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spUtils_8c_a11})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+RHS}]RHS is the right hand side. This is what is being solved for. \item[{\em 
+Solution}]Solution is the vector being multiplied by the matrix. \item[{\em 
+i\-RHS}]i\-RHS is the imaginary portion of the right hand side. This is what is being solved for. This is only necessary if the matrix is complex and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \item[{\em 
+i\-Solution}]i\-Solution is the imaginary portion of the vector being multiplied by the matrix. This is only necessary if the matrix is complex and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spNorm@{spNorm}}
+\index{spNorm@{spNorm}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sp\-Norm ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spUtils_8c_a21}
+
+
+Computes the L-infinity norm of an unfactored matrix. It is a fatal error to pass this routine a factored matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+ The largest absolute row sum of matrix.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spPseudoCondition@{spPseudoCondition}}
+\index{spPseudoCondition@{spPseudoCondition}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sp\-Pseudo\-Condition ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spUtils_8c_a19}
+
+
+Computes the magnitude of the ratio of the largest to the smallest pivots. This quantity is an indicator of ill-conditioning in the matrix. If this ratio is large, and if the matrix is scaled such that uncertainties in the RHS and the matrix entries are equilibrated, then the matrix is ill-conditioned. However, a small ratio does not necessarily imply that the matrix is well-conditioned. This routine must only be used after a matrix has been factored by {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} or {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} and before it is cleared by {\bf sp\-Clear}() {\rm (p.\,\pageref{spBuild_8c_a10})} or {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})}. The pseudocondition is faster to compute than the condition number calculated by {\bf sp\-Condition}() {\rm (p.\,\pageref{spUtils_8c_a20})}, but is not as informative.
+
+\begin{Desc}
+\item[Returns :]\par
+ The magnitude of the ratio of the largest to smallest pivot used during previous factorization. If the matrix was singular, zero is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spRoundoff@{spRoundoff}}
+\index{spRoundoff@{spRoundoff}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sp\-Roundoff ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em Rho})}\label{spUtils_8c_a23}
+
+
+This routine, along with {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})}, are used to gauge the stability of a factorization. See description of {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})} for more information.
+
+\begin{Desc}
+\item[Returns :]\par
+ Returns a bound on the magnitude of the largest element in $ E = A - LU $.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+Rho}]The bound on the magnitude of the largest element in any of the reduced submatrices. This is the number computed by the function {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})} when given a factored matrix. If this number is negative, the bound will be computed automatically. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spScale@{spScale}}
+\index{spScale@{spScale}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Scale ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS\_\-Scale\-Factors}[$\,$], sp\-REAL {\em Solution\-Scale\-Factors}[$\,$])}\label{spUtils_8c_a12}
+
+
+This function scales the matrix to enhance the possibility of finding a good pivoting order. Note that scaling enhances accuracy of the solution only if it affects the pivoting order, so it makes no sense to scale the matrix before {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})}. If scaling is desired it should be done before {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. There are several things to take into account when choosing the scale factors. First, the scale factors are directly multiplied against the elements in the matrix. To prevent roundoff, each scale factor should be equal to an integer power of the number base of the machine. Since most machines operate in base two, scale factors should be a power of two. Second, the matrix should be scaled such that the matrix of element uncertainties is equilibrated. Third, this function multiplies the scale factors by the elements, so if one row tends to have uncertainties 1000 times smaller than the other rows, then its scale factor should be 1024, not 1/1024. Fourth, to save time, this function does not scale rows or columns if their scale factors are equal to one. Thus, the scale factors should be normalized to the most common scale factor. Rows and columns should be normalized separately. For example, if the size of the matrix is 100 and 10 rows tend to have uncertainties near 1e-6 and the remaining 90 have uncertainties near 1e-12, then the scale factor for the 10 should be 1/1,048,576 and the scale factors for the remaining 90 should be 1. Fifth, since this routine directly operates on the matrix, it is necessary to apply the scale factors to the RHS and Solution vectors. It may be easier to simply use {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} on a scaled matrix to choose the pivoting order, and then throw away the matrix. Subsequent factorizations, performed with {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})}, will not need to have the RHS and Solution vectors descaled. Lastly, this function should not be executed before the function {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spUtils_8c_a11})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix to be scaled. \item[{\em 
+Solution\-Scale\-Factors}]The array of Solution scale factors. These factors scale the columns. All scale factors are real valued. \item[{\em 
+RHS\_\-Scale\-Factors}]The array of RHS scale factors. These factors scale the rows. All scale factors are real valued. \end{description}
+\end{Desc}
+\index{spUtils.c@{sp\-Utils.c}!spStripFills@{spStripFills}}
+\index{spStripFills@{spStripFills}!spUtils.c@{sp\-Utils.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Strip\-Fills ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spUtils_8c_a17}
+
+
+Strips the matrix of all fill-ins.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix to be stripped. \end{description}
+\end{Desc}

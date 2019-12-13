@@ -1,0 +1,15 @@
+/d
+/superbuild
+/13
+/13d
+build
+build_mingw
+buildMinGW
+/superbuild
+/sb
+/Dox
+/Plugins/uk.ac.kcl.CRIMSONApp/src/CRIMSONVersion.h
+*.pyc
+.idea
+PresolverExecutableName.py
+presolver.exe

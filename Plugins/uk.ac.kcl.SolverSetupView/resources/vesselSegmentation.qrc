@@ -1,0 +1,43 @@
+<RCC>
+  <qresource prefix="vesselSeg">
+    <file>icons/down.png</file>
+    <file>icons/up.png</file>
+    <file>icons/warning.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/throughCenters.png</file>
+    <file>icons/addAuto.png</file>
+    <file>icons/addToEnd.png</file>
+    <file>icons/addToStart.png</file>
+    <file>icons/copy.png</file>
+    <file>icons/settings.png</file>
+    <file>icons/point.png</file>
+    <file>icons/delete.png</file>
+    <file>icons/new.png</file>
+    <file>icons/interpolate.png</file>
+	<file>icons/interpolateAll.png</file>
+    <file>icons/duplicate.png</file>
+    <file>icons/circle.png</file>
+    <file>icons/ellipse.png</file>
+    <file>icons/polygon.png</file>
+    <file>icons/add2.png</file>
+    <file>icons/vis_off.png</file>
+    <file>icons/vis_on.png</file>
+    <file>icons/edit.png</file>
+    <file>icons/remove.png</file>
+    <file>icons/add.png</file>
+    <file>icons/list.png</file>
+    <file>icons/DataManagerIcon_Map.png</file>
+    <file>icons/DataManagerIcon_VesselPath.png</file>
+  </qresource>
+  <qresource prefix="contourModeling">
+    <file>cursors/left-mouse.png</file>
+    <file>cursors/right-mouse.png</file>
+    <file>cursors/cursor_addpoint.png</file>
+    <file>cursors/cursor_insertpoint.png</file>
+    <file>cursors/cursor_removepoint.png</file>
+    <file>cursors/Circle_cursor.png</file>
+    <file>cursors/Ellipse_cursor.png</file>
+    <file>cursors/Polygon_cursor.png</file>
+    <file>cursors/Point_cursor.png</file>
+  </qresource>
+</RCC>

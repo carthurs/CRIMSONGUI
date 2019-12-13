@@ -1,0 +1,243 @@
+QSapecNG README
+~~~~~~~~~~~~~~~~
+   QSapecNG v2.0.0
+   Copyright (C) 2009-2011 Michele Caini
+   GNU General Public License v3
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY.
+
+
+What is it?
+~~~~~~~~~~~
+ QSapecNG is a Qt-based program for symbolic analysis of linear analog circuits.
+ In fact, it consists of two indipendent parts: the SapecNG framework engine
+ and the application gui QSapecNG.
+
+ It is an open source, multi-platform project, continuously enhanced by students
+ and researchers of Department of Electronics and Telecommunications (DET) of
+ the University of Florence. It comes as continuation of SapWin for Windows, in
+ order to give to the project a full compatibility on other platforms.
+
+ Through SapecNG/QSapecNG users can draw, solve and analyze analog circuits as
+ well as manage them. Since version 2.0.0beta1 there is also the full support for
+ sub-circuits that can be created, saved, reopened and added as part of other
+ circuits.
+
+ SapecNG/QSapecNG is freely available on SourceForge.net <https://sourceforge.net/projects/qsapecng/>.
+ A previous version of SapecNG is available too, on SourceForge.net <https://sourceforge.net/projects/sapec-ng/>.
+ Pre-compiled packages will be also available from projects related pages.
+
+
+Installation
+~~~~~~~~~~~~
+ * Windows: open the setup executable and follow the instructions
+ * GNU/Linux
+    - binaries: install with the package manager of your distribution
+    - sources: see section "Building and Installing" below
+ * MacOSX: open the dmg file and copy the application bundle to the Applications folder
+
+
+ChangeLog
+~~~~~~~~~
+ * 2.0.0 (current stable release)
+    o Subcircuits support with in-place editing (was Dialog Explosion into
+      the 2.0.0beta1 release)
+    o Minor fixes for memory leaks
+    o Added 24x24 and 48x48 hicolor icons for GNU/Linux
+    o CCVS / VCVS standard graphic models
+    o Ammeter / Voltmeter fixed graphic models
+    o Property Editor now supports scientific notation
+    o Workplane now supports scientific notation
+    o Schematic Editor awares of properties modification
+    o Enhanced control on dirty state of Schematic Editor
+
+ * 1.2.2
+    o Fixed the inverted sign produced by some components
+    o Adapted the debian/copyright file in order to respect the DEP-5 proposal
+    o Created required files to install an entry in the Debian menu
+    o Added VCS data to the debian/control file
+
+ * 1.2.1
+    o Added support for MacOSX
+    o Added debian subfolder
+    o Minor bugs fixed
+    o Created this README
+    o Created the file src/functor/README.rpoly with the license of the
+      rpoly.cpp source file
+
+
+Requirements for building
+~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Qt v4.6.0 (http://qt.nokia.com/) [QtCore and QtGui are required]
+ * Boost v1.41.0 (http://www.boost.org/) [required] 
+ * Qwt v5.1.2 (http://qwt.sourceforge.net/) [required]     
+ * CMake v2.6 (http://www.cmake.org/) [optional, only for building]
+ * Doxygen (http://www.doxygen.org/) [optional, needed to generate the html documentation]
+ * NSIS (http://nsis.sourceforge.net/) [optional, needed to generate Setup file on Windows]
+ * 7-Zip (http://www.7-zip.org/) [optional, needed to generate zip of source and binaries file on Windows]
+ * tar+gzip (http://www.gnu.org/software/tar/ and http://www.gzip.org/)
+   [optional, needed to generate tar.gz of source and binaries file on Unix]
+ * tar+bzip (http://www.gnu.org/software/tar/ and http://www.bzip.org/)
+   [optional, needed to generate tar.bz2 of source and binaries file on Unix]
+ 
+ Note for MacOS: in order to compile properly, you need the latest "MacOS compilation workaround"
+ patch available here https://sourceforge.net/tracker/?func=detail&aid=3269126&group_id=369990&atid=1541778
+
+
+Building and Installing
+~~~~~~~~~~~~~~~~~~~~~~~
+ To build QSapecNG you need to have CMake installed on your system,
+ visit http://www.cmake.org/ to download it.
+
+ * Unix systems
+    Browse the filesystem to reach the root directory of the source
+    files and execute:
+     - mkdir build
+     - cd build
+     - cmake [OPTIONS] ..
+     - make
+     - make install
+    This will build and install QSapecNG to /usr/local/bin,
+    to install in a different path see 'Options' section in this readme. For
+    MacOSX it's better not to execute "make install", see section 'Packages'
+    below
+
+ * Windows
+    Open the program "CMake" or "cmake-gui" than
+     - browse the filesystem and select the root directory of the source files
+     - select the destination build directory (usually "${src_path}/build")
+     - click on "Configure" button and select the wanted output project (i.e. Visual Studio)
+     - click again on "Configure" and than on "Generate"
+    The project is now ready to be opened with Visual Studio. Select "Release"
+    instead of "Debug" and build QSapecNG. After building if you want to install
+    the program simply compile the "INSTALL" project.
+
+
+Options
+~~~~~~~
+ Specific options for QSapecNG can be passed to cmake program with
+ the "-D" parameter followed by the desidered option.
+ 
+ * CMAKE_LIBRARY_PATH=/path/to/the/libraries
+     this option must be used if some of the required libraries
+     listed above are not in default system path
+ 
+ * CMAKE_INCLUDE_PATH=/path/to/the/include/files
+     the same for included files of the above libraries
+ 
+ * CMAKE_INSTALL_PREFIX=/some/path
+     QSapecNG will be installed to /some/path/bin
+ 
+ * (only for Windows) INCLUDE_QT_DLL_IN_BIN_PACKAGE=[ON|OFF]
+     if you want/don't want to include the DLL files of Qt Libraries
+     in the binary packages (this option is enabled only if you have
+     installed Qt as shared DLL libraries)
+
+ * (only for Windows) INCLUDE_QWT5_DLL_IN_BIN_PACKAGE=[ON|OFF]
+     if you want/don't want to include the DLL files of Qwt Libraries
+     in the binary packages (this option is enabled only if you have
+     installed Qwt as shared DLL libraries)
+
+ * (only for MacOSX) INCLUDE_REQUIRED_LIBRARIES_INTO_BUNDLE=[ON|OFF]
+     if you want to include required libraries into the application Bundle
+ 
+ See CMake web-site for other generic cmake options.
+
+
+Building the documentation with Doxygen
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Unix systems: after the "cmake" command you can execute "make doc" to generate
+     the html documentation that will be saved to the ./doc subfolder.
+
+ * Windows: if Doxygen is installed in the system, also the "doc" project can
+    be build with Visual Studio, it generates the html documentation in
+    the ./doc subfolder.
+
+
+Uninstalling
+~~~~~~~~~~~~
+ * From Sources
+    If the building tree has not been deleted from the filesystem
+    you can execute, on Unix systems, "make uninstall" to remove the installed files
+    or you can build the project "uninstall" on Visual Studio.
+ 
+ * From Binary Packages
+    - If you have installed from (g|b)zipped binary file you can simply delete
+      every file you have unzipped.
+    - If you have installed from Windows setup file you can found the Uninstall
+      link in Start-->QSapecNG-->Uninstall
+    - If you have installed from deb or rpm package you can remove the program
+      using the package manager of your GNU/Linux distribution.
+    - If you have installed from dmg file on MacOS simply drag the icon program
+      from Applications directory to the Trash.
+
+
+Note for Debian-based distributions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ The sources are provided with the "debian" subfolder, and the building of
+ QSapecNG in a Debian-based system can be done using the common Debian
+ building tools 'devscripts'.
+
+ To build execute (in the source folder)
+
+    debuild binary
+    dpkg -i ../qsapecng_${version}_${arch}.deb
+
+ where ${version} is the current version of QSapecNG and ${arch} is
+ your system architecture.
+
+ To generate the whole set of debian-related files you need to create
+ the 'orig' tarball, this can be done executing "make package_source", the
+ resulting gzipped archive does not contain the debian subfolder and represents
+ the 'orig' tarball. The archive containing only the debian folder can be
+ created executing "make debian_tar".
+
+
+Note for (Slackware/Debian/RedHat)-based distributions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ You can use the "checkinstall" instead of "make install" to install
+ the program, so a slackware/deb/rpm package will be generated
+ and installed.
+ 
+ If you have downloaded a not-stable version from svn repository, I suggest using
+ checkinstall with the following command
+ 
+   checkinstall --default \
+     --pkgname qsapecng \
+     --pkgversion 2.0.0 \
+     --pkggroup electronics
+
+
+Packages
+~~~~~~~~
+ There are two additional targets for "make" command:
+ - package_source
+ - package
+ The first will create compressed archives with all the source files without
+ the debian subfolder, the second will create a binary compressed package on
+ Unix systems, a setup executable on Windows (if the program NSIS
+ http://nsis.sourceforge.net/ is installed on the system) and a .dmg file with
+ the application bundle on MacOSX.
+ 
+ * Debian users may execute (as root) "cpack -G DEB" instead of
+   "make package" to build a .deb binary file.
+
+ * RedHat users may execute (as root) "cpack -G RMP" instead of
+   "make package" to build a .rmp binary file (this command has not
+   been tested).
+ 
+ 
+Translations
+~~~~~~~~~~~~
+ Currently only English language is supported.
+ The Italian one is in progress and other translations are welcomed.
+
+
+Usage
+~~~~~
+ TODO

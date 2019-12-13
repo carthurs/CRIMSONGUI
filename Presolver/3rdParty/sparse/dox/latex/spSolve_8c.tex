@@ -1,0 +1,56 @@
+\section{sp\-Solve.c File Reference}
+\label{spSolve_8c}\index{spSolve.c@{spSolve.c}}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include \char`\"{}sp\-Config.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Matrix.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Defs.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void {\bf sp\-Solve} ({\bf sp\-Matrix} e\-Matrix, sp\-REAL RHS[$\,$], sp\-REAL Solution[$\,$])
+\item 
+void {\bf sp\-Solve\-Transposed} ({\bf sp\-Matrix} e\-Matrix, sp\-REAL RHS[$\,$], sp\-REAL Solution[$\,$])
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+ This file contains the forward and backward substitution routines for the sparse matrix routines.
+
+Objects that begin with the {\em spc} prefix are considered private and should not be used.
+
+\begin{Desc}
+\item[Author: ]\par
+ Kenneth S. Kundert $<${\tt kundert@users.sourceforge.net}$>$\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{spSolve.c@{sp\-Solve.c}!spSolve@{spSolve}}
+\index{spSolve@{spSolve}!spSolve.c@{sp\-Solve.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Solve ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spSolve_8c_a5}
+
+
+Performs forward elimination and back substitution to find the unknown vector from the {\em RHS} vector and factored matrix. This routine assumes that the pivots are associated with the lower triangular matrix and that the diagonal of the upper triangular matrix consists of ones. This routine arranges the computation in different way than is traditionally used in order to exploit the sparsity of the right-hand side. See the reference in sp\-Revision.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+RHS}]{\em RHS} is the input data array, the right hand side. This data is undisturbed and may be reused for other solves. \item[{\em 
+Solution}]{\em Solution} is the output data array. This routine is constructed such that {\em RHS} and {\em Solution} can be the same array. \item[{\em 
+i\-RHS}]{\em i\-RHS} is the imaginary portion of the input data array, the right hand side. This data is undisturbed and may be reused for other solves. This argument is only necessary if matrix is complex and if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set true. \item[{\em 
+i\-Solution}]{\em i\-Solution} is the imaginary portion of the output data array. This routine is constructed such that {\em i\-RHS} and {\em i\-Solution} can be the same array. This argument is only necessary if matrix is complex and if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set true. \end{description}
+\end{Desc}
+\index{spSolve.c@{sp\-Solve.c}!spSolveTransposed@{spSolveTransposed}}
+\index{spSolveTransposed@{spSolveTransposed}!spSolve.c@{sp\-Solve.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Solve\-Transposed ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spSolve_8c_a6}
+
+
+Performs forward elimination and back substitution to find the unknown vector from the RHS vector and transposed factored matrix. This routine is useful when performing sensitivity analysis on a circuit using the adjoint method. This routine assumes that the pivots are associated with the untransposed lower triangular matrix and that the diagonal of the untransposed upper triangular matrix consists of ones.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+RHS}]{\em RHS} is the input data array, the right hand side. This data is undisturbed and may be reused for other solves. \item[{\em 
+Solution}]{\em Solution} is the output data array. This routine is constructed such that {\em RHS} and {\em Solution} can be the same array. \item[{\em 
+i\-RHS}]{\em i\-RHS} is the imaginary portion of the input data array, the right hand side. This data is undisturbed and may be reused for other solves. If {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set false, or if matrix is real, there is no need to supply this array. \item[{\em 
+i\-Solution}]{\em i\-Solution} is the imaginary portion of the output data array. This routine is constructed such that {\em i\-RHS} and {\em i\-Solution} can be the same array. If {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set false, or if matrix is real, there is no need to supply this array. \end{description}
+\end{Desc}

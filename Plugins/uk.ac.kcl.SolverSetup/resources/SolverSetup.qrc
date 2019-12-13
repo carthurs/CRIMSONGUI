@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/open.png</file>
+    <file>icons/add.png</file>
+    <file>icons/remove.png</file>
+    <file>icons/DataManagerIcon_bc.png</file>
+    <file>icons/DataManagerIcon_bcs.png</file>
+    <file>icons/DataManagerIcon_ss.png</file>
+    <file>icons/DataManagerIcon_SolverStudy.png</file>
+    <file>icons/DataManagerIcon_root.png</file>
+    <file>icons/DataManagerIcon_solution.png</file>
+    <file>icons/DataManagerIcon_material.png</file>
+  </qresource>
+</RCC>

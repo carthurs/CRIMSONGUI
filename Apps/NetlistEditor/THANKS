@@ -1,0 +1,17 @@
+Thanks to Simone Rossetto and his work as packager.
+
+
+Thanks to C. R. Bond for Jenkins-Traub real polynomial root finder implementation.
+  [http://www.crbond.com/download/misc/rpoly.cpp]
+Source code has been used as-is, filtered by an adapter function.
+
+
+Thanks to the work of the Qwt project.
+  [http://qwt.sf.net]
+Source code has been used as-is.
+
+
+Thanks to Nokia and the not yet supported project QtPropertyBrowser (on Qt Solutions Archive).
+  [http://qt.nokia.com/products/qt-addons/solutions-archive/index]
+  [http://qt.gitorious.org/qt-solutions/qt-solutions/trees/master/qtpropertybrowser]
+Source code has been used as-is.

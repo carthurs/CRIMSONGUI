@@ -1,0 +1,959 @@
+\section{sp\-Fortran.c File Reference}
+\label{spFortran_8c}\index{spFortran.c@{spFortran.c}}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include \char`\"{}sp\-Config.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Matrix.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Defs.h\char`\"{}}\par
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\index{spINSIDE_SPARSE@{spINSIDE\_\-SPARSE}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!spINSIDE_SPARSE@{spINSIDE\_\-SPARSE}}
+\#define {\bf sp\-INSIDE\_\-SPARSE}\label{spFortran_8c_a0}
+
+\item 
+\index{sfCreate@{sfCreate}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfCreate@{sfCreate}}
+\#define {\bf sf\-Create}\ sfcreate\label{spFortran_8c_a1}
+
+\item 
+\index{sfStripFills@{sfStripFills}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfStripFills@{sfStripFills}}
+\#define {\bf sf\-Strip\-Fills}\ sfstripfills\label{spFortran_8c_a2}
+
+\item 
+\index{sfDestroy@{sfDestroy}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfDestroy@{sfDestroy}}
+\#define {\bf sf\-Destroy}\ sfdestroy\label{spFortran_8c_a3}
+
+\item 
+\index{sfClear@{sfClear}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfClear@{sfClear}}
+\#define {\bf sf\-Clear}\ sfclear\label{spFortran_8c_a4}
+
+\item 
+\index{sfGetElement@{sfGetElement}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfGetElement@{sfGetElement}}
+\#define {\bf sf\-Get\-Element}\ sfgetelement\label{spFortran_8c_a5}
+
+\item 
+\index{sfGetAdmittance@{sfGetAdmittance}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfGetAdmittance@{sfGetAdmittance}}
+\#define {\bf sf\-Get\-Admittance}\ sfgetadmittance\label{spFortran_8c_a6}
+
+\item 
+\index{sfGetQuad@{sfGetQuad}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfGetQuad@{sfGetQuad}}
+\#define {\bf sf\-Get\-Quad}\ sfgetquad\label{spFortran_8c_a7}
+
+\item 
+\index{sfGetOnes@{sfGetOnes}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfGetOnes@{sfGetOnes}}
+\#define {\bf sf\-Get\-Ones}\ sfgetones\label{spFortran_8c_a8}
+
+\item 
+\index{sfAdd1Real@{sfAdd1Real}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfAdd1Real@{sfAdd1Real}}
+\#define {\bf sf\-Add1Real}\ sfadd1real\label{spFortran_8c_a9}
+
+\item 
+\index{sfAdd1Imag@{sfAdd1Imag}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfAdd1Imag@{sfAdd1Imag}}
+\#define {\bf sf\-Add1Imag}\ sfadd1imag\label{spFortran_8c_a10}
+
+\item 
+\index{sfAdd1Complex@{sfAdd1Complex}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfAdd1Complex@{sfAdd1Complex}}
+\#define {\bf sf\-Add1Complex}\ sfadd1complex\label{spFortran_8c_a11}
+
+\item 
+\index{sfAdd4Real@{sfAdd4Real}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfAdd4Real@{sfAdd4Real}}
+\#define {\bf sf\-Add4Real}\ sfadd4real\label{spFortran_8c_a12}
+
+\item 
+\index{sfAdd4Imag@{sfAdd4Imag}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfAdd4Imag@{sfAdd4Imag}}
+\#define {\bf sf\-Add4Imag}\ sfadd4imag\label{spFortran_8c_a13}
+
+\item 
+\index{sfAdd4Complex@{sfAdd4Complex}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfAdd4Complex@{sfAdd4Complex}}
+\#define {\bf sf\-Add4Complex}\ sfadd4complex\label{spFortran_8c_a14}
+
+\item 
+\index{sfOrderAndFactor@{sfOrderAndFactor}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfOrderAndFactor@{sfOrderAndFactor}}
+\#define {\bf sf\-Order\-And\-Factor}\ sforderandfactor\label{spFortran_8c_a15}
+
+\item 
+\index{sfFactor@{sfFactor}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfFactor@{sfFactor}}
+\#define {\bf sf\-Factor}\ sffactor\label{spFortran_8c_a16}
+
+\item 
+\index{sfPartition@{sfPartition}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfPartition@{sfPartition}}
+\#define {\bf sf\-Partition}\ sfpartition\label{spFortran_8c_a17}
+
+\item 
+\index{sfSolve@{sfSolve}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfSolve@{sfSolve}}
+\#define {\bf sf\-Solve}\ sfsolve\label{spFortran_8c_a18}
+
+\item 
+\index{sfSolveTransposed@{sfSolveTransposed}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfSolveTransposed@{sfSolveTransposed}}
+\#define {\bf sf\-Solve\-Transposed}\ sfsolvetransposed\label{spFortran_8c_a19}
+
+\item 
+\index{sfPrint@{sfPrint}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfPrint@{sfPrint}}
+\#define {\bf sf\-Print}\ sfprint\label{spFortran_8c_a20}
+
+\item 
+\index{sfFileMatrix@{sfFileMatrix}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfFileMatrix@{sfFileMatrix}}
+\#define {\bf sf\-File\-Matrix}\ sffilematrix\label{spFortran_8c_a21}
+
+\item 
+\index{sfFileVector@{sfFileVector}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfFileVector@{sfFileVector}}
+\#define {\bf sf\-File\-Vector}\ sffilevector\label{spFortran_8c_a22}
+
+\item 
+\index{sfFileStats@{sfFileStats}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfFileStats@{sfFileStats}}
+\#define {\bf sf\-File\-Stats}\ sffilestats\label{spFortran_8c_a23}
+
+\item 
+\index{sfMNA_Preorder@{sfMNA\_\-Preorder}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfMNA_Preorder@{sfMNA\_\-Preorder}}
+\#define {\bf sf\-MNA\_\-Preorder}\ sfmna\_\-preorder\label{spFortran_8c_a24}
+
+\item 
+\index{sfScale@{sfScale}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfScale@{sfScale}}
+\#define {\bf sf\-Scale}\ sfscale\label{spFortran_8c_a25}
+
+\item 
+\index{sfMultiply@{sfMultiply}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfMultiply@{sfMultiply}}
+\#define {\bf sf\-Multiply}\ sfmultiply\label{spFortran_8c_a26}
+
+\item 
+\index{sfMultTransposed@{sfMultTransposed}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfMultTransposed@{sfMultTransposed}}
+\#define {\bf sf\-Mult\-Transposed}\ sfmulttransposed\label{spFortran_8c_a27}
+
+\item 
+\index{sfDeterminant@{sfDeterminant}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfDeterminant@{sfDeterminant}}
+\#define {\bf sf\-Determinant}\ sfdeterminant\label{spFortran_8c_a28}
+
+\item 
+\index{sfError@{sfError}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfError@{sfError}}
+\#define {\bf sf\-Error}\ sferror\label{spFortran_8c_a29}
+
+\item 
+\index{sfErrorMessage@{sfErrorMessage}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfErrorMessage@{sfErrorMessage}}
+\#define {\bf sf\-Error\-Message}\ sferrormessage\label{spFortran_8c_a30}
+
+\item 
+\index{sfWhereSingular@{sfWhereSingular}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfWhereSingular@{sfWhereSingular}}
+\#define {\bf sf\-Where\-Singular}\ sfwheresingular\label{spFortran_8c_a31}
+
+\item 
+\index{sfGetSize@{sfGetSize}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfGetSize@{sfGetSize}}
+\#define {\bf sf\-Get\-Size}\ sfgetsize\label{spFortran_8c_a32}
+
+\item 
+\index{sfSetReal@{sfSetReal}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfSetReal@{sfSetReal}}
+\#define {\bf sf\-Set\-Real}\ sfsetreal\label{spFortran_8c_a33}
+
+\item 
+\index{sfSetComplex@{sfSetComplex}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfSetComplex@{sfSetComplex}}
+\#define {\bf sf\-Set\-Complex}\ sfsetcomplex\label{spFortran_8c_a34}
+
+\item 
+\index{sfFillinCount@{sfFillinCount}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfFillinCount@{sfFillinCount}}
+\#define {\bf sf\-Fillin\-Count}\ sffillincount\label{spFortran_8c_a35}
+
+\item 
+\index{sfElementCount@{sfElementCount}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfElementCount@{sfElementCount}}
+\#define {\bf sf\-Element\-Count}\ sfelementcount\label{spFortran_8c_a36}
+
+\item 
+\index{sfDeleteRowAndCol@{sfDeleteRowAndCol}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfDeleteRowAndCol@{sfDeleteRowAndCol}}
+\#define {\bf sf\-Delete\-Row\-And\-Col}\ sfdeleterowandcol\label{spFortran_8c_a37}
+
+\item 
+\index{sfPseudoCondition@{sfPseudoCondition}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfPseudoCondition@{sfPseudoCondition}}
+\#define {\bf sf\-Pseudo\-Condition}\ sfpseudocondition\label{spFortran_8c_a38}
+
+\item 
+\index{sfCondition@{sfCondition}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfCondition@{sfCondition}}
+\#define {\bf sf\-Condition}\ sfcondition\label{spFortran_8c_a39}
+
+\item 
+\index{sfNorm@{sfNorm}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfNorm@{sfNorm}}
+\#define {\bf sf\-Norm}\ sfnorm\label{spFortran_8c_a40}
+
+\item 
+\index{sfLargestElement@{sfLargestElement}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfLargestElement@{sfLargestElement}}
+\#define {\bf sf\-Largest\-Element}\ sflargestelement\label{spFortran_8c_a41}
+
+\item 
+\index{sfRoundoff@{sfRoundoff}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!sfRoundoff@{sfRoundoff}}
+\#define {\bf sf\-Roundoff}\ sfroundoff\label{spFortran_8c_a42}
+
+\item 
+\index{MATRIX_FILE_NAME@{MATRIX\_\-FILE\_\-NAME}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!MATRIX_FILE_NAME@{MATRIX\_\-FILE\_\-NAME}}
+\#define {\bf MATRIX\_\-FILE\_\-NAME}\ \char`\"{}{\bf sp\-Matrix}\char`\"{}\label{spFortran_8c_a43}
+
+\item 
+\index{STATS_FILE_NAME@{STATS\_\-FILE\_\-NAME}!spFortran.c@{spFortran.c}}\index{spFortran.c@{spFortran.c}!STATS_FILE_NAME@{STATS\_\-FILE\_\-NAME}}
+\#define {\bf STATS\_\-FILE\_\-NAME}\ \char`\"{}sp\-Stats\char`\"{}\label{spFortran_8c_a44}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+long {\bf sf\-Create} (int $\ast$Size, int $\ast$Complex, int $\ast$Error)
+\item 
+void {\bf sf\-Destroy} (long $\ast$Matrix)
+\item 
+void {\bf sf\-Strip\-Fills} (long $\ast$Matrix)
+\item 
+void {\bf sf\-Clear} (long $\ast$Matrix)
+\item 
+long {\bf sf\-Get\-Element} (long $\ast$Matrix, int $\ast$Row, int $\ast$Col)
+\item 
+int {\bf sf\-Get\-Admittance} (long $\ast$Matrix, int $\ast$Node1, int $\ast$Node2, long Template[4])
+\item 
+int {\bf sf\-Get\-Quad} (long $\ast$Matrix, int $\ast$Row1, int $\ast$Row2, int $\ast$Col1, int $\ast$Col2, long Template[4])
+\item 
+int {\bf sf\-Get\-Ones} (long $\ast$Matrix, int $\ast$Pos, int $\ast$Neg, int $\ast$Eqn, long Template[4])
+\item 
+void {\bf sf\-Add1Real} (long $\ast$Element, sp\-REAL $\ast$Real)
+\item 
+void {\bf sf\-Add1Imag} (long $\ast$Element, sp\-REAL $\ast$Imag)
+\item 
+void {\bf sf\-Add1Complex} (long $\ast$Element, sp\-REAL $\ast$Real, sp\-REAL $\ast$Imag)
+\item 
+void {\bf sf\-Add4Real} (long Template[4], sp\-REAL $\ast$Real)
+\item 
+void {\bf sf\-Add4Imag} (long Template[4], sp\-REAL $\ast$Imag)
+\item 
+void {\bf sf\-Add4Complex} (long Template[4], sp\-REAL $\ast$Real, sp\-REAL $\ast$Imag)
+\item 
+int {\bf sf\-Order\-And\-Factor} (long $\ast$Matrix, sp\-REAL RHS[$\,$], sp\-REAL $\ast$Rel\-Threshold, sp\-REAL $\ast$Abs\-Threshold, long $\ast$Diag\-Pivoting)
+\item 
+int {\bf sf\-Factor} (long $\ast$Matrix)
+\item 
+void {\bf sf\-Partition} (long $\ast$Matrix, int $\ast$Mode)
+\item 
+void {\bf sf\-Solve} (long $\ast$Matrix, sp\-REAL RHS[$\,$], sp\-REAL Solution[$\,$])
+\item 
+void {\bf sf\-Solve\-Transposed} (long $\ast$Matrix, sp\-REAL RHS[$\,$], sp\-REAL Solution[$\,$])
+\item 
+void {\bf sf\-Print} (long $\ast$Matrix, long $\ast$Print\-Reordered, long $\ast$Data, long $\ast$Header)
+\item 
+long {\bf sf\-File\-Matrix} (long $\ast$Matrix, long $\ast$Reordered, long $\ast$Data, long $\ast$Header)
+\item 
+int {\bf sf\-File\-Vector} (long $\ast$Matrix, sp\-REAL RHS[$\,$])
+\item 
+int {\bf sf\-File\-Stats} (long $\ast$Matrix)
+\item 
+void {\bf sf\-MNA\_\-Preorder} (long $\ast$Matrix)
+\item 
+void {\bf sf\-Scale} (long $\ast$Matrix, sp\-REAL RHS\_\-Scale\-Factors[$\,$], sp\-REAL Solution\-Scale\-Factors[$\,$])
+\item 
+void {\bf sf\-Multiply} (long $\ast$Matrix, sp\-REAL RHS[$\,$], sp\-REAL Solution[$\,$])
+\item 
+void {\bf sf\-Mult\-Transposed} (long $\ast$Matrix, sp\-REAL RHS[$\,$], sp\-REAL Solution[$\,$])
+\item 
+void {\bf sf\-Determinant} (long $\ast$Matrix, sp\-REAL $\ast$p\-Determinant, sp\-REAL $\ast$pi\-Determinant, int $\ast$p\-Exponent)
+\item 
+int {\bf sf\-Error\-State} (long $\ast$Matrix)
+\item 
+void {\bf sf\-Error\-Message} (long $\ast$Matrix)
+\item 
+void {\bf sf\-Where\-Singular} (long $\ast$Matrix, int $\ast$Row, int $\ast$Col)
+\item 
+int {\bf sf\-Get\-Size} (long $\ast$Matrix, long $\ast$External)
+\item 
+void {\bf sf\-Set\-Real} (long $\ast$Matrix)
+\item 
+void {\bf sf\-Set\-Complex} (long $\ast$Matrix)
+\item 
+int {\bf sf\-Fillin\-Count} (long $\ast$Matrix)
+\item 
+int {\bf sf\-Element\-Count} (long $\ast$Matrix)
+\item 
+void {\bf sf\-Delete\-Row\-And\-Col} (long $\ast$Matrix, int $\ast$Row, int $\ast$Col)
+\item 
+sp\-REAL {\bf sf\-Pseudo\-Condition} (long $\ast$Matrix)
+\item 
+sp\-REAL {\bf sf\-Condition} (long $\ast$Matrix, sp\-REAL $\ast$Norm\-Of\-Matrix, int $\ast$p\-Error)
+\item 
+sp\-REAL {\bf sf\-Norm} (long $\ast$Matrix)
+\item 
+sp\-REAL {\bf sf\-Largest\-Element} (long $\ast$Matrix)
+\item 
+sp\-REAL {\bf sf\-Roundoff} (long $\ast$Matrix, sp\-REAL $\ast$Rho)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+ This module contains routines that interface Sparse1.4 to a calling program written in fortran. Almost every externally available Sparse1.4 routine has a counterpart defined in this file, with the name the same except the {\em sp} prefix is changed to {\em sf}. The {\em sp\-ADD\_\-ELEMENT} and {\em sp\-ADD\_\-QUAD} macros are also replaced with the {\em sf\-Add1} and {\em sf\-Add4} functions defined in this file.
+
+To ease porting this file to different operating systems, the names of the functions can be easily redefined (search for `Routine Renaming'). A simple example of a FORTRAN program that calls Sparse is included in this file (search for Example). When interfacing to a FORTRAN program, the ARRAY\_\-OFFSET option should be set to NO (see {\bf sp\-Config.h}).
+
+DISCLAIMER: These interface routines were written by a C programmer who has little experience with FORTRAN. The routines have had minimal testing. Any interface between two languages is going to have portability problems, this one is no exception.
+
+
+
+\subsection{Function Documentation}
+\index{spFortran.c@{sp\-Fortran.c}!sfAdd1Complex@{sfAdd1Complex}}
+\index{sfAdd1Complex@{sfAdd1Complex}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Add1Complex (long $\ast$ {\em Element}, sp\-REAL $\ast$ {\em Real}, sp\-REAL $\ast$ {\em Imag})}\label{spFortran_8c_a57}
+
+
+Adds a complex value to a matrix element. These elements are referenced by pointer, and so must already have been created by {\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spBuild_8c_a12})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Element}][INTEGER] Pointer to the element that is to be added to. \item[{\em 
+Real}][REAL or DOUBLE PRECISION] Real portion of the number to be added to the element. \item[{\em 
+Imag}][REAL or DOUBLE PRECISION] Imaginary portion of the number to be added to the element. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfAdd1Imag@{sfAdd1Imag}}
+\index{sfAdd1Imag@{sfAdd1Imag}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Add1Imag (long $\ast$ {\em Element}, sp\-REAL $\ast$ {\em Imag})}\label{spFortran_8c_a56}
+
+
+Adds an imaginary value to a matrix element. These elements are referenced by pointer, and so must already have been created by {\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spBuild_8c_a12})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Element}][INTEGER] Pointer to the element that is to be added to. \item[{\em 
+Imag}][REAL or DOUBLE PRECISION] Imaginary portion of the number to be added to the element. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfAdd1Real@{sfAdd1Real}}
+\index{sfAdd1Real@{sfAdd1Real}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Add1Real (long $\ast$ {\em Element}, sp\-REAL $\ast$ {\em Real})}\label{spFortran_8c_a55}
+
+
+Adds a real value to a matrix element. These elements are referenced by pointer, and so must already have been created by {\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spBuild_8c_a12})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Element}][INTEGER] Pointer to the element that is to be added to. \item[{\em 
+Real}][REAL or DOUBLE PRECISION] Real portion of the number to be added to the element. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfAdd4Complex@{sfAdd4Complex}}
+\index{sfAdd4Complex@{sfAdd4Complex}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Add4Complex (long {\em Template}[4], sp\-REAL $\ast$ {\em Real}, sp\-REAL $\ast$ {\em Imag})}\label{spFortran_8c_a60}
+
+
+Adds a complex value to a set of four elements in a matrix. These elements are referenced by pointer, and so must already have been created by {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spBuild_8c_a13})}, {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spBuild_8c_a14})}, or {\bf sp\-Get\-Ones}() {\rm (p.\,\pageref{spBuild_8c_a15})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Template}][4]) [INTEGER (4)] Pointer to the element that is to be added to. \item[{\em 
+Real}][REAL or DOUBLE PRECISION] Real portion of the number to be added to the element. \item[{\em 
+Imag}][REAL or DOUBLE PRECISION] Imaginary portion of the number to be added to the element. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfAdd4Imag@{sfAdd4Imag}}
+\index{sfAdd4Imag@{sfAdd4Imag}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Add4Imag (long {\em Template}[4], sp\-REAL $\ast$ {\em Imag})}\label{spFortran_8c_a59}
+
+
+Adds an imaginary value to a set of four elements in a matrix. These elements are referenced by pointer, and so must already have been created by {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spBuild_8c_a13})}, {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spBuild_8c_a14})}, or {\bf sp\-Get\-Ones}() {\rm (p.\,\pageref{spBuild_8c_a15})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Template}][4]) [INTEGER (4)] Pointer to the element that is to be added to. \item[{\em 
+Imag}][REAL or DOUBLE PRECISION] Imaginary portion of the number to be added to the element. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfAdd4Real@{sfAdd4Real}}
+\index{sfAdd4Real@{sfAdd4Real}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Add4Real (long {\em Template}[4], sp\-REAL $\ast$ {\em Real})}\label{spFortran_8c_a58}
+
+
+Adds a real value to a set of four elements in a matrix. These elements are referenced by pointer, and so must already have been created by {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spBuild_8c_a13})}, {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spBuild_8c_a14})}, or {\bf sp\-Get\-Ones}() {\rm (p.\,\pageref{spBuild_8c_a15})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Template}][4]) [INTEGER (4)] Pointer to the element that is to be added to. \item[{\em 
+Real}][REAL or DOUBLE PRECISION] Real portion of the number to be added to the element. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfClear@{sfClear}}
+\index{sfClear@{sfClear}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Clear (long $\ast$ {\em Matrix})}\label{spFortran_8c_a50}
+
+
+Sets every element of the matrix to zero and clears the error flag.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix that is to be cleared. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfCondition@{sfCondition}}
+\index{sfCondition@{sfCondition}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sf\-Condition (long $\ast$ {\em Matrix}, sp\-REAL $\ast$ {\em Norm\-Of\-Matrix}, int $\ast$ {\em p\-Error})}\label{spFortran_8c_a85}
+
+
+Computes an estimate of the condition number using a variation on the LINPACK condition number estimation algorithm. This quantity is an indicator of ill-conditioning in the matrix. To avoid problems with overflow, the reciprocal of the condition number is returned. If this number is small, and if the matrix is scaled such that uncertainties in the RHS and the matrix entries are equilibrated, then the matrix is ill-conditioned. If the this number is near one, the matrix is well conditioned. This routine must only be used after a matrix has been factored by {\bf sf\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a61})} or {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} and before it is cleared by {\bf sf\-Clear}() {\rm (p.\,\pageref{spFortran_8c_a50})} or {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})}.
+
+Unlike the LINPACK condition number estimator, this routines returns the L infinity condition number. This is an artifact of Sparse placing ones on the diagonal of the upper triangular matrix rather than the lower. This difference should be of no importance.
+
+{\bf References}: A.K. Cline, C.B. Moler, G.W. Stewart, J.H. Wilkinson. An estimate for the condition number of a matrix. SIAM Journal on Numerical Analysis. Vol. 16, No. 2, pages 368-375, April 1979.
+
+J.J. Dongarra, C.B. Moler, J.R. Bunch, G.W. Stewart. LINPACK User's Guide. SIAM, 1979.
+
+Roger G. Grimes, John G. Lewis. Condition number estimation for sparse matrices. SIAM Journal on Scientific and Statistical Computing. Vol. 2, No. 4, pages 384-388, December 1981.
+
+Dianne Prost O'Leary. Estimating matrix condition numbers. SIAM Journal on Scientific and Statistical Computing. Vol. 1, No. 2, pages 205-209, June 1980.
+
+\begin{Desc}
+\item[Returns :]\par
+[REAL or DOUBLE PRECISION] The reciprocal of the condition number. If the matrix was singular, zero is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix. \item[{\em 
+Norm\-Of\-Matrix}][REAL or DOUBLE PRECISION] The L-infinity norm of the unfactored matrix as computed by {\bf sp\-Norm}() {\rm (p.\,\pageref{spUtils_8c_a21})}. \item[{\em 
+p\-Error}][INTEGER or INTEGER$\ast$2] Used to return error code. Possible errors include {\em sp\-SINGULAR} and {\em sp\-NO\_\-MEMORY}. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfCreate@{sfCreate}}
+\index{sfCreate@{sfCreate}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}long sf\-Create (int $\ast$ {\em Size}, int $\ast$ {\em Complex}, int $\ast$ {\em Error})}\label{spFortran_8c_a47}
+
+
+Allocates and initializes the data structures associated with a matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+[INTEGER] A pointer to the matrix is returned cast into an integer. This pointer is then passed and used by the other matrix routines to refer to a particular matrix. If an error occurs, the NULL pointer is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Size}][INTEGER] Size of matrix or estimate of size of matrix if matrix is {\em EXPANDABLE}. \item[{\em 
+Complex}][INTEGER or INTEGER$\ast$2] Type of matrix. If {\em Complex} is 0 then the matrix is real, otherwise the matrix will be complex. Note that if a matrix will be both real and complex, it must be specified here as being complex. \item[{\em 
+Error}][INTEGER or INTEGER$\ast$2] Returns error flag, needed because function {\bf sp\-Error} {\rm (p.\,\pageref{spMatrix_8h_a21})} will not work correctly if {\bf sp\-Create}() {\rm (p.\,\pageref{spAllocate_8c_a11})} returns NULL. Possible errors include {\em sp\-NO\_\-MEMORY}. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfDeleteRowAndCol@{sfDeleteRowAndCol}}
+\index{sfDeleteRowAndCol@{sfDeleteRowAndCol}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Delete\-Row\-And\-Col (long $\ast$ {\em Matrix}, int $\ast$ {\em Row}, int $\ast$ {\em Col})}\label{spFortran_8c_a83}
+
+
+Deletes a row and a column from a matrix.
+
+Sparse will abort if an attempt is made to delete a row or column that doesn't exist.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix in which the row and column are to be deleted. \item[{\em 
+Row}][INTEGER or INTEGER$\ast$2] Row to be deleted. \item[{\em 
+Col}][INTEGER or INTEGER$\ast$2] Column to be deleted. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfDestroy@{sfDestroy}}
+\index{sfDestroy@{sfDestroy}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Destroy (long $\ast$ {\em Matrix})}\label{spFortran_8c_a48}
+
+
+Deallocates pointers and elements of matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix frame which is to be removed from memory. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfDeterminant@{sfDeterminant}}
+\index{sfDeterminant@{sfDeterminant}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Determinant (long $\ast$ {\em Matrix}, sp\-REAL $\ast$ {\em p\-Determinant}, sp\-REAL $\ast$ {\em pi\-Determinant}, int $\ast$ {\em p\-Exponent})}\label{spFortran_8c_a74}
+
+
+This routine in capable of calculating the determinant of the matrix once the LU factorization has been performed. Hence, only use this routine after {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} and before {\bf sp\-Clear}() {\rm (p.\,\pageref{spBuild_8c_a10})}. The determinant equals the product of all the diagonal elements of the lower triangular matrix L, except that this product may need negating. Whether the product or the negative product equals the determinant is determined by the number of row and column interchanges performed. Note that the determinants of matrices can be very large or very small. On large matrices, the determinant can be far larger or smaller than can be represented by a floating point number. For this reason the determinant is scaled to a reasonable value and the logarithm of the scale factor is returned.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] A pointer to the matrix for which the determinant is desired. \item[{\em 
+p\-Exponent}][INTEGER or INTEGER$\ast$2] The logarithm base 10 of the scale factor for the determinant. To find the actual determinant, Exponent should be added to the exponent of Determinant\-Real. \item[{\em 
+p\-Determinant}][REAL or DOUBLE PRECISION] The real portion of the determinant. This number is scaled to be greater than or equal to 1.0 and less than 10.0. \item[{\em 
+pi\-Determinant}][REAL or DOUBLE PRECISION] The imaginary portion of the determinant. When the matrix is real this pointer need not be supplied, nothing will be returned. This number is scaled to be greater than or equal to 1.0 and less than 10.0. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfElementCount@{sfElementCount}}
+\index{sfElementCount@{sfElementCount}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Element\-Count (long $\ast$ {\em Matrix})}\label{spFortran_8c_a82}
+
+
+Returns the total number of total elements in the matrix.
+
+$>$$>$$>$ Arguments: Matrix [INTEGER] Pointer to matrix. \index{spFortran.c@{sp\-Fortran.c}!sfErrorMessage@{sfErrorMessage}}
+\index{sfErrorMessage@{sfErrorMessage}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Error\-Message (long $\ast$ {\em Matrix})}\label{spFortran_8c_a76}
+
+
+This function prints a Sparse error message to stderr.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] The matrix for which the error message is desired. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfErrorState@{sfErrorState}}
+\index{sfErrorState@{sfErrorState}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Error\-State (long $\ast$ {\em Matrix})}\label{spFortran_8c_a75}
+
+
+This function is used to determine the error status of the given matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+[INTEGER or INTEGER$\ast$2] The error status of the given matrix.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] The matrix for which the error status is desired. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfFactor@{sfFactor}}
+\index{sfFactor@{sfFactor}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Factor (long $\ast$ {\em Matrix})}\label{spFortran_8c_a62}
+
+
+This routine is the companion routine to {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. Unlike {\bf sf\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a61})}, {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} cannot change the ordering. It is also faster than {\bf sf\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a61})}. The standard way of using these two routines is to first use {\bf sf\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a61})} for the initial factorization. For subsequent factorizations, {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} is used if there is some assurance that little growth will occur (say for example, that the matrix is diagonally dominant). If {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} is called for the initial factorization of the matrix, then {\bf sf\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a61})} is automatically called with the default threshold. This routine uses \char`\"{}row at a time\char`\"{} LU factorization. Pivots are associated with the lower triangular matrix and the diagonals of the upper triangular matrix are ones.
+
+\begin{Desc}
+\item[Returns :]\par
+[INTEGER or INTEGER$\ast$2] The error code is returned. Possible errors include {\em sp\-NO\_\-MEMORY} {\em sp\-SINGULAR} {\em sp\-ZERO\_\-DIAG} {\em sp\-SMALL\_\-PIVOT} Error is cleared in this function.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfFileMatrix@{sfFileMatrix}}
+\index{sfFileMatrix@{sfFileMatrix}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}long sf\-File\-Matrix (long $\ast$ {\em Matrix}, long $\ast$ {\em Reordered}, long $\ast$ {\em Data}, long $\ast$ {\em Header})}\label{spFortran_8c_a67}
+
+
+Writes matrix to file in format suitable to be read back in by the matrix test program. Data is sent to a file with a fixed name  (MATRIX\_\-FILE\_\-NAME) because it is impossible to pass strings from FORTRAN to C in a manner that is portable.
+
+\begin{Desc}
+\item[Returns :]\par
+ One is returned if routine was successful, otherwise zero is returned. The calling function can query errno (the system global error variable) as to the reason why this routine failed.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \item[{\em 
+Reordered}][LOGICAL] Specifies whether matrix should be output in reordered form, or in original order. \item[{\em 
+Data}][LOGICAL] Indicates that the element values should be output along with the indices for each element. This parameter must be true if matrix is to be read by the sparse test program. \item[{\em 
+Header}][LOGICAL] Indicates that header is desired. This parameter must be true if matrix is to be read by the sparse test program. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfFileStats@{sfFileStats}}
+\index{sfFileStats@{sfFileStats}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-File\-Stats (long $\ast$ {\em Matrix})}\label{spFortran_8c_a69}
+
+
+Writes useful information concerning the matrix to a file. Should be executed after the matrix is factored. Data is sent to a file with a fixed name (STATS\_\-FILE\_\-NAME) because it is impossible to pass strings from FORTRAN to C in a manner that is portable.
+
+\begin{Desc}
+\item[Returns :]\par
+[LOGICAL] One is returned if routine was successful, otherwise zero is returned. The calling function can query errno (the system global error variable) as to the reason why this routine failed.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfFileVector@{sfFileVector}}
+\index{sfFileVector@{sfFileVector}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-File\-Vector (long $\ast$ {\em Matrix}, sp\-REAL {\em RHS}[$\,$])}\label{spFortran_8c_a68}
+
+
+Writes vector to file in format suitable to be read back in by the matrix test program. This routine should be executed after the function sf\-File\-Matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+ One is returned if routine was successful, otherwise zero is returned. The calling function can query errno (the system global error variable) as to the reason why this routine failed.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \item[{\em 
+RHS}][REAL (1) or DOUBLE PRECISION (1)] Right-hand side vector. This is only the real portion if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \item[{\em 
+i\-RHS}][REAL (1) or DOUBLE PRECISION (1)] Right-hand side vector, imaginary portion. Not necessary if matrix is real or if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is set false. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfFillinCount@{sfFillinCount}}
+\index{sfFillinCount@{sfFillinCount}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Fillin\-Count (long $\ast$ {\em Matrix})}\label{spFortran_8c_a81}
+
+
+Returns the number of fill-ins in the matrix.
+
+$>$$>$$>$ Arguments: Matrix [INTEGER] Pointer to matrix. \index{spFortran.c@{sp\-Fortran.c}!sfGetAdmittance@{sfGetAdmittance}}
+\index{sfGetAdmittance@{sfGetAdmittance}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Get\-Admittance (long $\ast$ {\em Matrix}, int $\ast$ {\em Node1}, int $\ast$ {\em Node2}, long {\em Template}[4])}\label{spFortran_8c_a52}
+
+
+Performs same function as {\bf sf\-Get\-Element}() {\rm (p.\,\pageref{spFortran_8c_a51})} except rather than one element, all four Matrix elements for a floating component are added. This routine also works if component is grounded. Positive elements are placed at [Node1,Node2] and [Node2,Node1]. This routine is only to be used after {\bf sf\-Create}() {\rm (p.\,\pageref{spFortran_8c_a47})} and before {\bf sf\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spFortran_8c_a70})}, {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} or {\bf sf\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a61})}.
+
+\begin{Desc}
+\item[Returns :]\par
+[INTEGER or INTEGER$\ast$2] The error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix that component is to be entered in. \item[{\em 
+Node1}][INTEGER or INTEGER$\ast$2] Row and column indices for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Node zero is the ground node. In no case may {\em Node1} be less than zero. \item[{\em 
+Node2}][INTEGER or INTEGER$\ast$2] Row and column indices for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Node zero is the ground node. In no case may {\em Node2} be less than zero. \item[{\em 
+Template}][INTEGER (4)] Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfGetElement@{sfGetElement}}
+\index{sfGetElement@{sfGetElement}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}long sf\-Get\-Element (long $\ast$ {\em Matrix}, int $\ast$ {\em Row}, int $\ast$ {\em Col})}\label{spFortran_8c_a51}
+
+
+Finds element [Row,Col] and returns a pointer to it. If element is not found then it is created and spliced into matrix. This routine is only to be used after {\bf sp\-Create}() {\rm (p.\,\pageref{spAllocate_8c_a11})} and before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spUtils_8c_a11})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} or {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. Returns a pointer to the Real portion of a matrix element. This pointer is later used by sf\-Addxxxxx() to directly access element.
+
+\begin{Desc}
+\item[Returns :]\par
+[INTEGER] Returns a pointer to the element. This pointer is then used to directly access the element during successive builds. Returns NULL if {\em sp\-NO\_\-MEMORY} error occurs. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix that the element is to be added to. \item[{\em 
+Row}][INTEGER or INTEGER$\ast$2] Row index for element. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Elements placed in row zero are discarded. In no case may {\em Row} be less than zero. \item[{\em 
+Col}][INTEGER or INTEGER$\ast$2] Column index for element. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Elements placed in column zero are discarded. In no case may {\em Col} be less than zero. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfGetOnes@{sfGetOnes}}
+\index{sfGetOnes@{sfGetOnes}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Get\-Ones (long $\ast$ {\em Matrix}, int $\ast$ {\em Pos}, int $\ast$ {\em Neg}, int $\ast$ {\em Eqn}, long {\em Template}[4])}\label{spFortran_8c_a54}
+
+
+Performs similar function to {\bf sf\-Get\-Quad}() {\rm (p.\,\pageref{spFortran_8c_a53})} except this routine is meant for components that do not have an admittance representation.
+
+The following stamp is used: 
+
+\footnotesize\begin{verbatim}         Pos  Neg  Eqn
+  Pos  [  .    .    1  ]
+  Neg  [  .    .   -1  ]
+  Eqn  [  1   -1    .  ]
+\end{verbatim}\normalsize 
+
+
+\begin{Desc}
+\item[Returns :]\par
+[INTEGER or INTEGER$\ast$2] Error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix that component is to be entered in. \item[{\em 
+Pos}][INTEGER or INTEGER$\ast$2] See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Pos} be less than zero. \item[{\em 
+Neg}][INTEGER or INTEGER$\ast$2] See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Neg} be less than zero. \item[{\em 
+Eqn}][INTEGER or INTEGER$\ast$2] See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Eqn} be less than zero. \item[{\em 
+Template}][4]) [INTEGER (4)] Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfGetQuad@{sfGetQuad}}
+\index{sfGetQuad@{sfGetQuad}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Get\-Quad (long $\ast$ {\em Matrix}, int $\ast$ {\em Row1}, int $\ast$ {\em Row2}, int $\ast$ {\em Col1}, int $\ast$ {\em Col2}, long {\em Template}[4])}\label{spFortran_8c_a53}
+
+
+Similar to {\bf sf\-Get\-Admittance}() {\rm (p.\,\pageref{spFortran_8c_a52})}, except that {\bf sf\-Get\-Admittance}() {\rm (p.\,\pageref{spFortran_8c_a52})} only handles 2-terminal components, whereas {\bf sf\-Get\-Quad}() {\rm (p.\,\pageref{spFortran_8c_a53})} handles simple 4-terminals as well. These 4-terminals are simply generalized 2-terminals with the option of having the sense terminals different from the source and sink terminals. {\bf sf\-Get\-Quad}() {\rm (p.\,\pageref{spFortran_8c_a53})} adds four elements to the matrix. Positive elements occur at Row1,Col1 Row2,Col2 while negative elements occur at Row1,Col2 and Row2,Col1. The routine works fine if any of the rows and columns are zero. This routine is only to be used after {\bf sf\-Create}() {\rm (p.\,\pageref{spFortran_8c_a47})} and before {\bf sf\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spFortran_8c_a70})}, {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} or {\bf sf\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a61})} unless TRANSLATE is set true.
+
+\begin{Desc}
+\item[Returns :]\par
+[INTEGER or INTEGER$\ast$2] Error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix that component is to be entered in. \item[{\em 
+Row1}][INTEGER or INTEGER$\ast$2] First row index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Row1} be less than zero. \item[{\em 
+Row2}][INTEGER or INTEGER$\ast$2] Second row index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Row2} be less than zero. \item[{\em 
+Col1}][INTEGER or INTEGER$\ast$2] First column index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground column. In no case may {\em Col1} be less than zero. \item[{\em 
+Col2}][INTEGER or INTEGER$\ast$2] Second column index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground column. In no case may {\em Col2} be less than zero. \item[{\em 
+Template}][INTEGER (4)] Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfGetSize@{sfGetSize}}
+\index{sfGetSize@{sfGetSize}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Get\-Size (long $\ast$ {\em Matrix}, long $\ast$ {\em External})}\label{spFortran_8c_a78}
+
+
+Returns the size of the matrix. Either the internal or external size of the matrix is returned.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \item[{\em 
+External}][LOGICAL] If External is set true, the external size , i.e., the value of the largest external row or column number encountered is returned. Otherwise the true size of the matrix is returned. These two sizes may differ if the TRANSLATE option is set true. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfLargestElement@{sfLargestElement}}
+\index{sfLargestElement@{sfLargestElement}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sf\-Largest\-Element (long $\ast$ {\em Matrix})}\label{spFortran_8c_a87}
+
+
+{\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})} finds the magnitude on the largest element in the matrix. If the matrix has not yet been factored, the largest element is found by direct search. If the matrix is factored, a bound on the largest element in any of the reduced submatrices is computed.
+
+\begin{Desc}
+\item[Returns :]\par
+[REAL or DOUBLE PRECISION] If matrix is not factored, returns the magnitude of the largest element in the matrix. If the matrix is factored, a bound on the magnitude of the largest element in any of the reduced submatrices is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})} \end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfMNA_Preorder@{sfMNA\_\-Preorder}}
+\index{sfMNA_Preorder@{sfMNA\_\-Preorder}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-MNA\_\-Preorder (long $\ast$ {\em Matrix})}\label{spFortran_8c_a70}
+
+
+This routine massages modified node admittance matrices to remove zeros from the diagonal. It takes advantage of the fact that the row and column associated with a zero diagonal usually have structural ones placed symmetricly. This routine should be used only on modified node admittance matrices and should be executed after the matrix has been built but before the factorization begins. It should be executed for the initial factorization only and should be executed before the rows have been linked. Thus it should be run before using {\bf sp\-Scale}() {\rm (p.\,\pageref{spUtils_8c_a12})}, {\bf sp\-Multiply}() {\rm (p.\,\pageref{spUtils_8c_a14})}, {\bf sp\-Delete\-Row\-And\-Col}() {\rm (p.\,\pageref{spUtils_8c_a18})}, or {\bf sp\-Norm}() {\rm (p.\,\pageref{spUtils_8c_a21})}.
+
+This routine exploits the fact that the structural one are placed in the matrix in symmetric twins. For example, the stamps for grounded and a floating voltage sources are 
+
+\footnotesize\begin{verbatim}  grounded:              floating:
+  [  x   x   1 ]         [  x   x   1 ]
+  [  x   x     ]         [  x   x  -1 ]
+  [  1         ]         [  1  -1     ]
+\end{verbatim}\normalsize 
+ Notice for the grounded source, there is one set of twins, and for the grounded, there are two sets. We remove the zero from the diagonal by swapping the rows associated with a set of twins. For example: grounded: floating 1: floating 2: 
+
+\footnotesize\begin{verbatim}  [  1         ]         [  1  -1     ]         [  x   x   1 ]
+  [  x   x     ]         [  x   x  -1 ]         [  1  -1     ]
+  [  x   x   1 ]         [  x   x   1 ]         [  x   x  -1 ]
+\end{verbatim}\normalsize 
+
+
+It is important to deal with any zero diagonals that only have one set of twins before dealing with those that have more than one because swapping row destroys the symmetry of any twins in the rows being swapped, which may limit future moves. Consider 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [  x   x  -1   1 ]
+  [  1  -1         ]
+  [      1         ]
+\end{verbatim}\normalsize 
+ There is one set of twins for diagonal 4 and two for diagonal3. Dealing with diagonal for first requires swapping rows 2 and 4. 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [      1         ]
+  [  1  -1         ]
+  [  x   x  -1   1 ]
+\end{verbatim}\normalsize 
+ We can now deal with diagonal 3 by swapping rows 1 and 3. 
+
+\footnotesize\begin{verbatim}  [  1  -1         ]
+  [      1         ]
+  [  x   x   1     ]
+  [  x   x  -1   1 ]
+\end{verbatim}\normalsize 
+ And we are done, there are no zeros left on the diagonal. However, if we originally dealt with diagonal 3 first, we could swap rows 2 and 3 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [  1  -1         ]
+  [  x   x  -1   1 ]
+  [      1         ]
+\end{verbatim}\normalsize 
+ Diagonal 4 no longer has a symmetric twin and we cannot continue.
+
+So we always take care of lone twins first. When none remain, we choose arbitrarily a set of twins for a diagonal with more than one set and swap the rows corresponding to that twin. We then deal with any lone twins that were created and repeat the procedure until no zero diagonals with symmetric twins remain.
+
+In this particular implementation, columns are swapped rather than rows. The algorithm used in this function was developed by Ken Kundert and Tom Quarles.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix to be preordered. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfMultiply@{sfMultiply}}
+\index{sfMultiply@{sfMultiply}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Multiply (long $\ast$ {\em Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spFortran_8c_a72}
+
+
+Multiplies matrix by solution vector to find source vector. Assumes matrix has not been factored. This routine can be used as a test to see if solutions are correct. It should not be used before Preorder\-Fo\-Modified\-Nodal().\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix. \item[{\em 
+RHS}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] RHS is the right hand side. This is what is being solved for. \item[{\em 
+Solution}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] Solution is the vector being multiplied by the matrix. \item[{\em 
+i\-RHS}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] i\-RHS is the imaginary portion of the right hand side. This is what is being solved for. This is only necessary if the matrix is complex and sp\-SEPARATED\_\-COMPLEX\_\-VECTORS is true. \item[{\em 
+i\-Solution}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] i\-Solution is the imaginary portion of the vector being multiplied by the matrix. This is only necessary if the matrix is complex and sp\-SEPARATED\_\-COMPLEX\_\-VECTORS is true. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfMultTransposed@{sfMultTransposed}}
+\index{sfMultTransposed@{sfMultTransposed}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Mult\-Transposed (long $\ast$ {\em Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spFortran_8c_a73}
+
+
+Multiplies transposed matrix by solution vector to find source vector. Assumes matrix has not been factored. This routine can be used as a test to see if solutions are correct. It should not be used before Preorder\-Fo\-Modified\-Nodal().\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix. \item[{\em 
+RHS}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] RHS is the right hand side. This is what is being solved for. \item[{\em 
+Solution}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] Solution is the vector being multiplied by the matrix. \item[{\em 
+i\-RHS}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] i\-RHS is the imaginary portion of the right hand side. This is what is being solved for. This is only necessary if the matrix is complex and sp\-SEPARATED\_\-COMPLEX\_\-VECTORS is true. \item[{\em 
+i\-Solution}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] i\-Solution is the imaginary portion of the vector being multiplied by the matrix. This is only necessary if the matrix is complex and sp\-SEPARATED\_\-COMPLEX\_\-VECTORS is true. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfNorm@{sfNorm}}
+\index{sfNorm@{sfNorm}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sf\-Norm (long $\ast$ {\em Matrix})}\label{spFortran_8c_a86}
+
+
+Computes the L-infinity norm of an unfactored matrix. It is a fatal error to pass this routine a factored matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+[REAL or DOUBLE PRECISION] The largest absolute row sum of matrix.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfOrderAndFactor@{sfOrderAndFactor}}
+\index{sfOrderAndFactor@{sfOrderAndFactor}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sf\-Order\-And\-Factor (long $\ast$ {\em Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL $\ast$ {\em Rel\-Threshold}, sp\-REAL $\ast$ {\em Abs\-Threshold}, long $\ast$ {\em Diag\-Pivoting})}\label{spFortran_8c_a61}
+
+
+This routine chooses a pivot order for the matrix and factors it into LU form. It handles both the initial factorization and subsequent factorizations when a reordering is desired. This is handled in a manner that is transparent to the user. The routine uses a variation of Gauss's method where the pivots are associated with L and the diagonal terms of U are one.
+
+\begin{Desc}
+\item[Returns :]\par
+[INTEGER of INTEGER$\ast$2] The error code is returned. Possible errors include {\em sp\-NO\_\-MEMORY}, {\em sp\-SINGULAR}, and {\em sp\-SMALL\_\-PIVOT}. Error is cleared in this function.\end{Desc}
+\begin{Desc}
+\item[Returns :]\par
+Matrix [INTEGER] Pointer to matrix. RHS [REAL (1) or DOUBLE PRECISION (1)] Representative right-hand side vector that is used to determine pivoting order when the right hand side vector is sparse. If {\em RHS} is a NULL pointer then the RHS vector is assumed to be full and it is not used when determining the pivoting order. Rel\-Threshold [REAL or DOUBLE PRECISION] This number determines what the pivot relative threshold will be. It should be between zero and one. If it is one then the pivoting method becomes complete pivoting, which is very slow and tends to fill up the matrix. If it is set close to zero the pivoting method becomes strict Markowitz with no threshold. The pivot threshold is used to eliminate pivot candidates that would cause excessive element growth if they were used. Element growth is the cause of roundoff error. Element growth occurs even in well-conditioned matrices. Setting the {\em Rel\-Threshold} large will reduce element growth and roundoff error, but setting it too large will cause execution time to be excessive and will result in a large number of fill-ins. If this occurs, accuracy can actually be degraded because of the large number of operations required on the matrix due to the large number of fill-ins. A good value seems to be 0.001. The default is chosen by giving a value larger than one or less than or equal to zero. This value should be increased and the matrix resolved if growth is found to be excessive. Changing the pivot threshold does not improve performance on matrices where growth is low, as is often the case with ill-conditioned matrices. Once a valid threshold is given, it becomes the new default. The default value of Rel\-Threshold was chosen for use with nearly diagonally dominant matrices such as node- and modified-node admittance matrices. For these matrices it is usually best to use diagonal pivoting. For matrices without a strong diagonal, it is usually best to use a larger threshold, such as 0.01 or 0.1. Abs\-Threshold [REAL or DOUBLE PRECISION] The absolute magnitude an element must have to be considered as a pivot candidate, except as a last resort. This number should be set significantly smaller than the smallest diagonal element that is is expected to be placed in the matrix. If there is no reasonable prediction for the lower bound on these elements, then {\em Abs\-Threshold} should be set to zero. {\em Abs\-Threshold} is used to reduce the possibility of choosing as a pivot an element that has suffered heavy cancellation and as a result mainly consists of roundoff error. Once a valid threshold is given, it becomes the new default. Diag\-Pivoting [LOGICAL] A flag indicating that pivot selection should be confined to the diagonal if possible. If Diag\-Pivoting is nonzero and if {\em DIAGONAL\_\-PIVOTING} is enabled pivots will be chosen only from the diagonal unless there are no diagonal elements that satisfy the threshold criteria. Otherwise, the entire reduced submatrix is searched when looking for a pivot. The diagonal pivoting in Sparse is efficient and well refined, while the off-diagonal pivoting is not. For symmetric and near symmetric matrices, it is best to use diagonal pivoting because it results in the best performance when reordering the matrix and when factoring the matrix without ordering. If there is a considerable amount of nonsymmetry in the matrix, then off-diagonal pivoting may result in a better equation ordering simply because there are more pivot candidates to choose from. A better ordering results in faster subsequent factorizations. However, the initial pivot selection process takes considerably longer for off-diagonal pivoting. \end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfPartition@{sfPartition}}
+\index{sfPartition@{sfPartition}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Partition (long $\ast$ {\em Matrix}, int $\ast$ {\em Mode})}\label{spFortran_8c_a63}
+
+
+This routine determines the cost to factor each row using both direct and indirect addressing and decides, on a row-by-row basis, which addressing mode is fastest. This information is used in {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} to speed the factorization.
+
+When factoring a previously ordered matrix using {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})}, Sparse operates on a row-at-a-time basis. For speed, on each step, the row being updated is copied into a full vector and the operations are performed on that vector. This can be done one of two ways, either using direct addressing or indirect addressing. Direct addressing is fastest when the matrix is relatively dense and indirect addressing is best when the matrix is quite sparse. The user selects the type of partition used with {\em Mode}. If {\em Mode} is set to {\em sp\-DIRECT\_\-PARTITION}, then the all rows are placed in the direct addressing partition. Similarly, if {\em Mode} is set to {\em sp\-INDIRECT\_\-PARTITION}, then the all rows are placed in the indirect addressing partition. By setting {\em Mode} to {\em sp\-AUTO\_\-PARTITION}, the user allows {\em Sparse} to select the partition for each row individually. {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} generally runs faster if Sparse is allowed to choose its own partitioning, however choosing a partition is expensive. The time required to choose a partition is of the same order of the cost to factor the matrix. If you plan to factor a large number of matrices with the same structure, it is best to let {\em Sparse} choose the partition. Otherwise, you should choose the partition based on the predicted density of the matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \item[{\em 
+Mode}][INTEGER or INTEGER$\ast$2] Mode must be one of three special codes: {\em sp\-DIRECT\_\-PARTITION}, {\em sp\-INDIRECT\_\-PARTITION}, or {\em sp\-AUTO\_\-PARTITION}. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfPrint@{sfPrint}}
+\index{sfPrint@{sfPrint}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Print (long $\ast$ {\em Matrix}, long $\ast$ {\em Print\-Reordered}, long $\ast$ {\em Data}, long $\ast$ {\em Header})}\label{spFortran_8c_a66}
+
+
+Formats and send the matrix to standard output. Some elementary statistics are also output. The matrix is output in a format that is readable by people.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \item[{\em 
+Print\-Reordered}][LOGICAL] Indicates whether the matrix should be printed out in its original form, as input by the user, or whether it should be printed in its reordered form, as used by the matrix routines. A zero indicates that the matrix should be printed as inputed, a one indicates that it should be printed reordered. \item[{\em 
+Data}][LOGICAL] Boolean flag that when false indicates that output should be compressed such that only the existence of an element should be indicated rather than giving the actual value. Thus 10 times as many can be printed on a row. A zero signifies that the matrix should be printed compressed. A one indicates that the matrix should be printed in all its glory. \item[{\em 
+Header}][LOGICAL] Flag indicating that extra information such as the row and column numbers should be printed. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfPseudoCondition@{sfPseudoCondition}}
+\index{sfPseudoCondition@{sfPseudoCondition}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sf\-Pseudo\-Condition (long $\ast$ {\em Matrix})}\label{spFortran_8c_a84}
+
+
+Computes the magnitude of the ratio of the largest to the smallest pivots. This quantity is an indicator of ill-conditioning in the matrix. If this ratio is large, and if the matrix is scaled such that uncertainties in the RHS and the matrix entries are equilibrated, then the matrix is ill-conditioned. However, a small ratio does not necessarily imply that the matrix is well-conditioned. This routine must only be used after a matrix has been factored by {\bf sf\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a61})} or {\bf sf\-Factor}() {\rm (p.\,\pageref{spFortran_8c_a62})} and before it is cleared by {\bf sf\-Clear}() {\rm (p.\,\pageref{spFortran_8c_a50})} or {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})}. The pseudocondition is faster to compute than the condition number calculated by {\bf sf\-Condition}() {\rm (p.\,\pageref{spFortran_8c_a85})}, but is not as informative.
+
+\begin{Desc}
+\item[Returns :]\par
+[REAL or DOUBLE PRECISION] The magnitude of the ratio of the largest to smallest pivot used during previous factorization. If the matrix was singular, zero is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfRoundoff@{sfRoundoff}}
+\index{sfRoundoff@{sfRoundoff}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-REAL sf\-Roundoff (long $\ast$ {\em Matrix}, sp\-REAL $\ast$ {\em Rho})}\label{spFortran_8c_a88}
+
+
+This routine, along with {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})}, are used to gauge the stability of a factorization. See description of {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})} for more information.
+
+\begin{Desc}
+\item[Returns :]\par
+[REAL or DOUBLE PRECISION] Returns a bound on the magnitude of the largest element in E = A - LU.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix. \item[{\em 
+Rho}][REAL or DOUBLE PRECISION] The bound on the magnitude of the largest element in any of the reduced submatrices. This is the number computed by the function {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})} when given a factored matrix. If this number is negative, the bound will be computed automatically. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Roundoff}() {\rm (p.\,\pageref{spUtils_8c_a23})} \end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfScale@{sfScale}}
+\index{sfScale@{sfScale}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Scale (long $\ast$ {\em Matrix}, sp\-REAL {\em RHS\_\-Scale\-Factors}[$\,$], sp\-REAL {\em Solution\-Scale\-Factors}[$\,$])}\label{spFortran_8c_a71}
+
+
+This function scales the matrix to enhance the possibility of finding a good pivoting order. Note that scaling enhances accuracy of the solution only if it affects the pivoting order, so it makes no sense to scale the matrix before {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})}. If scaling is desired it should be done before {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. There are several things to take into account when choosing the scale factors. First, the scale factors are directly multiplied against the elements in the matrix. To prevent roundoff, each scale factor should be equal to an integer power of the number base of the machine. Since most machines operate in base two, scale factors should be a power of two. Second, the matrix should be scaled such that the matrix of element uncertainties is equilibrated. Third, this function multiplies the scale factors by the elements, so if one row tends to have uncertainties 1000 times smaller than the other rows, then its scale factor should be 1024, not 1/1024. Fourth, to save time, this function does not scale rows or columns if their scale factors are equal to one. Thus, the scale factors should be normalized to the most common scale factor. Rows and columns should be normalized separately. For example, if the size of the matrix is 100 and 10 rows tend to have uncertainties near 1e-6 and the remaining 90 have uncertainties near 1e-12, then the scale factor for the 10 should be 1/1,048,576 and the scale factors for the remaining 90 should be 1. Fifth, since this routine directly operates on the matrix, it is necessary to apply the scale factors to the RHS and Solution vectors. It may be easier to simply use {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} on a scaled matrix to choose the pivoting order, and then throw away the matrix. Subsequent factorizations, performed with {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})}, will not need to have the RHS and Solution vectors descaled. Lastly, this function should not be executed before the function sp\-MNA\_\-Preorder.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix to be scaled. \item[{\em 
+Solution\-Scale\-Factors}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] The array of Solution scale factors. These factors scale the columns. All scale factors are real valued. \item[{\em 
+RHS\_\-Scale\-Factors}][{\bf REAL}(1) {\rm (p.\,\pageref{spConfig_8h_a0})} or DOUBLE PRECISION(1)] The array of RHS scale factors. These factors scale the rows. All scale factors are real valued. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfSetComplex@{sfSetComplex}}
+\index{sfSetComplex@{sfSetComplex}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Set\-Complex (long $\ast$ {\em Matrix})}\label{spFortran_8c_a80}
+
+
+Forces matrix to be complex.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfSetReal@{sfSetReal}}
+\index{sfSetReal@{sfSetReal}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Set\-Real (long $\ast$ {\em Matrix})}\label{spFortran_8c_a79}
+
+
+Forces matrix to be real.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfSolve@{sfSolve}}
+\index{sfSolve@{sfSolve}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Solve (long $\ast$ {\em Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spFortran_8c_a64}
+
+
+Performs forward elimination and back substitution to find the unknown vector from the RHS vector and factored matrix. This routine assumes that the pivots are associated with the lower triangular (L) matrix and that the diagonal of the upper triangular (U) matrix consists of ones. This routine arranges the computation in different way than is traditionally used in order to exploit the sparsity of the right-hand side. See the reference in sp\-Revision.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \item[{\em 
+RHS}][REAL (1) or DOUBLE PRECISION (1)] {\em RHS} is the input data array, the right hand side. This data is undisturbed and may be reused for other solves. \item[{\em 
+Solution}][REAL (1) or DOUBLE PRECISION (1)] {\em Solution} is the output data array. This routine is constructed such that {\em RHS} and {\em Solution} can be the same array. \item[{\em 
+i\-RHS}][REAL (1) or DOUBLE PRECISION (1)] {\em i\-RHS} is the imaginary portion of the input data array, the right hand side. This data is undisturbed and may be reused for other solves. This argument is only necessary if matrix is complex and if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set true. \item[{\em 
+i\-Solution}][REAL (1) or DOUBLE PRECISION (1)] {\em i\-Solution} is the imaginary portion of the output data array. This routine is constructed such that {\em i\-RHS} and {\em i\-Solution} can be the same array. This argument is only necessary if matrix is complex and if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set true. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfSolveTransposed@{sfSolveTransposed}}
+\index{sfSolveTransposed@{sfSolveTransposed}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Solve\-Transposed (long $\ast$ {\em Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spFortran_8c_a65}
+
+
+Performs forward elimination and back substitution to find the unknown vector from the RHS vector and transposed factored matrix. This routine is useful when performing sensitivity analysis on a circuit using the adjoint method. This routine assumes that the pivots are associated with the untransposed lower triangular (L) matrix and that the diagonal of the untransposed upper triangular (U) matrix consists of ones.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to matrix. \item[{\em 
+RHS}][REAL (1) or DOUBLE PRECISION (1)] {\em RHS} is the input data array, the right hand side. This data is undisturbed and may be reused for other solves. \item[{\em 
+Solution}][REAL (1) or DOUBLE PRECISION (1)] {\em Solution} is the output data array. This routine is constructed such that {\em RHS} and {\em Solution} can be the same array. \item[{\em 
+i\-RHS}][REAL (1) or DOUBLE PRECISION (1)] {\em i\-RHS} is the imaginary portion of the input data array, the right hand side. This data is undisturbed and may be reused for other solves. If {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set false, or if matrix is real, there is no need to supply this array. \item[{\em 
+i\-Solution}][REAL (1) or DOUBLE PRECISION (1)] {\em i\-Solution} is the imaginary portion of the output data array. This routine is constructed such that {\em i\-RHS} and {\em i\-Solution} can be the same array. If {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set false, or if matrix is real, there is no need to supply this array. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfStripFills@{sfStripFills}}
+\index{sfStripFills@{sfStripFills}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Strip\-Fills (long $\ast$ {\em Matrix})}\label{spFortran_8c_a49}
+
+
+Strips the matrix of all fill-ins.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] Pointer to the matrix to be stripped. \end{description}
+\end{Desc}
+\index{spFortran.c@{sp\-Fortran.c}!sfWhereSingular@{sfWhereSingular}}
+\index{sfWhereSingular@{sfWhereSingular}!spFortran.c@{sp\-Fortran.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sf\-Where\-Singular (long $\ast$ {\em Matrix}, int $\ast$ {\em Row}, int $\ast$ {\em Col})}\label{spFortran_8c_a77}
+
+
+This function returns the row and column number where the matrix was detected as singular or where a zero was detected on the diagonal.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}][INTEGER] The matrix for which the error status is desired. \item[{\em 
+p\-Row}][INTEGER or INTEGER$\ast$2] The row number. \item[{\em 
+p\-Col}][INTEGER or INTEGER$\ast$2] The column number. \end{description}
+\end{Desc}

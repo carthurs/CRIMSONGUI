@@ -1,0 +1,181 @@
+\section{sp\-Allocate.c File Reference}
+\label{spAllocate_8c}\index{spAllocate.c@{spAllocate.c}}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include \char`\"{}sp\-Config.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Matrix.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Defs.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+{\bf sp\-Matrix} {\bf sp\-Create} (int Size, int Complex, {\bf sp\-Error} $\ast$p\-Error)
+\item 
+\index{spcGetElement@{spcGetElement}!spAllocate.c@{spAllocate.c}}\index{spAllocate.c@{spAllocate.c}!spcGetElement@{spcGetElement}}
+Element\-Ptr {\bf spc\-Get\-Element} (Matrix\-Ptr Matrix)\label{spAllocate_8c_a12}
+
+\item 
+\index{spcGetFillin@{spcGetFillin}!spAllocate.c@{spAllocate.c}}\index{spAllocate.c@{spAllocate.c}!spcGetFillin@{spcGetFillin}}
+Element\-Ptr {\bf spc\-Get\-Fillin} (Matrix\-Ptr Matrix)\label{spAllocate_8c_a13}
+
+\item 
+void {\bf sp\-Destroy} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+{\bf sp\-Error} {\bf sp\-Error\-State} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+void {\bf sp\-Where\-Singular} ({\bf sp\-Matrix} e\-Matrix, int $\ast$p\-Row, int $\ast$p\-Col)
+\item 
+int {\bf sp\-Get\-Size} ({\bf sp\-Matrix} e\-Matrix, int External)
+\item 
+void {\bf sp\-Set\-Real} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+void {\bf sp\-Set\-Complex} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+int {\bf sp\-Fillin\-Count} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+int {\bf sp\-Element\-Count} ({\bf sp\-Matrix} e\-Matrix)
+\end{CompactItemize}
+\subsection*{Variables}
+\begin{CompactItemize}
+\item 
+\index{spcMatrixIsNotValid@{spcMatrixIsNotValid}!spAllocate.c@{spAllocate.c}}\index{spAllocate.c@{spAllocate.c}!spcMatrixIsNotValid@{spcMatrixIsNotValid}}
+char {\bf spc\-Matrix\-Is\-Not\-Valid} [$\,$] = \char`\"{}Matrix passed to Sparse is not valid\char`\"{}\label{spAllocate_8c_a3}
+
+\item 
+\index{spcErrorsMustBeCleared@{spcErrorsMustBeCleared}!spAllocate.c@{spAllocate.c}}\index{spAllocate.c@{spAllocate.c}!spcErrorsMustBeCleared@{spcErrorsMustBeCleared}}
+char {\bf spc\-Errors\-Must\-Be\-Cleared} [$\,$] = \char`\"{}Error not cleared\char`\"{}\label{spAllocate_8c_a4}
+
+\item 
+\index{spcMatrixMustBeFactored@{spcMatrixMustBeFactored}!spAllocate.c@{spAllocate.c}}\index{spAllocate.c@{spAllocate.c}!spcMatrixMustBeFactored@{spcMatrixMustBeFactored}}
+char {\bf spc\-Matrix\-Must\-Be\-Factored} [$\,$] = \char`\"{}Matrix must be factored\char`\"{}\label{spAllocate_8c_a5}
+
+\item 
+\index{spcMatrixMustNotBeFactored@{spcMatrixMustNotBeFactored}!spAllocate.c@{spAllocate.c}}\index{spAllocate.c@{spAllocate.c}!spcMatrixMustNotBeFactored@{spcMatrixMustNotBeFactored}}
+char {\bf spc\-Matrix\-Must\-Not\-Be\-Factored} [$\,$] = \char`\"{}Matrix must not be factored\char`\"{}\label{spAllocate_8c_a6}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+ This file contains functions for allocating and freeing matrices, configuring them, and for accessing global information about the matrix (size, error status, etc.).
+
+Objects that begin with the {\em spc} prefix are considered private and should not be used.
+
+\begin{Desc}
+\item[Author: ]\par
+ Kenneth S. Kundert $<${\tt kundert@users.sourceforge.net}$>$\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{spAllocate.c@{sp\-Allocate.c}!spCreate@{spCreate}}
+\index{spCreate@{spCreate}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Matrix} sp\-Create (int {\em Size}, int {\em Complex}, {\bf sp\-Error} $\ast$ {\em p\-Error})}\label{spAllocate_8c_a11}
+
+
+Allocates and initializes the data structures associated with a matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+ A pointer to the matrix is returned cast into {\em {\bf sp\-Matrix}} (typically a pointer to a void). This pointer is then passed and used by the other matrix routines to refer to a particular matrix. If an error occurs, the {\em NULL} pointer is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Size}]Size of matrix or estimate of size of matrix if matrix is {\em EXPANDABLE}. \item[{\em 
+Complex}]Type of matrix. If {\em Complex} is 0 then the matrix is real, otherwise the matrix will be complex. Note that if the routines are not set up to handle the type of matrix requested, then an {\em sp\-PANIC} error will occur. Further note that if a matrix will be both real and complex, it must be specified here as being complex. \item[{\em 
+p\-Error}]Returns error flag, needed because function {\em {\bf sp\-Error\-State}() {\rm (p.\,\pageref{spAllocate_8c_a15})}} will not work correctly if {\em {\bf sp\-Create}() {\rm (p.\,\pageref{spAllocate_8c_a11})}} returns {\em NULL}. Possible errors include {\em sp\-NO\_\-MEMORY} and {\em sp\-PANIC}. \end{description}
+\end{Desc}
+\index{spAllocate.c@{sp\-Allocate.c}!spDestroy@{spDestroy}}
+\index{spDestroy@{spDestroy}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Destroy ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spAllocate_8c_a14}
+
+
+Destroys a matrix and frees all memory associated with it.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix frame which is to be destroyed. \end{description}
+\end{Desc}
+\index{spAllocate.c@{sp\-Allocate.c}!spElementCount@{spElementCount}}
+\index{spElementCount@{spElementCount}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sp\-Element\-Count ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spAllocate_8c_a21}
+
+
+This function returns the total number of elements (including fill-ins) that currently exists in a matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\index{spAllocate.c@{sp\-Allocate.c}!spErrorState@{spErrorState}}
+\index{spErrorState@{spErrorState}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Error} sp\-Error\-State ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spAllocate_8c_a15}
+
+
+This function returns the error status of the given matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+ The error status of the given matrix.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]The pointer to the matrix for which the error status is desired. \end{description}
+\end{Desc}
+\index{spAllocate.c@{sp\-Allocate.c}!spFillinCount@{spFillinCount}}
+\index{spFillinCount@{spFillinCount}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sp\-Fillin\-Count ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spAllocate_8c_a20}
+
+
+This function returns the number of fill-ins that currently exists in a matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\index{spAllocate.c@{sp\-Allocate.c}!spGetSize@{spGetSize}}
+\index{spGetSize@{spGetSize}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sp\-Get\-Size ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em External})}\label{spAllocate_8c_a17}
+
+
+Returns the size of the matrix. Either the internal or external size of the matrix is returned.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+External}]If {\em External} is set true, the external size , i.e., the value of the largest external row or column number encountered is returned. Otherwise the true size of the matrix is returned. These two sizes may differ if the {\em TRANSLATE} option is set true. \end{description}
+\end{Desc}
+\index{spAllocate.c@{sp\-Allocate.c}!spSetComplex@{spSetComplex}}
+\index{spSetComplex@{spSetComplex}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Set\-Complex ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spAllocate_8c_a19}
+
+
+Forces matrix to be complex.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\index{spAllocate.c@{sp\-Allocate.c}!spSetReal@{spSetReal}}
+\index{spSetReal@{spSetReal}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Set\-Real ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spAllocate_8c_a18}
+
+
+Forces matrix to be real.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\index{spAllocate.c@{sp\-Allocate.c}!spWhereSingular@{spWhereSingular}}
+\index{spWhereSingular@{spWhereSingular}!spAllocate.c@{sp\-Allocate.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Where\-Singular ({\bf sp\-Matrix} {\em e\-Matrix}, int $\ast$ {\em p\-Row}, int $\ast$ {\em p\-Col})}\label{spAllocate_8c_a16}
+
+
+This function returns the row and column number where the matrix was detected as singular (if pivoting was allowed on the last factorization) or where a zero was detected on the diagonal (if pivoting was not allowed on the last factorization). Pivoting is performed only in {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]The matrix for which the error status is desired. \item[{\em 
+p\-Row}]The row number. \item[{\em 
+p\-Col}]The column number. \end{description}
+\end{Desc}

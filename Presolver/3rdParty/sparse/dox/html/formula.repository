@@ -1,0 +1,23 @@
+\form#0:$ E = [e_{ij}] $
+\form#1:$ A+E = LU $
+\form#2:$ |e_{ij}| $
+\form#3:$ |e_{ij}| < 3.01 u \rho m_{ij} $
+\form#4:$ u $
+\form#5:$ \rho = \max a_{ij} $
+\form#6:$ i $
+\form#7:$ j $
+\form#8:$ k $
+\form#9:$ m_{ij} $
+\form#10:$ l_{ij} $
+\form#11:$ i > j $
+\form#12:$ u_{ij} $
+\form#13:$ \rho < \max_i || l_i ||_p \max_j || u_j ||_q $
+\form#14:$ 1/p + 1/q = 1 $
+\form#15:$ p = \infty $
+\form#16:$ q = 1 $
+\form#17:$ e_{ij} $
+\form#18:$ |e_{ij}| < 1.01 u \rho (t c^3 + (1 + t)c^2) $
+\form#19:$ t $
+\form#20:$ c $
+\form#21:$ L $
+\form#22:$ E = A - LU $

@@ -1,0 +1,22 @@
+<RCC>
+  <qresource prefix="contourModeling">
+    <file>icons/list.png</file>
+    <file>icons/open.png</file>
+    <file>icons/save.png</file>
+    <file>icons/vis_off.png</file>
+    <file>icons/vis_on.png</file>
+    <file>icons/DataManagerIcon_solution.png</file>
+    <file>icons/settings.png</file>
+    <file>icons/go-up.svg</file>
+    <file>Icon_MeshAdaptView.png</file>
+	<file>Icon_PCMRIMappingWidget.png</file>
+    <file>icons/stop.png</file>
+    <file>icons/DataManagerIcon_bc.png</file>
+    <file>icons/DataManagerIcon_bcs.png</file>
+    <file>icons/DataManagerIcon_SolverStudy.png</file>
+    <file>icons/DataManagerIcon_ss.png</file>
+    <file>icons/DataManagerIcon_material.png</file>
+	<file>icons/DataManagerIcon_Map.png</file>
+    <file>icons/add.png</file>
+  </qresource>
+</RCC>

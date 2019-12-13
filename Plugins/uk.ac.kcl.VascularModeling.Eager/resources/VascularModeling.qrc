@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="VascularModeling">
+    <file>icons/DataManagerIcon_Loft.png</file>
+    <file>icons/DataManagerIcon_Blend.png</file>
+    <file>icons/DataManagerIcon_VesselPath.png</file>
+    <file>icons/DataManagerIcon_VesselTree.png</file>
+    <file>icons/vis_on.png</file>
+    <file>icons/vis_off.png</file>
+    <file>icons/hierarchy.png</file>
+    <file>icons/go-up.svg</file>
+    <file>icons/go-down.svg</file>
+  </qresource>
+</RCC>

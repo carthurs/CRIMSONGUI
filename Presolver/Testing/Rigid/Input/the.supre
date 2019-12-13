@@ -1,0 +1,31 @@
+number_of_variables 5
+number_of_nodes 5601
+number_of_elements 24197
+number_of_mesh_edges 32172
+number_of_mesh_faces 50769
+
+phasta_node_order
+
+nodes the.coordinates
+elements the.connectivity
+boundary_faces all_exterior_faces.ebc
+adjacency the.xadj
+
+set_surface_id all_exterior_faces.ebc 1
+set_surface_id wall_Branch.ebc 2
+set_surface_id wall_Descending_Aorta.ebc 3
+set_surface_id wall_Descending_Aorta_Branch.ebc 4
+set_surface_id inflow_Descending_Aorta.ebc 5
+set_surface_id outflow_Branch.ebc 6
+set_surface_id outflow_Descending_Aorta.ebc 7
+
+noslip wall_Descending_Aorta.nbc
+noslip wall_Descending_Aorta_Branch.nbc
+noslip wall_Branch.nbc
+
+prescribed_velocities inflow_Descending_Aorta.nbc
+
+zero_pressure outflow_Descending_Aorta.ebc
+zero_pressure outflow_Branch.ebc
+write_geombc  geombc.dat.1
+write_restart restart.0.1

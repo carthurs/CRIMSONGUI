@@ -1,0 +1,91 @@
+<!DOCTYPE RCC><RCC version="1.0">
+
+<qresource>
+<!-- qsapecng artworks -->
+  <file>images/qsapecng.png</file>
+  <file>images/icon.ico</file>
+  <file>images/qsapecng-16x16.png</file>
+  <file>images/qsapecng-32x32.png</file>
+  <file>images/qsapecng-64x64.png</file>
+  <file>images/qsapecng-128x128.png</file>
+  <file>images/qsapecng-256x256.png</file>
+  <file>images/CRIMSONBoundaryConditionToolboxLogo.png</file>
+  <file>images/qsapecng-splash-ng.png</file>
+  <file>images/symbols/symbols.png</file>
+
+<!-- config dialog -->
+  <file>images/font.png</file>
+
+<!-- about -->
+  <file>images/info.png</file>
+  <file>images/license.png</file>
+  <file>images/qt-logo.png</file>
+
+<!-- file -->
+  <file>images/new.png</file>
+  <file>images/newcmp.png</file>
+  <file>images/open.png</file>
+  <file>images/save.png</file>
+  <file>images/print.png</file>
+  <file>images/cross.png</file>
+
+<!-- view -->
+  <file>images/zoomin.png</file>
+  <file>images/zoomout.png</file>
+  <file>images/zoomnormal.png</file>
+  <file>images/fit.png</file>
+
+<!-- run -->
+  <file>images/node.png</file>
+  <file>images/resolve.png</file>
+  <file>images/wave.png</file>
+
+<!-- settings -->
+  <file>images/configuration.png</file>
+
+<!-- symbols sidebar -->
+  <file>images/symbols/userdef.png</file>
+  <file>images/symbols/threeDNode.png</file>
+  <file>images/symbols/resistor.png</file>
+  <file>images/symbols/inductor.png</file>
+  <file>images/symbols/capacitor.png</file>
+  <file>images/symbols/diode.png</file>
+  <file>images/symbols/prescribedPressureNode.png</file>
+  <file>images/symbols/volumeTrackingPressureChamber.png</file>
+  <file>images/symbols/voltage.png</file>
+  <file>images/symbols/current.png</file>
+  <file>images/symbols/vcvs.png</file>
+  <file>images/symbols/ccvs.png</file>
+  <file>images/symbols/vccs.png</file>
+  <file>images/symbols/cccs.png</file>
+  <file>images/symbols/opampl.png</file>
+  <file>images/symbols/transformer.png</file>
+  <file>images/symbols/mutualinductance.png</file>
+
+<!-- tools toolbar -->
+  <file>images/cursor.png</file>
+  <file>images/symbols/wire.png</file>
+  <file>images/symbols/wirecross.png</file>
+  <file>images/symbols/ground.png</file>
+  <file>images/symbols/port.png</file>
+  <file>images/symbols/out.png</file>
+  <file>images/symbols/voltmeter.png</file>
+  <file>images/symbols/ammeter.png</file>
+  <file>images/grid.png</file>
+  <file>images/label.png</file>
+
+<!-- edit menu -->
+  <file>images/undo.png</file>
+  <file>images/redo.png</file>
+  <file>images/cut.png</file>
+  <file>images/copy.png</file>
+  <file>images/paste.png</file>
+  <file>images/rotate.png</file>
+  <file>images/mirror.png</file>
+  <file>images/bringfront.png</file>
+  <file>images/sendback.png</file>
+  <file>images/bin.png</file>
+
+</qresource>
+
+</RCC>

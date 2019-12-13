@@ -1,0 +1,13 @@
+set(PROJECT_PLUGINS
+  Plugins/uk.ac.kcl.CRIMSONApp:ON
+  Plugins/uk.ac.kcl.AsyncTaskManager:ON
+  Plugins/uk.ac.kcl.AsyncTaskManagerView:ON
+  Plugins/uk.ac.kcl.HierarchyManager:ON
+  Plugins/uk.ac.kcl.VascularModeling.Eager:ON
+  Plugins/uk.ac.kcl.VascularModeling:ON
+  Plugins/uk.ac.kcl.VesselMeshing.Eager:ON
+  Plugins/uk.ac.kcl.VesselMeshing:ON
+  Plugins/uk.ac.kcl.SolverSetup:ON
+  Plugins/uk.ac.kcl.SolverSetupView:ON
+  Plugins/uk.ac.kcl.SolverSetupPython:ON
+)

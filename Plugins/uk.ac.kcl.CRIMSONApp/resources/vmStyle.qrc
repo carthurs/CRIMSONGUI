@@ -1,0 +1,12 @@
+<RCC>
+  <qresource>
+    <file>icons/checkbox.png</file>
+    <file>icons/down_arrow.png</file>
+    <file>icons/handle.png</file>
+    <file>icons/triangle_right.png</file>
+    <file>icons/triangle_down.png</file>
+    <file>vmStyle.qss</file>
+    <file>vmStyle-activetab.qss</file>
+    <file>vmStyle-tab.qss</file>
+  </qresource>
+</RCC>

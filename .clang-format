@@ -1,0 +1,10 @@
+BasedOnStyle: LLVM 
+IndentWidth: 4
+ColumnLimit: 128
+AccessModifierOffset: -4
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakTemplateDeclarations: true
+BreakBeforeBraces: Linux
+BreakConstructorInitializersBeforeComma: true
+PointerBindsToType: true

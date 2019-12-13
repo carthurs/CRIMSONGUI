@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<PhastaMetaFile number_of_pieces="1">
+  <GeometryFileNamePattern pattern="geombc.dat.%d" has_piece_entry="1" has_time_entry="0"/>
+  <FieldFileNamePattern pattern="restart.%d.1" has_piece_entry="0" has_time_entry="1"/>
+  <TimeSteps number_of_steps="1" auto_generate_indices="1"
+                                    start_index="0"
+                                    increment_index_by="1"
+                                    start_value="0."
+                                    increment_value_by="1">
+</TimeSteps>
+<Fields number_of_fields="3">
+  <Field paraview_field_tag="velocity"
+         phasta_field_tag="solution"
+         start_index_in_phasta_array="1"
+         number_of_components="3"
+         data_dependency="0"
+         data_type="double"/>
+  <Field paraview_field_tag="pressure"
+         phasta_field_tag="solution"
+         start_index_in_phasta_array="0"
+         number_of_components="1"
+         data_dependency="0"
+         data_type="double"/>
+  <Field paraview_field_tag="displacement"
+         phasta_field_tag="displacement"
+         start_index_in_phasta_array="0"
+         number_of_components="3"
+         data_dependency="0"
+         data_type="double"/>
+</Fields>
+</PhastaMetaFile>
+

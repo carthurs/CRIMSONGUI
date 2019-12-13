@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?BlueBerry version="0.1"?>
+<plugin>
+  <extension point="org.blueberry.osgi.applications" id="uk.ac.kcl.CRIMSONApp">
+    <application>
+      <run class="crimson::CRIMSONApplication"/>
+    </application>
+  </extension>
+  
+  <extension id="CRIMSON" point="org.blueberry.core.runtime.products">
+    <product application="uk.ac.kcl.CRIMSONApp" />
+  </extension>
+
+
+  <extension point="org.blueberry.ui.perspectives">
+    <perspective
+      id="uk.ac.kcl.GeometryModelingPerspective"
+      name="CRIMSON Geometric Modeling"
+      class="crimson::GeometryModelingPerspective"
+      icon="resources/Icon_VesselBlendingView.png">
+    </perspective>
+  </extension>
+
+  <extension point="org.blueberry.ui.perspectives">
+    <perspective
+      id="uk.ac.kcl.MeshingAndSolverSetupPerspective"
+      name="CRIMSON Meshing and Solver Setup"
+      class="crimson::MeshingAndSolverSetupPerspective"
+      icon="resources/Icon_MeshingAndSolverSetupPerspective.png">
+    </perspective>
+  </extension>
+</plugin>

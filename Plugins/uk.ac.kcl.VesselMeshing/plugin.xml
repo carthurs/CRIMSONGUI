@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+
+  <extension point="org.blueberry.ui.views">
+    <view id="org.mitk.views.vesselmeshingview"
+          category="CRIMSON"
+          name="CRIMSON Meshing"
+          class="VesselMeshingView"
+          icon="resources/Icon_VesselMeshingView.png" />
+  </extension>
+
+  <extension point="org.blueberry.ui.views">
+    <view id="org.mitk.views.MeshExplorationView"
+          category="CRIMSON"
+          name="CRIMSON Mesh Exploration"
+          class="MeshExplorationView"
+          icon="resources/Icon_MeshExplorationView.png" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="Solid" label="Create 3D mesh" icon=":/VesselMeshing/icons/DataManagerIcon_Mesh.png" class="MeshAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="Mesh" label="Show mesh information" icon=":/VesselMeshing/icons/info.png" class="ShowMeshInformationAction" />
+  </extension>
+
+  <extension point="org.mitk.gui.qt.datamanager.contextMenuActions">
+    <contextMenuAction nodeDescriptorName="Surface" label="Convert to CRIMSON discrete model" icon=":/VesselMeshing/icons/DataManagerIcon_Loft.png" class="ConvertToDiscreteModelAction" />
+  </extension>
+
+  </plugin>

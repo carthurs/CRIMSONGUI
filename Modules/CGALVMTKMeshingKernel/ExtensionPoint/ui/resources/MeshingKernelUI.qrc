@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>add.png</file>
+    <file>remove.png</file>
+    <file>default.png</file>
+    <file>warning.png</file>
+    <file>use_default.png</file>
+  </qresource>
+</RCC>

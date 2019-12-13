@@ -1,0 +1,1240 @@
+This is TeX, Version 3.14159 (Web2C 7.3.7) (format=latex 2003.6.3)  30 JUN 2003 12:03
+**refman.tex
+(./refman.tex
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+(/usr/share/texmf/tex/latex/base/book.cls
+Document Class: book 2001/04/21 v1.4e Standard LaTeX document class
+(/usr/share/texmf/tex/latex/base/bk10.clo
+File: bk10.clo 2001/04/21 v1.4e Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@chapter=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf/tex/latex/misc/a4wide.sty
+Package: a4wide 1994/08/30
+
+(/usr/share/texmf/tex/latex/ntgclass/a4.sty
+Package: a4 1999/03/03 v1.2f A4 based page layout
+))
+(/usr/share/texmf/tex/latex/base/makeidx.sty
+Package: makeidx 2000/03/29 v1.0m Standard LaTeX package
+)
+(/usr/share/texmf/tex/latex/fancyhdr/fancyhdr.sty
+\headwidth=\dimen103
+)
+(/usr/share/texmf/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf/tex/latex/graphics/graphics.sty
+Package: graphics 2001/07/07 v1.0n Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/share/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2001/08/31 v1.1 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: dvips.def on input line 80.
+
+(/usr/share/texmf/tex/latex/graphics/dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+\Gin@req@height=\dimen104
+\Gin@req@width=\dimen105
+)
+(/usr/share/texmf/tex/latex/misc/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count88
+\float@exts=\toks15
+\float@box=\box26
+\@float@everytoks=\toks16
+\@floatcapt=\box27
+)
+(/usr/share/texmf/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+) (./doxygen.sty
+Package: doxygen 
+
+(/usr/share/texmf/tex/latex/tools/calc.sty
+Package: calc 1998/07/07 v4.1b Infix arithmetic (KKT,FJ)
+\calc@Acount=\count89
+\calc@Bcount=\count90
+\calc@Adimen=\dimen106
+\calc@Bdimen=\dimen107
+\calc@Askip=\skip43
+\calc@Bskip=\skip44
+LaTeX Info: Redefining \setlength on input line 59.
+LaTeX Info: Redefining \addtolength on input line 60.
+\calc@denominator=\count91
+)
+(/usr/share/texmf/tex/latex/tools/array.sty
+Package: array 1998/05/13 v2.3m Tabular extension package (FMi)
+\col@sep=\dimen108
+\extrarowheight=\dimen109
+\NC@list=\toks17
+\extratabsurround=\skip45
+\backup@length=\skip46
+)
+\tmplength=\skip47
+)
+\@indexfile=\write3
+\openout3 = `refman.idx'.
+
+
+Writing index file refman.idx
+(./refman.aux (./spBuild_8c.aux) (./spConfig_8h.aux) (./spFactor_8c.aux)
+(./spFortran_8c.aux) (./spMatrix_8h.aux) (./spOutput_8c.aux) (./spSolve_8c.aux)
+(./spUtils_8c.aux))
+\openout1 = `refman.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+ [1
+
+
+] [2
+
+] (./refman.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 2.
+)
+\tf@toc=\write4
+\openout4 = `refman.toc'.
+
+ [1
+
+] [2
+
+]
+Chapter 1.
+(./annotated.tex) [1
+
+] [2
+
+]
+Chapter 2.
+(./files.tex) [3] [4
+
+]
+Chapter 3.
+(./structspTemplate.tex
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 8.
+ (/usr/share/texmf/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 8.
+) [5]
+[6
+
+]
+Chapter 4.
+(./spAllocate_8c.tex
+Underfull \hbox (badness 10000) in paragraph at lines 63--63
+  
+ []
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 76--76
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--79
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 92--92
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 103--103
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--116
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--119
+  
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 130--130
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--141
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 153--153
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 164--164
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 175--175
+  
+ []
+
+) [9]
+\openout2 = `spBuild_8c.aux'.
+
+ (./spBuild_8c.tex
+Underfull \hbox (badness 10000) in paragraph at lines 71--71
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 82--82
+  
+ []
+
+[10
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 95--95
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 98--98
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 106--106
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 116--116
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--119
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--135
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 138--138
+  
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 146--146
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 156--156
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 159--159
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 165--165
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--184
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 187--187
+  
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 204--204
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 207--207
+  
+ []
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 229--229
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--232
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 239--239
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 247--247
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--254
+  
+ []
+
+) [14]
+\openout2 = `spConfig_8h.aux'.
+
+ (./spConfig_8h.tex
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
+ []\OT1/cmr/m/n/10 #define \OT1/cmr/bx/n/10 spc-FUNC[]-NEEDS[]-FILE\OT1/cmr/m/n
+/10 (func, file) func/$\OMS/cmsy/m/n/10 ^^C$$^^C$\OT1/cmr/m/n/10 /[]-requires[]
+-/$\OMS/cmsy/m/n/10 ^^C$$^^C$\OT1/cmr/m/n/10 /file/$\OMS/cmsy/m/n/10 ^^C$$^^C$\
+OT1/cmr/m/n/10 /[]-to[]-be[]-
+ []
+
+[15
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 137--137
+  
+ []
+
+[16] [17] [18]
+Underfull \hbox (badness 10000) in paragraph at lines 255--255
+  
+ []
+
+[19] [20] [21]
+Underfull \hbox (badness 10000) in paragraph at lines 353--353
+  
+ []
+
+) [22]
+\openout2 = `spFactor_8c.aux'.
+
+ (./spFactor_8c.tex
+Underfull \hbox (badness 1852) in paragraph at lines 10--12
+ []\OT1/cmr/bx/n/10 sp-Error sp-Order-And-Factor \OT1/cmr/m/n/10 (\OT1/cmr/bx/n
+/10 sp-Matrix \OT1/cmr/m/n/10 e-Matrix, sp-REAL RHS[$ $], sp-REAL Rel-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--36
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--49
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 52--52
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 58--58
+  
+ []
+
+[23
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 68--68
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 71--71
+  
+ []
+
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--91
+  
+ []
+
+) [25]
+\openout2 = `spFortran_8c.aux'.
+
+ (./spFortran_8c.tex [26
+
+
+] [27]
+Underfull \hbox (badness 10000) in paragraph at lines 295--295
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 308--308
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 320--320
+  
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 332--332
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 345--345
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 357--357
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 369--369
+  
+ []
+
+[29]
+Underfull \hbox (badness 10000) in paragraph at lines 392--392
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 395--395
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 410--410
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 413--413
+  
+ []
+
+[30]
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 441--441
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 452--452
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 473--473
+  
+ []
+
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 486--486
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 489--489
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 502--502
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 505--505
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 518--518
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 521--521
+  
+ []
+
+[32]
+Underfull \hbox (badness 10000) in paragraph at lines 537--537
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 540--540
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 553--553
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 556--556
+  
+ []
+
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 578--578
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 581--581
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 597--597
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 600--600
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 624--624
+  
+ []
+
+[34]
+Underfull \hbox (badness 10000) in paragraph at lines 627--627
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 644--644
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 647--647
+  
+ []
+
+[35]
+Underfull \hbox (badness 10000) in paragraph at lines 663--663
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 677--677
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 680--680
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 686--686
+  
+ []
+
+[36]
+Underfull \hbox (badness 10000) in paragraph at lines 743--743
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 754--754
+  
+ []
+
+[37]
+Underfull \hbox (badness 10000) in paragraph at lines 769--769
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 786--786
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 789--789
+  
+ []
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 802--802
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 805--805
+  
+ []
+
+[39]
+Underfull \hbox (badness 10000) in paragraph at lines 815--815
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 827--827
+  
+ []
+
+[40]
+Underfull \hbox (badness 10000) in paragraph at lines 843--843
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 846--846
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 859--859
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 862--862
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 869--869
+  
+ []
+
+[41]
+Underfull \hbox (badness 10000) in paragraph at lines 877--877
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 890--890
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 901--901
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 912--912
+  
+ []
+
+[42]
+Underfull \hbox (badness 10000) in paragraph at lines 927--927
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 942--942
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 953--953
+  
+ []
+
+) [43]
+\openout2 = `spMatrix_8h.aux'.
+
+ (./spMatrix_8h.tex [44
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+  
+ []
+
+[45] [46]
+Underfull \hbox (badness 10000) in paragraph at lines 225--225
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 233--233
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 241--241
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--254
+  
+ []
+
+[47] [48]
+Underfull \hbox (badness 10000) in paragraph at lines 323--323
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 348--348
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 351--351
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 366--366
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 369--369
+  
+ []
+
+[49]
+Underfull \hbox (badness 10000) in paragraph at lines 384--384
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 397--397
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 408--408
+  
+ []
+
+[50]
+Underfull \hbox (badness 10000) in paragraph at lines 422--422
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 433--433
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 448--448
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 451--451
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 464--464
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 467--467
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 473--473
+  
+ []
+
+[51]
+Underfull \hbox (badness 10000) in paragraph at lines 483--483
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 486--486
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 504--504
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 507--507
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 522--522
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 525--525
+  
+ []
+
+[52]
+Underfull \hbox (badness 10000) in paragraph at lines 539--539
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 552--552
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 555--555
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 563--563
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 573--573
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 576--576
+  
+ []
+
+[53]
+Underfull \hbox (badness 10000) in paragraph at lines 592--592
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 595--595
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 603--603
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 613--613
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 616--616
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 622--622
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 641--641
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 644--644
+  
+ []
+
+[54]
+Underfull \hbox (badness 10000) in paragraph at lines 661--661
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 664--664
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 680--680
+  
+ []
+
+[55]
+Underfull \hbox (badness 10000) in paragraph at lines 692--692
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 699--699
+  
+ []
+
+[56]
+Underfull \hbox (badness 10000) in paragraph at lines 719--719
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 722--722
+  
+ []
+
+[57]
+Underfull \hbox (badness 10000) in paragraph at lines 783--783
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 794--794
+  
+ []
+
+[58]
+Underfull \hbox (badness 10000) in paragraph at lines 809--809
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 826--826
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 829--829
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 842--842
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 845--845
+  
+ []
+
+[59]
+Underfull \hbox (badness 10000) in paragraph at lines 855--855
+  
+ []
+
+[60]
+Underfull \hbox (badness 10000) in paragraph at lines 865--865
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 877--877
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 893--893
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 896--896
+  
+ []
+
+[61]
+Underfull \hbox (badness 10000) in paragraph at lines 909--909
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 912--912
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 924--924
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 937--937
+  
+ []
+
+[62]
+Underfull \hbox (badness 10000) in paragraph at lines 948--948
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 959--959
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 974--974
+  
+ []
+
+[63]
+Underfull \hbox (badness 10000) in paragraph at lines 989--989
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1000--1000
+  
+ []
+
+) [64]
+\openout2 = `spOutput_8c.aux'.
+
+ (./spOutput_8c.tex
+Underfull \hbox (badness 10000) in paragraph at lines 26--26
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 42--42
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 60--60
+  
+ []
+
+[65
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 63--63
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 95--95
+  
+ []
+
+) [66]
+\openout2 = `spSolve_8c.aux'.
+
+ (./spSolve_8c.tex
+Underfull \hbox (badness 10000) in paragraph at lines 22--22
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 33--33
+  
+ []
+
+[67
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 48--48
+  
+ []
+
+) [68]
+\openout2 = `spUtils_8c.aux'.
+
+ (./spUtils_8c.tex
+Underfull \hbox (badness 10000) in paragraph at lines 59--59
+  
+ []
+
+[69
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 84--84
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--87
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--102
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--115
+  
+ []
+
+[70]
+Underfull \hbox (badness 10000) in paragraph at lines 129--129
+  
+ []
+
+[71]
+Underfull \hbox (badness 10000) in paragraph at lines 154--154
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 157--157
+  
+ []
+
+[72]
+Underfull \hbox (badness 10000) in paragraph at lines 218--218
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 229--229
+  
+ []
+
+[73]
+Underfull \hbox (badness 10000) in paragraph at lines 244--244
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 261--261
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 264--264
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 277--277
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 280--280
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 293--293
+  
+ []
+
+[74]
+Underfull \hbox (badness 10000) in paragraph at lines 296--296
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 308--308
+  
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 321--321
+  
+ []
+
+) [75]
+No file refman.ind.
+(./refman.aux (./spBuild_8c.aux) (./spConfig_8h.aux) (./spFactor_8c.aux)
+(./spFortran_8c.aux) (./spMatrix_8h.aux) (./spOutput_8c.aux) (./spSolve_8c.aux)
+(./spUtils_8c.aux)) ) 
+Here is how much of TeX's memory you used:
+ 1253 strings out of 25847
+ 16345 string characters out of 195961
+ 70159 words of memory out of 384000
+ 4134 multiletter control sequences out of 10000+15000
+ 8319 words of font info for 30 fonts, out of 400000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 29i,12n,43p,3735b,508s stack positions out of 300i,100n,500p,50000b,4000s
+
+Output written on refman.dvi (79 pages, 254844 bytes).

@@ -1,0 +1,115 @@
+/*
+ *  REVISION HISTORY
+ *
+ *  Author:
+ *      Kenneth S. Kundert
+ *      kundert@users.sourceforge.net
+ *
+ *  References
+ *  Kenneth S. Kundert.  Sparse matrix techniques.  In "Circuit Analysis,
+ *      Simulation and Design," vol. 3, pt. 1, Albert E. Ruehli (editor).
+ *      North-Holland, 1986.
+ */
+
+/*
+ *  Copyright information.
+ *
+ *  Copyright (c) 1985-2003
+ *  by Kenneth S. Kundert
+ *  All rights reserved
+ */
+
+/*
+ *  >>> Current revision information:
+ *  $Author: kundert $
+ *  $Date: 2003/06/07 05:48:42 $
+ *  $Revision: 1.2 $
+ */
+
+
+
+
+
+
+/*
+ *  >>> History:
+ *  Revision 1.1  January 1985
+ *      Initial release.
+ *
+ *  Revision 1.1a  20 March 1985
+ *      Modified DecomposeMatrix() and OrderAndDecomposeMatrix() so that
+ *      the parameters Growth, PseudoCondition and LargestElement may be 
+ *      given as NULL.
+ *
+ *  Revision 1.1b  28 March 1985
+ *      Corrected a bug that caused OrderAndDecomposeMatrix() to reorder
+ *      the matrix every time it was called.  Also made many of the global
+ *      variables defined in MtrxDecom.c static.
+ *
+ *  Revision 1.2  October 1985
+ *      This new version of Sparse is meant to make it more compatible
+ *      with interactive circuit simulators.  In it the TRANSLATE
+ *      option was added, along with the ability to access the matrix
+ *      with AddElementToMatrix() and AddAdmittanceToMatrix() after it
+ *      has been reordered.  Also added were the DeleteRowAndColFromMatrix(),
+ *      CleanMatrix(), GetMatrixSize(), SetMatrixReal() and SetMatrixComplex()
+ *      routines.
+ *
+ *  Revision 1.2a  April 1986
+ *      Fixed a bug that caused the matrix frame to get freed twice and one
+ *      in the test program that caused sparse to crash when a complex matrix
+ *      with no source vector was attempted.
+ *
+ *  Revision 1.2b  July 1986
+ *      Modified the test routine so that it allocates vectors from the heap
+ *      rather than the stack.
+ *
+ *  Revision 1.2c  February 1987
+ *      Fixed off-by-one error in PreorderForModifiedNodal().
+ *
+ *  Revision 1.2d
+ *      Modified the pivot selection algorithm so that singletons also meet
+ *      numerical threshold criterion.  Deleted some global variables.  Modified
+ *      test program to add command line options among other things.  Made 
+ *      thresholds sticky, so that once a valid threshold has been specified
+ *      for a particular matrix, it becomes the new default.
+ *
+ *  Revision 1.3a  July 1988
+ *      Made numerous changes.  Highlights are:
+ *      Routine names shortened and made unique to 8 characters.
+ *      Unordering factorization is faster.
+ *      Added self initialization feature.
+ *      Sparse now aborts on errors that should not occur.
+ *      Cleaned up test program.
+ *      Separated growth and pseudocondition calculations from factorization.
+ *      Added LINPACK condition number estimator.
+ *      Rewrote spMNA_Preorder, algorithm extended to fix inadequacies.
+ *      Eliminated all global variables.
+ *      Added DIAGONAL_PIVOTING option (only diagonal pivoting before).
+ *
+ *  Revision 1.3b  August 1988
+ *	Added function declarations at the top of each file.
+ *
+ *  Revision 1.3c  January 1989
+ *      Fixed bug in spFactor.c:SearchForSingleton that caused the program
+ *      to crash when looking for a singleton in a row or column in the
+ *      reduced submatrix that has no elements.
+ *
+ *  Revision 1.3d  June 1989
+ *      Compatibility to Spice3c1 added.
+ *      Added spErrorMessage() error message printing function.
+ *
+ *  Revision 1.3e  March 1990
+ *      Fixed bug that caused sparse to crash when using spMultiply() or
+ *	spMultTransposed() before the matrix had been factored once.
+ *      Compatibility to Spice3d1 added.
+ *
+ *  Revision 1.3f  July 1990
+ *	Fixed bug in spFactor.c:spOrderAndFactor().
+ *	Added verbose ASSERT() and ABORT().
+ *
+ *  Revision 1.4a  June 2003
+ *	Modernized the API a bit.
+ *	Fixed the Markowitz overflow problem.
+ *	Released on SourceForge as open source software.
+ */

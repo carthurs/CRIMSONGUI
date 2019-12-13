@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=QSapecNG
+Comment=Symbolic analyzer of linear analog circuits
+Comment[it]=Analizzatore simbolico di circuiti analogici lineari
+GenericName=QSapecNG
+Icon=qsapecng
+Exec=qsapecng
+StartupNotify=true
+Terminal=false
+Categories=Electronics;Development;

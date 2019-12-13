@@ -1,0 +1,25 @@
+- IMPORTANTE: port come oggetti a sé stile wire anziché component?
+
+- refactoring:
+    introdurre progetti
+    eliminare workspace
+    risultati in messages
+- traduzione in italiano (lupdate e compagnia)
+
+- scrivere la sezione "Usage" sia nel README che in debian/qsapecng.1
+- avvio da riga di comando passando il file circuito in ingresso.
+- leggere per i tipi MIME
+    o http://www.debian.org/doc/packaging-manuals/mime-policy/
+    o http://wiki.debian.org/MimeTypesSupport
+    o http://stackoverflow.com/questions/30931/register-file-extensions-mime-types-in-linux
+- mantenendo la stessa icona, rederla più usabile su ambienti desktop
+
+- replotting nel workplane in thread separato o blocca tutto!! :-)
+
+- Application asked to unregister timer 0x34000004 which is not registered in this thread. Fix application.
+  Errore quando si passa al workplane... :-(
+
+- closeEvent in qsapecngwindow non torna mica tanto! :-D
+
+- J.C.: Matlab function output
+- J.C.: Approximate solution (vedi Luchetta e SapWin)

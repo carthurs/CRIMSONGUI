@@ -1,0 +1,365 @@
+\section{sp\-Config.h File Reference}
+\label{spConfig_8h}\index{spConfig.h@{spConfig.h}}
+{\tt \#include $<$limits.h$>$}\par
+{\tt \#include $<$float.h$>$}\par
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define {\bf REAL}\ YES
+\item 
+\#define {\bf EXPANDABLE}\ YES
+\item 
+\#define {\bf TRANSLATE}\ YES
+\item 
+\#define {\bf INITIALIZE}\ YES
+\item 
+\#define {\bf DIAGONAL\_\-PIVOTING}\ YES
+\item 
+\#define {\bf ARRAY\_\-OFFSET}\ NOT FORTRAN
+\item 
+\#define {\bf MODIFIED\_\-MARKOWITZ}\ NO
+\item 
+\#define {\bf DELETE}\ YES
+\item 
+\#define {\bf STRIP}\ YES
+\item 
+\#define {\bf MODIFIED\_\-NODAL}\ YES
+\item 
+\#define {\bf QUAD\_\-ELEMENT}\ YES
+\item 
+\#define {\bf TRANSPOSE}\ YES
+\item 
+\#define {\bf SCALING}\ YES
+\item 
+\#define {\bf DOCUMENTATION}\ YES
+\item 
+\#define {\bf MULTIPLICATION}\ YES
+\item 
+\#define {\bf DETERMINANT}\ YES
+\item 
+\#define {\bf STABILITY}\ YES
+\item 
+\#define {\bf CONDITION}\ YES
+\item 
+\#define {\bf PSEUDOCONDITION}\ YES
+\item 
+\#define {\bf FORTRAN}\ YES
+\item 
+\#define {\bf DEBUG}\ YES
+\item 
+\#define {\bf sp\-COMPLEX}\ 1
+\item 
+\#define {\bf sp\-SEPARATED\_\-COMPLEX\_\-VECTORS}\ 0
+\item 
+\#define {\bf DEFAULT\_\-THRESHOLD}\ 1.0e-3
+\item 
+\#define {\bf DIAG\_\-PIVOTING\_\-AS\_\-DEFAULT}\ YES
+\item 
+\#define {\bf SPACE\_\-FOR\_\-ELEMENTS}\ 6
+\item 
+\#define {\bf SPACE\_\-FOR\_\-FILL\_\-INS}\ 4
+\item 
+\#define {\bf ELEMENTS\_\-PER\_\-ALLOCATION}\ 31
+\item 
+\#define {\bf MINIMUM\_\-ALLOCATED\_\-SIZE}\ 6
+\item 
+\#define {\bf EXPANSION\_\-FACTOR}\ 1.5
+\item 
+\#define {\bf MAX\_\-MARKOWITZ\_\-TIES}\ 100
+\item 
+\#define {\bf TIES\_\-MULTIPLIER}\ 5
+\item 
+\#define {\bf DEFAULT\_\-PARTITION}\ sp\-AUTO\_\-PARTITION
+\item 
+\#define {\bf PRINTER\_\-WIDTH}\ 80
+\item 
+\index{spcCONCAT@{spcCONCAT}!spConfig.h@{spConfig.h}}\index{spConfig.h@{spConfig.h}!spcCONCAT@{spcCONCAT}}
+\#define {\bf spc\-CONCAT}(prefix, suffix)\ prefix/$\ast$$\ast$/suffix\label{spConfig_8h_a34}
+
+\item 
+\index{spcQUOTE@{spcQUOTE}!spConfig.h@{spConfig.h}}\index{spConfig.h@{spConfig.h}!spcQUOTE@{spcQUOTE}}
+\#define {\bf spc\-QUOTE}(x)\ \char`\"{}x\char`\"{}\label{spConfig_8h_a35}
+
+\item 
+\index{spcFUNC_NEEDS_FILE@{spcFUNC\_\-NEEDS\_\-FILE}!spConfig.h@{spConfig.h}}\index{spConfig.h@{spConfig.h}!spcFUNC_NEEDS_FILE@{spcFUNC\_\-NEEDS\_\-FILE}}
+\#define {\bf spc\-FUNC\_\-NEEDS\_\-FILE}(func, file)\ func/$\ast$$\ast$/\_\-requires\_\-/$\ast$$\ast$/file/$\ast$$\ast$/\_\-to\_\-be\_\-included\_\-\label{spConfig_8h_a36}
+
+\item 
+\index{spcEXTERN@{spcEXTERN}!spConfig.h@{spConfig.h}}\index{spConfig.h@{spConfig.h}!spcEXTERN@{spcEXTERN}}
+\#define {\bf spc\-EXTERN}\ extern\label{spConfig_8h_a37}
+
+\item 
+\index{spcNO_ARGS@{spcNO\_\-ARGS}!spConfig.h@{spConfig.h}}\index{spConfig.h@{spConfig.h}!spcNO_ARGS@{spcNO\_\-ARGS}}
+\#define {\bf spc\-NO\_\-ARGS}\label{spConfig_8h_a38}
+
+\item 
+\index{spcCONST@{spcCONST}!spConfig.h@{spConfig.h}}\index{spConfig.h@{spConfig.h}!spcCONST@{spcCONST}}
+\#define {\bf spc\-CONST}\label{spConfig_8h_a39}
+
+\item 
+\#define {\bf MACHINE\_\-RESOLUTION}\ DBL\_\-EPSILON
+\item 
+\#define {\bf LARGEST\_\-REAL}\ DBL\_\-MAX
+\item 
+\#define {\bf SMALLEST\_\-REAL}\ DBL\_\-MIN
+\item 
+\#define {\bf LARGEST\_\-SHORT\_\-INTEGER}\ SHRT\_\-MAX
+\item 
+\#define {\bf LARGEST\_\-LONG\_\-INTEGER}\ LONG\_\-MAX
+\item 
+\#define {\bf ANNOTATE}\ NONE
+\item 
+\#define {\bf NONE}\ 0
+\item 
+\#define {\bf ON\_\-STRANGE\_\-BEHAVIOR}\ 1
+\item 
+\#define {\bf FULL}\ 2
+\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+\index{spGenericPtr@{spGenericPtr}!spConfig.h@{spConfig.h}}\index{spConfig.h@{spConfig.h}!spGenericPtr@{spGenericPtr}}
+typedef char $\ast$ {\bf sp\-Generic\-Ptr}\label{spConfig_8h_a49}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+This file contains macros for the sparse matrix routines that are used to define the personality of the routines. The user is expected to modify this file to maximize the performance of the routines with his/her matrices.
+
+Macros are distinguished by using solely capital letters in their identifiers. This contrasts with C defined identifiers which are strictly lower case, and program variable and procedure names which use both upper and lower case.
+
+Objects that begin with the {\em spc} prefix are considered private and should not be used.
+
+\begin{Desc}
+\item[Author: ]\par
+ Kenneth S. Kundert $<${\tt kundert@users.sourceforge.net}$>$\end{Desc}
+
+
+\subsection{Define Documentation}
+\index{spConfig.h@{sp\-Config.h}!ANNOTATE@{ANNOTATE}}
+\index{ANNOTATE@{ANNOTATE}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define ANNOTATE\ NONE}\label{spConfig_8h_a45}
+
+
+This macro changes the amount of annotation produced by the matrix routines. The annotation is used as a debugging aid. Change the number associated with {\em ANNOTATE} to change the amount of annotation produced by the program. Possible values include {\em NONE}, {\em ON\_\-STRANGE\_\-BEHAVIOR}, and {\em FULL}. {\em NONE} is recommended. \index{spConfig.h@{sp\-Config.h}!ARRAY_OFFSET@{ARRAY\_\-OFFSET}}
+\index{ARRAY_OFFSET@{ARRAY\_\-OFFSET}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define ARRAY\_\-OFFSET\ NOT FORTRAN}\label{spConfig_8h_a5}
+
+
+This determines whether arrays start at an index of zero or one. This option is necessitated by the fact that standard C convention dictates that arrays begin with an index of zero but the standard mathematic convention states that arrays begin with an index of one. So if you prefer to start your arrays with zero, or your calling Sparse from FORTRAN, set ARRAY\_\-OFFSET to NO or 0. Otherwise, set ARRAY\_\-OFFSET to YES or 1. Note that if you use an offset of one, the arrays that you pass to Sparse must have an allocated length of one plus the size of the matrix. ARRAY\_\-OFFSET must be either 0 or 1, no other offsets are valid. \index{spConfig.h@{sp\-Config.h}!CONDITION@{CONDITION}}
+\index{CONDITION@{CONDITION}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define CONDITION\ YES}\label{spConfig_8h_a17}
+
+
+This specifies that {\bf sp\-Condition}() {\rm (p.\,\pageref{spUtils_8c_a20})} and {\bf sp\-Norm}() {\rm (p.\,\pageref{spUtils_8c_a21})}, the code that computes a good estimate of the condition number of the matrix, should be compiled. Recomend {\em NO}. \index{spConfig.h@{sp\-Config.h}!DEBUG@{DEBUG}}
+\index{DEBUG@{DEBUG}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DEBUG\ YES}\label{spConfig_8h_a20}
+
+
+This specifies that additional error checking will be compiled. The type of error checked are those that are common when the matrix routines are first integrated into a user's program. Once the routines have been integrated in and are running smoothly, this option should be turned off. {\em YES} is recommended. \index{spConfig.h@{sp\-Config.h}!DEFAULT_PARTITION@{DEFAULT\_\-PARTITION}}
+\index{DEFAULT_PARTITION@{DEFAULT\_\-PARTITION}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DEFAULT\_\-PARTITION\ sp\-AUTO\_\-PARTITION}\label{spConfig_8h_a32}
+
+
+Which partition mode is used by {\bf sp\-Partition}() {\rm (p.\,\pageref{spFactor_8c_a26})} as default. Possibilities include {\em sp\-DIRECT\_\-PARTITION} (each row used direct addressing, best for a few relatively dense matrices), {\em sp\-INDIRECT\_\-PARTITION} (each row used indirect addressing, best for a few very sparse matrices), and {\em sp\-AUTO\_\-PARTITION} (direct or indirect addressing is chosen on a row-by-row basis, carries a large overhead, but speeds up both dense and sparse matrices, best if there is a large number of matrices that can use the same ordering. \index{spConfig.h@{sp\-Config.h}!DEFAULT_THRESHOLD@{DEFAULT\_\-THRESHOLD}}
+\index{DEFAULT_THRESHOLD@{DEFAULT\_\-THRESHOLD}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DEFAULT\_\-THRESHOLD\ 1.0e-3}\label{spConfig_8h_a23}
+
+
+The relative threshold used if the user enters an invalid threshold. Also the threshold used by {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} when calling {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. The default threshold should not be less than or equal to zero nor larger than one. 0.001 is recommended. \index{spConfig.h@{sp\-Config.h}!DELETE@{DELETE}}
+\index{DELETE@{DELETE}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DELETE\ YES}\label{spConfig_8h_a7}
+
+
+This specifies that the {\bf sp\-Delete\-Row\-And\-Col}() {\rm (p.\,\pageref{spUtils_8c_a18})} routine should be compiled. Note that for this routine to be compiled, both {\em DELETE} and {\em TRANSLATE} should be set true. \index{spConfig.h@{sp\-Config.h}!DETERMINANT@{DETERMINANT}}
+\index{DETERMINANT@{DETERMINANT}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DETERMINANT\ YES}\label{spConfig_8h_a15}
+
+
+This specifies that the routine {\bf sp\-Determinant}() {\rm (p.\,\pageref{spUtils_8c_a16})} should be complied. \index{spConfig.h@{sp\-Config.h}!DIAG_PIVOTING_AS_DEFAULT@{DIAG\_\-PIVOTING\_\-AS\_\-DEFAULT}}
+\index{DIAG_PIVOTING_AS_DEFAULT@{DIAG\_\-PIVOTING\_\-AS\_\-DEFAULT}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DIAG\_\-PIVOTING\_\-AS\_\-DEFAULT\ YES}\label{spConfig_8h_a24}
+
+
+This indicates whether {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} should use diagonal pivoting as default. This issue only arises when {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} is called from {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})}. {\em YES} is recommended. \index{spConfig.h@{sp\-Config.h}!DIAGONAL_PIVOTING@{DIAGONAL\_\-PIVOTING}}
+\index{DIAGONAL_PIVOTING@{DIAGONAL\_\-PIVOTING}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DIAGONAL\_\-PIVOTING\ YES}\label{spConfig_8h_a4}
+
+
+Many matrices, and in particular node- and modified-node admittance matrices, tend to be nearly symmetric and nearly diagonally dominant. For these matrices, it is a good idea to select pivots from the diagonal. With this option enabled, this is exactly what happens, though if no satisfactory pivot can be found on the diagonal, an off-diagonal pivot will be used. If this option is disabled, Sparse does not preferentially search the diagonal. Because of this, Sparse has a wider variety of pivot candidates available, and so presumably fewer fill-ins will be created. However, the initial pivot selection process will take considerably longer. If working with node admittance matrices, or other matrices with a strong diagonal, it is probably best to use {\em DIAGONAL\_\-PIVOTING} for two reasons. First, accuracy will be better because pivots will be chosen from the large diagonal elements, thus reducing the chance of growth. Second, a near optimal ordering will be chosen quickly. If the class of matrices you are working with does not have a strong diagonal, do not use {\em DIAGONAL\_\-PIVOTING}, but consider using a larger threshold. When {\em DIAGONAL\_\-PIVOTING} is turned off, the following options and constants are not used: {\em MODIFIED\_\-MARKOWITZ}, {\em MAX\_\-MARKOWITZ\_\-TIES}, and {\em TIES\_\-MULTIPLIER}. \index{spConfig.h@{sp\-Config.h}!DOCUMENTATION@{DOCUMENTATION}}
+\index{DOCUMENTATION@{DOCUMENTATION}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define DOCUMENTATION\ YES}\label{spConfig_8h_a13}
+
+
+This specifies that routines that are used to document the matrix, such as {\bf sp\-Print}() {\rm (p.\,\pageref{spOutput_8c_a3})} and {\bf sp\-File\-Matrix}() {\rm (p.\,\pageref{spOutput_8c_a4})}, should be compiled. \index{spConfig.h@{sp\-Config.h}!ELEMENTS_PER_ALLOCATION@{ELEMENTS\_\-PER\_\-ALLOCATION}}
+\index{ELEMENTS_PER_ALLOCATION@{ELEMENTS\_\-PER\_\-ALLOCATION}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define ELEMENTS\_\-PER\_\-ALLOCATION\ 31}\label{spConfig_8h_a27}
+
+
+The number of matrix elements requested from the malloc utility on each call to it. Setting this value greater than 1 reduces the amount of overhead spent in this system call. On a virtual memory machine, its good to allocate slightly less than a page worth of elements at a time (or some multiple thereof). 31 is recommended. \index{spConfig.h@{sp\-Config.h}!EXPANDABLE@{EXPANDABLE}}
+\index{EXPANDABLE@{EXPANDABLE}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define EXPANDABLE\ YES}\label{spConfig_8h_a1}
+
+
+Setting this compiler flag true (1) makes the matrix expandable before it has been factored. If the matrix is expandable, then if an element is added that would be considered out of bounds in the current matrix, the size of the matrix is increased to hold that element. As a result, the size of the matrix need not be known before the matrix is built. The matrix can be allocated with size zero and expanded. \index{spConfig.h@{sp\-Config.h}!EXPANSION_FACTOR@{EXPANSION\_\-FACTOR}}
+\index{EXPANSION_FACTOR@{EXPANSION\_\-FACTOR}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define EXPANSION\_\-FACTOR\ 1.5}\label{spConfig_8h_a29}
+
+
+The amount the allocated size of the matrix is increased when it is expanded. \index{spConfig.h@{sp\-Config.h}!FORTRAN@{FORTRAN}}
+\index{FORTRAN@{FORTRAN}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define FORTRAN\ YES}\label{spConfig_8h_a19}
+
+
+This specifies that the {\em FORTRAN} interface routines should be compiled. When interfacing to {\em FORTRAN} programs, the {\em ARRAY\_\-OFFSET} options should be set to NO. \index{spConfig.h@{sp\-Config.h}!FULL@{FULL}}
+\index{FULL@{FULL}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define FULL\ 2}\label{spConfig_8h_a48}
+
+
+A possible value for {\em ANNOTATE}. Enables full annotation. \index{spConfig.h@{sp\-Config.h}!INITIALIZE@{INITIALIZE}}
+\index{INITIALIZE@{INITIALIZE}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define INITIALIZE\ YES}\label{spConfig_8h_a3}
+
+
+Causes the {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})}, {\bf sp\-Get\-Init\-Info}() {\rm (p.\,\pageref{spBuild_8c_a23})}, and {\bf sp\-Install\-Init\-Info}() {\rm (p.\,\pageref{spBuild_8c_a22})} routines to be compiled. These routines allow the user to store and read one pointer in each nonzero element in the matrix. {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})} then calls a user specified function for each structural nonzero in the matrix, and includes this pointer as well as the external row and column numbers as arguments. This allows the user to write custom matrix initialization routines. \index{spConfig.h@{sp\-Config.h}!LARGEST_LONG_INTEGER@{LARGEST\_\-LONG\_\-INTEGER}}
+\index{LARGEST_LONG_INTEGER@{LARGEST\_\-LONG\_\-INTEGER}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define LARGEST\_\-LONG\_\-INTEGER\ LONG\_\-MAX}\label{spConfig_8h_a44}
+
+
+The largest possible value of longs. \index{spConfig.h@{sp\-Config.h}!LARGEST_REAL@{LARGEST\_\-REAL}}
+\index{LARGEST_REAL@{LARGEST\_\-REAL}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define LARGEST\_\-REAL\ DBL\_\-MAX}\label{spConfig_8h_a41}
+
+
+The largest possible value of sp\-REAL. \index{spConfig.h@{sp\-Config.h}!LARGEST_SHORT_INTEGER@{LARGEST\_\-SHORT\_\-INTEGER}}
+\index{LARGEST_SHORT_INTEGER@{LARGEST\_\-SHORT\_\-INTEGER}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define LARGEST\_\-SHORT\_\-INTEGER\ SHRT\_\-MAX}\label{spConfig_8h_a43}
+
+
+The largest possible value of shorts. \index{spConfig.h@{sp\-Config.h}!MACHINE_RESOLUTION@{MACHINE\_\-RESOLUTION}}
+\index{MACHINE_RESOLUTION@{MACHINE\_\-RESOLUTION}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define MACHINE\_\-RESOLUTION\ DBL\_\-EPSILON}\label{spConfig_8h_a40}
+
+
+The resolution of sp\-REAL. \index{spConfig.h@{sp\-Config.h}!MAX_MARKOWITZ_TIES@{MAX\_\-MARKOWITZ\_\-TIES}}
+\index{MAX_MARKOWITZ_TIES@{MAX\_\-MARKOWITZ\_\-TIES}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define MAX\_\-MARKOWITZ\_\-TIES\ 100}\label{spConfig_8h_a30}
+
+
+Some terminology should be defined. The Markowitz row count is the number of non-zero elements in a row excluding the one being considered as pivot. There is one Markowitz row count for every row. The Markowitz column is defined similarly for columns. The Markowitz product for an element is the product of its row and column counts. It is a measure of how much work would be required on the next step of the factorization if that element were chosen to be pivot. A small Markowitz product is desirable.
+
+This number is used for two slightly different things, both of which relate to the search for the best pivot. First, it is the maximum number of elements that are Markowitz tied that will be sifted through when trying to find the one that is numerically the best. Second, it creates an upper bound on how large a Markowitz product can be before it eliminates the possibility of early termination of the pivot search. In other words, if the product of the smallest Markowitz product yet found and {\em TIES\_\-MULTIPLIER} is greater than {\em MAX\_\-MARKOWITZ\_\-TIES}, then no early termination takes place. Set {\em MAX\_\-MARKOWITZ\_\-TIES} to some small value if no early termination of the pivot search is desired. An array of Real\-Numbers is allocated of size {\em MAX\_\-MARKOWITZ\_\-TIES} so it must be positive and shouldn't be too large. Active when MODIFIED\_\-MARKOWITZ is 1 (YES). 100 is recommended. \begin{Desc}
+\item[See also: ]\par
+{\bf TIES\_\-MULTIPLIER} {\rm (p.\,\pageref{spConfig_8h_a31})} \end{Desc}
+\index{spConfig.h@{sp\-Config.h}!MINIMUM_ALLOCATED_SIZE@{MINIMUM\_\-ALLOCATED\_\-SIZE}}
+\index{MINIMUM_ALLOCATED_SIZE@{MINIMUM\_\-ALLOCATED\_\-SIZE}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define MINIMUM\_\-ALLOCATED\_\-SIZE\ 6}\label{spConfig_8h_a28}
+
+
+The minimum allocated size of a matrix. Note that this does not limit the minimum size of a matrix. This just prevents having to resize a matrix many times if the matrix is expandable, large and allocated with an estimated size of zero. This number should not be less than one. \index{spConfig.h@{sp\-Config.h}!MODIFIED_MARKOWITZ@{MODIFIED\_\-MARKOWITZ}}
+\index{MODIFIED_MARKOWITZ@{MODIFIED\_\-MARKOWITZ}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define MODIFIED\_\-MARKOWITZ\ NO}\label{spConfig_8h_a6}
+
+
+This specifies that the modified Markowitz method of pivot selection is to be used. The modified Markowitz method differs from standard Markowitz in two ways. First, under modified Markowitz, the search for a pivot can be terminated early if a adequate (in terms of sparsity) pivot candidate is found. Thus, when using modified Markowitz, the initial factorization can be faster, but at the expense of a suboptimal pivoting order that may slow subsequent factorizations. The second difference is in the way modified Markowitz breaks Markowitz ties. When two or more elements are pivot candidates and they all have the same Markowitz product, then the tie is broken by choosing the element that is best numerically. The numerically best element is the one with the largest ratio of its magnitude to the magnitude of the largest element in the same column, excluding itself. The modified Markowitz method results in marginally better accuracy. This option is most appropriate for use when working with very large matrices where the initial factor time represents an unacceptable burden. {\em NO} is recommended. \index{spConfig.h@{sp\-Config.h}!MODIFIED_NODAL@{MODIFIED\_\-NODAL}}
+\index{MODIFIED_NODAL@{MODIFIED\_\-NODAL}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define MODIFIED\_\-NODAL\ YES}\label{spConfig_8h_a9}
+
+
+This specifies that the routine that preorders modified node admittance matrices should be compiled. This routine results in greater speed and accuracy if used with this type of matrix. \index{spConfig.h@{sp\-Config.h}!MULTIPLICATION@{MULTIPLICATION}}
+\index{MULTIPLICATION@{MULTIPLICATION}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define MULTIPLICATION\ YES}\label{spConfig_8h_a14}
+
+
+This specifies that routines that are used to multily the matrix by a vector, such as {\bf sp\-Multiply}() {\rm (p.\,\pageref{spUtils_8c_a14})} and {\bf sp\-Mult\-Transposed}() {\rm (p.\,\pageref{spUtils_8c_a15})}, should be compiled. \index{spConfig.h@{sp\-Config.h}!NONE@{NONE}}
+\index{NONE@{NONE}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define NONE\ 0}\label{spConfig_8h_a46}
+
+
+A possible value for {\em ANNOTATE}. Disables all annotation. \index{spConfig.h@{sp\-Config.h}!ON_STRANGE_BEHAVIOR@{ON\_\-STRANGE\_\-BEHAVIOR}}
+\index{ON_STRANGE_BEHAVIOR@{ON\_\-STRANGE\_\-BEHAVIOR}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define ON\_\-STRANGE\_\-BEHAVIOR\ 1}\label{spConfig_8h_a47}
+
+
+A possible value for {\em ANNOTATE}. Causes annotation to be produce upon unusual occurances only. \index{spConfig.h@{sp\-Config.h}!PRINTER_WIDTH@{PRINTER\_\-WIDTH}}
+\index{PRINTER_WIDTH@{PRINTER\_\-WIDTH}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define PRINTER\_\-WIDTH\ 80}\label{spConfig_8h_a33}
+
+
+The number of characters per page width. Set to 80 for terminal, 132 for line printer. Controls how many columns printed by {\bf sp\-Print}() {\rm (p.\,\pageref{spOutput_8c_a3})} per page width. \index{spConfig.h@{sp\-Config.h}!PSEUDOCONDITION@{PSEUDOCONDITION}}
+\index{PSEUDOCONDITION@{PSEUDOCONDITION}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define PSEUDOCONDITION\ YES}\label{spConfig_8h_a18}
+
+
+This specifies that {\bf sp\-Pseudo\-Condition}() {\rm (p.\,\pageref{spUtils_8c_a19})}, the code that computes a crude and easily fooled indicator of ill-conditioning in the matrix, should be compiled. Recomend {\em NO}. \index{spConfig.h@{sp\-Config.h}!QUAD_ELEMENT@{QUAD\_\-ELEMENT}}
+\index{QUAD_ELEMENT@{QUAD\_\-ELEMENT}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define QUAD\_\-ELEMENT\ YES}\label{spConfig_8h_a10}
+
+
+This specifies that the routines that allow four related elements to be entered into the matrix at once should be compiled. These elements are usually related to an admittance. The routines affected by {\em QUAD\_\-ELEMENT} are the {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spBuild_8c_a13})}, {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spBuild_8c_a14})} and {\bf sp\-Get\-Ones}() {\rm (p.\,\pageref{spBuild_8c_a15})} routines. \index{spConfig.h@{sp\-Config.h}!REAL@{REAL}}
+\index{REAL@{REAL}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define REAL\ YES}\label{spConfig_8h_a0}
+
+
+This specifies that the routines are expected to handle real systems of equations. The routines can be compiled to handle both real and complex systems at the same time, but there is a slight speed and memory advantage if the routines are complied to handle only real systems of equations. \index{spConfig.h@{sp\-Config.h}!SCALING@{SCALING}}
+\index{SCALING@{SCALING}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define SCALING\ YES}\label{spConfig_8h_a12}
+
+
+This specifies that the routine that performs scaling on the matrix should be complied. Scaling is not strongly supported. The routine to scale the matrix is provided, but no routines are provided to scale and descale the RHS and Solution vectors. It is suggested that if scaling is desired, it only be preformed when the pivot order is being chosen [in {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}]. This is the only time scaling has an effect. The scaling may then either be removed from the solution by the user or the scaled factors may simply be thrown away. {\em NO} is recommended. \index{spConfig.h@{sp\-Config.h}!SMALLEST_REAL@{SMALLEST\_\-REAL}}
+\index{SMALLEST_REAL@{SMALLEST\_\-REAL}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define SMALLEST\_\-REAL\ DBL\_\-MIN}\label{spConfig_8h_a42}
+
+
+The smalles possible positive value of sp\-REAL. \index{spConfig.h@{sp\-Config.h}!SPACE_FOR_ELEMENTS@{SPACE\_\-FOR\_\-ELEMENTS}}
+\index{SPACE_FOR_ELEMENTS@{SPACE\_\-FOR\_\-ELEMENTS}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define SPACE\_\-FOR\_\-ELEMENTS\ 6}\label{spConfig_8h_a25}
+
+
+This number multiplied by the size of the matrix equals the number of elements for which memory is initially allocated in {\bf sp\-Create}() {\rm (p.\,\pageref{spAllocate_8c_a11})}. 6 is recommended. \index{spConfig.h@{sp\-Config.h}!SPACE_FOR_FILL_INS@{SPACE\_\-FOR\_\-FILL\_\-INS}}
+\index{SPACE_FOR_FILL_INS@{SPACE\_\-FOR\_\-FILL\_\-INS}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define SPACE\_\-FOR\_\-FILL\_\-INS\ 4}\label{spConfig_8h_a26}
+
+
+This number multiplied by the size of the matrix equals the number of elements for which memory is initially allocated and specifically reserved for fill-ins in {\bf sp\-Create}() {\rm (p.\,\pageref{spAllocate_8c_a11})}. 4 is recommended. \index{spConfig.h@{sp\-Config.h}!spCOMPLEX@{spCOMPLEX}}
+\index{spCOMPLEX@{spCOMPLEX}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-COMPLEX\ 1}\label{spConfig_8h_a21}
+
+
+This specifies that the routines will be complied to handle complex systems of equations. \index{spConfig.h@{sp\-Config.h}!spSEPARATED_COMPLEX_VECTORS@{spSEPARATED\_\-COMPLEX\_\-VECTORS}}
+\index{spSEPARATED_COMPLEX_VECTORS@{spSEPARATED\_\-COMPLEX\_\-VECTORS}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-SEPARATED\_\-COMPLEX\_\-VECTORS\ 0}\label{spConfig_8h_a22}
+
+
+This specifies the format for complex vectors. If this is set false then a complex vector is made up of one double sized array of Real\-Number's in which the real and imaginary numbers are placed alternately in the array. In other words, the first entry would be Complex[1].Real, then comes Complex[1].Imag, then Complex[2].Real, etc. If {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is set true, then each complex vector is represented by two arrays of {\em sp\-REALs}, one with the real terms, the other with the imaginary. {\em NO} is recommended. \index{spConfig.h@{sp\-Config.h}!STABILITY@{STABILITY}}
+\index{STABILITY@{STABILITY}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define STABILITY\ YES}\label{spConfig_8h_a16}
+
+
+This specifies that {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spUtils_8c_a22})} and {\bf sp\-Roundoff}() {\rm (p.\,\pageref{spUtils_8c_a23})} should be compiled. These routines are used to check the stability (and hence the quality of the pivoting) of the factorization by computing a bound on the size of the element is the matrix $ E = A - LU $. If this bound is very high after applying {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}, then the pivot threshold should be raised. If the bound increases greatly after using {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})}, then the matrix should probably be reordered. Recomend {\em NO}. \index{spConfig.h@{sp\-Config.h}!STRIP@{STRIP}}
+\index{STRIP@{STRIP}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define STRIP\ YES}\label{spConfig_8h_a8}
+
+
+This specifies that the {\bf sp\-Strip\-Fills}() {\rm (p.\,\pageref{spUtils_8c_a17})} routine should be compiled. \index{spConfig.h@{sp\-Config.h}!TIES_MULTIPLIER@{TIES\_\-MULTIPLIER}}
+\index{TIES_MULTIPLIER@{TIES\_\-MULTIPLIER}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define TIES\_\-MULTIPLIER\ 5}\label{spConfig_8h_a31}
+
+
+Specifies the number of Markowitz ties that are allowed to occur before the search for the pivot is terminated early. Set to some large value if no early termination of the pivot search is desired. This number is multiplied times the Markowitz product to determine how many ties are required for early termination. This means that more elements will be searched before early termination if a large number of fill-ins could be created by accepting what is currently considered the best choice for the pivot. Active when {\em MODIFIED\_\-MARKOWITZ} is 1 (YES). Setting this number to zero effectively eliminates all pivoting, which should be avoided. This number must be positive. {\em TIES\_\-MULTIPLIER} is also used when diagonal pivoting breaks down. 5 is recommended. \begin{Desc}
+\item[See also: ]\par
+{\bf MAX\_\-MARKOWITZ\_\-TIES} {\rm (p.\,\pageref{spConfig_8h_a30})} \end{Desc}
+\index{spConfig.h@{sp\-Config.h}!TRANSLATE@{TRANSLATE}}
+\index{TRANSLATE@{TRANSLATE}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define TRANSLATE\ YES}\label{spConfig_8h_a2}
+
+
+This option allows the set of external row and column numbers to be non-packed. In other words, the row and column numbers do not have to be contiguous. The priced paid for this flexibility is that when {\em TRANSLATE} is set true, the time required to initially build the matrix will be greater because the external row and column number must be translated into internal equivalents. This translation brings about other benefits though. First, the {\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spBuild_8c_a12})} and {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spBuild_8c_a13})} routines may be used after the matrix has been factored. Further, elements, and even rows and columns, may be added to the matrix, and row and columns may be deleted from the matrix, after it has been factored. Note that when the set of row and column number is not a packed set, neither are the {\em RHS} and {\em Solution} vectors. Thus the size of these vectors must be at least as large as the external size, which is the value of the largest given row or column numbers. \index{spConfig.h@{sp\-Config.h}!TRANSPOSE@{TRANSPOSE}}
+\index{TRANSPOSE@{TRANSPOSE}!spConfig.h@{sp\-Config.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define TRANSPOSE\ YES}\label{spConfig_8h_a11}
+
+
+This specifies that the routines that solve the matrix as if it was transposed should be compiled. These routines are useful when performing sensitivity analysis using the adjoint method. 

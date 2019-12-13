@@ -1,0 +1,96 @@
+\section{sp\-Factor.c File Reference}
+\label{spFactor_8c}\index{spFactor.c@{spFactor.c}}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include \char`\"{}sp\-Config.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Matrix.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Defs.h\char`\"{}}\par
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+{\bf sp\-Error} {\bf sp\-Order\-And\-Factor} ({\bf sp\-Matrix} e\-Matrix, sp\-REAL RHS[$\,$], sp\-REAL Rel\-Threshold, sp\-REAL Abs\-Threshold, int Diag\-Pivoting)
+\item 
+{\bf sp\-Error} {\bf sp\-Factor} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+void {\bf sp\-Partition} ({\bf sp\-Matrix} e\-Matrix, int Mode)
+\item 
+\index{spcCreateInternalVectors@{spcCreateInternalVectors}!spFactor.c@{spFactor.c}}\index{spFactor.c@{spFactor.c}!spcCreateInternalVectors@{spcCreateInternalVectors}}
+void {\bf spc\-Create\-Internal\-Vectors} (Matrix\-Ptr Matrix)\label{spFactor_8c_a27}
+
+\item 
+\index{spcRowExchange@{spcRowExchange}!spFactor.c@{spFactor.c}}\index{spFactor.c@{spFactor.c}!spcRowExchange@{spcRowExchange}}
+void {\bf spc\-Row\-Exchange} (Matrix\-Ptr Matrix, int Row1, int Row2)\label{spFactor_8c_a34}
+
+\item 
+\index{spcColExchange@{spcColExchange}!spFactor.c@{spFactor.c}}\index{spFactor.c@{spFactor.c}!spcColExchange@{spcColExchange}}
+void {\bf spc\-Col\-Exchange} (Matrix\-Ptr Matrix, int Col1, int Col2)\label{spFactor_8c_a35}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+ This file contains the routines to factor the matrix into LU form.
+
+Objects that begin with the {\em spc} prefix are considered private and should not be used.
+
+\begin{Desc}
+\item[Author: ]\par
+ Kenneth S. Kundert $<${\tt kundert@users.sourceforge.net}$>$\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{spFactor.c@{sp\-Factor.c}!spFactor@{spFactor}}
+\index{spFactor@{spFactor}!spFactor.c@{sp\-Factor.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Error} sp\-Factor ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spFactor_8c_a25}
+
+
+This routine is the companion routine to {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. Unlike {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} cannot change the ordering. It is also faster than {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. The standard way of using these two routines is to first use {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} for the initial factorization. For subsequent factorizations, {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} is used if there is some assurance that little growth will occur (say for example, that the matrix is diagonally dominant). If {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} is called for the initial factorization of the matrix, then {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} is automatically called with the default threshold. This routine uses \char`\"{}row at a time\char`\"{} {\em LU} factorization. Pivots are associated with the lower triangular matrix and the diagonals of the upper triangular matrix are ones.
+
+\begin{Desc}
+\item[Returns :]\par
+ The error code is returned. Possible errors are {\em sp\-NO\_\-MEMORY}, {\em sp\-SINGULAR}, {\em sp\-ZERO\_\-DIAG} and {\em sp\-SMALL\_\-PIVOT}. Error is cleared upon entering this function.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} \end{Desc}
+\index{spFactor.c@{sp\-Factor.c}!spOrderAndFactor@{spOrderAndFactor}}
+\index{spOrderAndFactor@{spOrderAndFactor}!spFactor.c@{sp\-Factor.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Error} sp\-Order\-And\-Factor ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Rel\-Threshold}, sp\-REAL {\em Abs\-Threshold}, int {\em Diag\-Pivoting})}\label{spFactor_8c_a24}
+
+
+This routine chooses a pivot order for the matrix and factors it into {\em LU} form. It handles both the initial factorization and subsequent factorizations when a reordering is desired. This is handled in a manner that is transparent to the user. The routine uses a variation of Gauss's method where the pivots are associated with {\em L} and the diagonal terms of {\em U} are one.
+
+\begin{Desc}
+\item[Returns :]\par
+ The error code is returned. Possible errors are {\em sp\-NO\_\-MEMORY},  {\em sp\-SINGULAR} and {\em sp\-SMALL\_\-PIVOT}. Error is cleared upon entering this function.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+RHS}]Representative right-hand side vector that is used to determine pivoting order when the right hand side vector is sparse. If RHS is a NULL pointer then the RHS vector is assumed to be full and it is not used when determining the pivoting order. \item[{\em 
+Rel\-Threshold}]This number determines what the pivot relative threshold will be. It should be between zero and one. If it is one then the pivoting method becomes complete pivoting, which is very slow and tends to fill up the matrix. If it is set close to zero the pivoting method becomes strict Markowitz with no threshold. The pivot threshold is used to eliminate pivot candidates that would cause excessive element growth if they were used. Element growth is the cause of roundoff error. Element growth occurs even in well-conditioned matrices. Setting the {\em Rel\-Threshold} large will reduce element growth and roundoff error, but setting it too large will cause execution time to be excessive and will result in a large number of fill-ins. If this occurs, accuracy can actually be degraded because of the large number of operations required on the matrix due to the large number of fill-ins. A good value seems to be 0.001. The default is chosen by giving a value larger than one or less than or equal to zero. This value should be increased and the matrix resolved if growth is found to be excessive. Changing the pivot threshold does not improve performance on matrices where growth is low, as is often the case with ill-conditioned matrices. Once a valid threshold is given, it becomes the new default. The default value of {\em Rel\-Threshold} was choosen for use with nearly diagonally dominant matrices such as node- and modified-node admittance matrices. For these matrices it is usually best to use diagonal pivoting. For matrices without a strong diagonal, it is usually best to use a larger threshold, such as 0.01 or 0.1. \item[{\em 
+Abs\-Threshold}]The absolute magnitude an element must have to be considered as a pivot candidate, except as a last resort. This number should be set significantly smaller than the smallest diagonal element that is is expected to be placed in the matrix. If there is no reasonable prediction for the lower bound on these elements, then {\em Abs\-Threshold} should be set to zero. {\em Abs\-Threshold} is used to reduce the possibility of choosing as a pivot an element that has suffered heavy cancellation and as a result mainly consists of roundoff error. Once a valid threshold is given, it becomes the new default. \item[{\em 
+Diag\-Pivoting}]A flag indicating that pivot selection should be confined to the diagonal if possible. If {\em Diag\-Pivoting} is nonzero and if {\em DIAGONAL\_\-PIVOTING} is enabled pivots will be chosen only from the diagonal unless there are no diagonal elements that satisfy the threshold criteria. Otherwise, the entire reduced submatrix is searched when looking for a pivot. The diagonal pivoting in Sparse is efficient and well refined, while the off-diagonal pivoting is not. For symmetric and near symmetric matrices, it is best to use diagonal pivoting because it results in the best performance when reordering the matrix and when factoring the matrix without ordering. If there is a considerable amount of nonsymmetry in the matrix, then off-diagonal pivoting may result in a better equation ordering simply because there are more pivot candidates to choose from. A better ordering results in faster subsequent factorizations. However, the initial pivot selection process takes considerably longer for off-diagonal pivoting.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} \end{Desc}
+\index{spFactor.c@{sp\-Factor.c}!spPartition@{spPartition}}
+\index{spPartition@{spPartition}!spFactor.c@{sp\-Factor.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Partition ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Mode})}\label{spFactor_8c_a26}
+
+
+This routine determines the cost to factor each row using both direct and indirect addressing and decides, on a row-by-row basis, which addressing mode is fastest. This information is used in {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} to speed the factorization.
+
+When factoring a previously ordered matrix using {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})}, Sparse operates on a row-at-a-time basis. For speed, on each step, the row being updated is copied into a full vector and the operations are performed on that vector. This can be done one of two ways, either using direct addressing or indirect addressing. Direct addressing is fastest when the matrix is relatively dense and indirect addressing is best when the matrix is quite sparse. The user selects the type of partition used with {\em Mode}. If {\em Mode} is set to {\em sp\-DIRECT\_\-PARTITION}, then the all rows are placed in the direct addressing partition. Similarly, if {\em Mode} is set to {\em sp\-INDIRECT\_\-PARTITION}, then the all rows are placed in the indirect addressing partition. By setting {\em Mode} to {\em sp\-AUTO\_\-PARTITION}, the user allows Sparse to select the partition for each row individually. {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} generally runs faster if Sparse is allowed to choose its own partitioning, however choosing a partition is expensive. The time required to choose a partition is of the same order of the cost to factor the matrix. If you plan to factor a large number of matrices with the same structure, it is best to let Sparse choose the partition. Otherwise, you should choose the partition based on the predicted density of the matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+Mode}]Mode must be one of three special codes: {\em sp\-DIRECT\_\-PARTITION}, {\em sp\-INDIRECT\_\-PARTITION}, or {\em sp\-AUTO\_\-PARTITION}. \end{description}
+\end{Desc}

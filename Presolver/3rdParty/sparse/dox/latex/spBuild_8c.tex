@@ -1,0 +1,255 @@
+\section{sp\-Build.c File Reference}
+\label{spBuild_8c}\index{spBuild.c@{spBuild.c}}
+{\tt \#include $<$stdio.h$>$}\par
+{\tt \#include \char`\"{}sp\-Config.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Matrix.h\char`\"{}}\par
+{\tt \#include \char`\"{}sp\-Defs.h\char`\"{}}\par
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\index{spINSIDE_SPARSE@{spINSIDE\_\-SPARSE}!spBuild.c@{spBuild.c}}\index{spBuild.c@{spBuild.c}!spINSIDE_SPARSE@{spINSIDE\_\-SPARSE}}
+\#define {\bf sp\-INSIDE\_\-SPARSE}\label{spBuild_8c_a0}
+
+\item 
+\index{BorderRight@{BorderRight}!spBuild.c@{spBuild.c}}\index{spBuild.c@{spBuild.c}!BorderRight@{BorderRight}}
+\#define {\bf Border\-Right}\ 0\label{spBuild_8c_a1}
+
+\item 
+\index{BorderDown@{BorderDown}!spBuild.c@{spBuild.c}}\index{spBuild.c@{spBuild.c}!BorderDown@{BorderDown}}
+\#define {\bf Border\-Down}\ 1\label{spBuild_8c_a2}
+
+\item 
+\index{DiagRight@{DiagRight}!spBuild.c@{spBuild.c}}\index{spBuild.c@{spBuild.c}!DiagRight@{DiagRight}}
+\#define {\bf Diag\-Right}\ 2\label{spBuild_8c_a3}
+
+\item 
+\index{DiagDown@{DiagDown}!spBuild.c@{spBuild.c}}\index{spBuild.c@{spBuild.c}!DiagDown@{DiagDown}}
+\#define {\bf Diag\-Down}\ 3\label{spBuild_8c_a4}
+
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+void {\bf sp\-Clear} ({\bf sp\-Matrix} e\-Matrix)
+\item 
+{\bf sp\-Element} $\ast$ {\bf sp\-Find\-Element} ({\bf sp\-Matrix} e\-Matrix, int Row, int Col)
+\item 
+{\bf sp\-Element} $\ast$ {\bf sp\-Get\-Element} ({\bf sp\-Matrix} e\-Matrix, int Row, int Col)
+\item 
+{\bf sp\-Error} {\bf sp\-Get\-Admittance} ({\bf sp\-Matrix} Matrix, int Node1, int Node2, struct {\bf sp\-Template} $\ast$Template)
+\item 
+{\bf sp\-Error} {\bf sp\-Get\-Quad} ({\bf sp\-Matrix} Matrix, int Row1, int Row2, int Col1, int Col2, struct {\bf sp\-Template} $\ast$Template)
+\item 
+{\bf sp\-Error} {\bf sp\-Get\-Ones} ({\bf sp\-Matrix} Matrix, int Pos, int Neg, int Eqn, struct {\bf sp\-Template} $\ast$Template)
+\item 
+\index{spcFindDiag@{spcFindDiag}!spBuild.c@{spBuild.c}}\index{spBuild.c@{spBuild.c}!spcFindDiag@{spcFindDiag}}
+Element\-Ptr {\bf spc\-Find\-Diag} (Matrix\-Ptr Matrix, register int Index)\label{spBuild_8c_a16}
+
+\item 
+\index{spcCreateElement@{spcCreateElement}!spBuild.c@{spBuild.c}}\index{spBuild.c@{spBuild.c}!spcCreateElement@{spcCreateElement}}
+Element\-Ptr {\bf spc\-Create\-Element} (Matrix\-Ptr Matrix, int Row, register int Col, register Element\-Ptr $\ast$pp\-To\-Left, register Element\-Ptr $\ast$pp\-Above, BOOLEAN Fillin)\label{spBuild_8c_a17}
+
+\item 
+\index{spcLinkRows@{spcLinkRows}!spBuild.c@{spBuild.c}}\index{spBuild.c@{spBuild.c}!spcLinkRows@{spcLinkRows}}
+void {\bf spc\-Link\-Rows} (Matrix\-Ptr Matrix)\label{spBuild_8c_a18}
+
+\item 
+int {\bf sp\-Initialize} ({\bf sp\-Matrix} e\-Matrix, int($\ast$p\-Init)({\bf sp\-Element} $\ast$p\-Element, sp\-Generic\-Ptr p\-Init\-Info, int Row, int Col))
+\item 
+void {\bf sp\-Install\-Init\-Info} ({\bf sp\-Element} $\ast$p\-Element, sp\-Generic\-Ptr p\-Init\-Info)
+\item 
+sp\-Generic\-Ptr {\bf sp\-Get\-Init\-Info} ({\bf sp\-Element} $\ast$p\-Element)
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+ This file contains the routines associated with clearing, loading and preprocessing the matrix.
+
+Objects that begin with the {\em spc} prefix are considered private and should not be used.
+
+\begin{Desc}
+\item[Author: ]\par
+ Kenneth S. Kundert $<${\tt kundert@users.sourceforge.net}$>$\end{Desc}
+
+
+\subsection{Function Documentation}
+\index{spBuild.c@{sp\-Build.c}!spClear@{spClear}}
+\index{spClear@{spClear}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Clear ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spBuild_8c_a10}
+
+
+Sets every element of the matrix to zero and clears the error flag.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix that is to be cleared. \end{description}
+\end{Desc}
+\index{spBuild.c@{sp\-Build.c}!spFindElement@{spFindElement}}
+\index{spFindElement@{spFindElement}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Element}$\ast$ sp\-Find\-Element ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Row}, int {\em Col})}\label{spBuild_8c_a11}
+
+
+This routine is used to find an element given its indices. It will not create it if it does not exist.
+
+\begin{Desc}
+\item[Returns :]\par
+ A pointer to the desired element, or {\em NULL} if it does not exist.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+Row}]Row index for element. \item[{\em 
+Col}]Column index for element.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spBuild_8c_a12})} \end{Desc}
+\index{spBuild.c@{sp\-Build.c}!spGetAdmittance@{spGetAdmittance}}
+\index{spGetAdmittance@{spGetAdmittance}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Error} sp\-Get\-Admittance ({\bf sp\-Matrix} {\em Matrix}, int {\em Node1}, int {\em Node2}, struct {\bf sp\-Template} $\ast$ {\em Template})}\label{spBuild_8c_a13}
+
+
+Performs same function as {\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spBuild_8c_a12})} except rather than one element, all four matrix elements for a floating two terminal admittance component are added. This routine also works if component is grounded. Positive elements are placed at [Node1,Node2] and [Node2,Node1]. This routine is only to be used after {\bf sp\-Create}() {\rm (p.\,\pageref{spAllocate_8c_a11})} and before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spUtils_8c_a11})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} or {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}.
+
+\begin{Desc}
+\item[Returns :]\par
+ Error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}]Pointer to the matrix that component is to be entered in. \item[{\em 
+Node1}]Row and column indices for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Node zero is the ground node. In no case may {\em Node1} be less than zero. \item[{\em 
+Node2}]Row and column indices for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Node zero is the ground node. In no case may {\em Node2} be less than zero. \item[{\em 
+Template}]Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spBuild.c@{sp\-Build.c}!spGetElement@{spGetElement}}
+\index{spGetElement@{spGetElement}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Element}$\ast$ sp\-Get\-Element ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Row}, int {\em Col})}\label{spBuild_8c_a12}
+
+
+Finds element [Row,Col] and returns a pointer to it. If element is not found then it is created and spliced into matrix. This routine is only to be used after {\bf sp\-Create}() {\rm (p.\,\pageref{spAllocate_8c_a11})} and before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spUtils_8c_a11})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} or {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})}. Returns a pointer to the real portion of an {\em {\bf sp\-Element}}. This pointer is later used by {\em sp\-ADD\_\-xxx\_\-ELEMENT} to directly access element.
+
+\begin{Desc}
+\item[Returns :]\par
+ Returns a pointer to the element. This pointer is then used to directly access the element during successive builds.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix that the element is to be added to. \item[{\em 
+Row}]Row index for element. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Elements placed in row zero are discarded. In no case may {\em Row} be less than zero. \item[{\em 
+Col}]Column index for element. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Elements placed in column zero are discarded. In no case may {\em Col} be less than zero.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Find\-Element}() {\rm (p.\,\pageref{spBuild_8c_a11})} \end{Desc}
+\index{spBuild.c@{sp\-Build.c}!spGetInitInfo@{spGetInitInfo}}
+\index{spGetInitInfo@{spGetInitInfo}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}sp\-Generic\-Ptr sp\-Get\-Init\-Info ({\bf sp\-Element} $\ast$ {\em p\-Element})}\label{spBuild_8c_a23}
+
+
+This function returns a pointer to a data structure that is used to contain initialization information to a matrix element.
+
+\begin{Desc}
+\item[Returns :]\par
+ The pointer to the initialiation information data structure that is associated with a particular matrix element.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+p\-Element}]Pointer to the matrix element.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})} \end{Desc}
+\index{spBuild.c@{sp\-Build.c}!spGetOnes@{spGetOnes}}
+\index{spGetOnes@{spGetOnes}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Error} sp\-Get\-Ones ({\bf sp\-Matrix} {\em Matrix}, int {\em Pos}, int {\em Neg}, int {\em Eqn}, struct {\bf sp\-Template} $\ast$ {\em Template})}\label{spBuild_8c_a15}
+
+
+Addition of four structural ones to matrix by index. Performs similar function to {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spBuild_8c_a14})} except this routine is meant for components that do not have an admittance representation.
+
+The following stamp is used: 
+
+\footnotesize\begin{verbatim}         Pos  Neg  Eqn
+  Pos  [  .    .    1  ]
+  Neg  [  .    .   -1  ]
+  Eqn  [  1   -1    .  ]
+\end{verbatim}\normalsize 
+
+
+\begin{Desc}
+\item[Returns :]\par
+ Error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}]Pointer to the matrix that component is to be entered in. \item[{\em 
+Pos}]See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Pos} be less than zero. \item[{\em 
+Neg}]See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Neg} be less than zero. \item[{\em 
+Eqn}]See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Eqn} be less than zero. \item[{\em 
+Template}]Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spBuild.c@{sp\-Build.c}!spGetQuad@{spGetQuad}}
+\index{spGetQuad@{spGetQuad}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}{\bf sp\-Error} sp\-Get\-Quad ({\bf sp\-Matrix} {\em Matrix}, int {\em Row1}, int {\em Row2}, int {\em Col1}, int {\em Col2}, struct {\bf sp\-Template} $\ast$ {\em Template})}\label{spBuild_8c_a14}
+
+
+Similar to {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spBuild_8c_a13})}, except that {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spBuild_8c_a13})} only handles 2-terminal components, whereas {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spBuild_8c_a14})} handles simple 4-terminals as well. These 4-terminals are simply generalized 2-terminals with the option of having the sense terminals different from the source and sink terminals. {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spBuild_8c_a14})} adds four elements to the matrix. Positive elements occur at [Row1,Col1] [Row2,Col2] while negative elements occur at [Row1,Col2] and [Row2,Col1]. The routine works fine if any of the rows and columns are zero. This routine is only to be used after {\bf sp\-Create}() {\rm (p.\,\pageref{spAllocate_8c_a11})} and before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spUtils_8c_a11})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a25})} or {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spFactor_8c_a24})} unless {\em TRANSLATE} is set true.
+
+\begin{Desc}
+\item[Returns :]\par
+ Error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}]Pointer to the matrix that component is to be entered in. \item[{\em 
+Row1}]First row index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may Row1 be less than zero. \item[{\em 
+Row2}]Second row index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may Row2 be less than zero. \item[{\em 
+Col1}]First column index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground column. In no case may Col1 be less than zero. \item[{\em 
+Col2}]Second column index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground column. In no case may Col2 be less than zero. \item[{\em 
+Template}]Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spBuild.c@{sp\-Build.c}!spInitialize@{spInitialize}}
+\index{spInitialize@{spInitialize}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}int sp\-Initialize ({\bf sp\-Matrix} {\em e\-Matrix}, int($\ast$ {\em p\-Init})({\bf sp\-Element} $\ast$p\-Element,	sp\-Generic\-Ptr p\-Init\-Info,	int Row,	int Col))}\label{spBuild_8c_a21}
+
+
+Initialize the matrix.
+
+With the {\em INITIALIZE} compiler option (see {\bf sp\-Config.h}) set true, Sparse allows the user to keep initialization information with each structurally nonzero matrix element. Each element has a pointer that is set and used by the user. The user can set this pointer using {\bf sp\-Install\-Init\-Info}() {\rm (p.\,\pageref{spBuild_8c_a22})} and may be read using {\bf sp\-Get\-Init\-Info}() {\rm (p.\,\pageref{spBuild_8c_a23})}. Both may be used only after the element exists. The function {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})} is a user customizable way to initialize the matrix. Passed to this routine is a function pointer. {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})} sweeps through every element in the matrix and checks the {\em p\-Init\-Info} pointer (the user supplied pointer). If the {\em p\-Init\-Info} is {\em NULL}, which is true unless the user changes it (almost always true for fill-ins), then the element is zeroed. Otherwise, the function pointer is called and passed the {\em p\-Init\-Info} pointer as well as the element pointer and the external row and column numbers. If the user sets the value of each element, then {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})} replaces {\bf sp\-Clear}() {\rm (p.\,\pageref{spBuild_8c_a10})}.
+
+The user function is expected to return a nonzero integer if there is a fatal error and zero otherwise. Upon encountering a nonzero return code, {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})} terminates, sets the error state of the matrix to be {\em sp\-MANGLED}, and returns the error code.
+
+\begin{Desc}
+\item[Returns :]\par
+ Returns the return value of the {\em p\-Init()} function. \end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+p\-Init}]Pointer to a function that initializes an element.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Clear}() {\rm (p.\,\pageref{spBuild_8c_a10})} \end{Desc}
+\index{spBuild.c@{sp\-Build.c}!spInstallInitInfo@{spInstallInitInfo}}
+\index{spInstallInitInfo@{spInstallInitInfo}!spBuild.c@{sp\-Build.c}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}void sp\-Install\-Init\-Info ({\bf sp\-Element} $\ast$ {\em p\-Element}, sp\-Generic\-Ptr {\em p\-Init\-Info})}\label{spBuild_8c_a22}
+
+
+This function installs a pointer to a data structure that is used to contain initialization information to a matrix element. It is is then used by {\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})} to initialize the matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+p\-Element}]Pointer to matrix element. \item[{\em 
+p\-Init\-Info}]Pointer to the data structure that will contain initialiation information. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Initialize}() {\rm (p.\,\pageref{spBuild_8c_a21})} \end{Desc}

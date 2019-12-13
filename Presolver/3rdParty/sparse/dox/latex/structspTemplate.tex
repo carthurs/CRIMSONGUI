@@ -1,0 +1,33 @@
+\section{sp\-Template Struct Reference}
+\label{structspTemplate}\index{spTemplate@{spTemplate}}
+{\tt \#include $<$sp\-Matrix.h$>$}
+
+\subsection*{Public Attributes}
+\begin{CompactItemize}
+\item 
+\index{Element1@{Element1}!spTemplate@{spTemplate}}\index{spTemplate@{spTemplate}!Element1@{Element1}}
+{\bf sp\-Element} $\ast$ {\bf Element1}\label{structspTemplate_m0}
+
+\item 
+\index{Element2@{Element2}!spTemplate@{spTemplate}}\index{spTemplate@{spTemplate}!Element2@{Element2}}
+{\bf sp\-Element} $\ast$ {\bf Element2}\label{structspTemplate_m1}
+
+\item 
+\index{Element3Negated@{Element3Negated}!spTemplate@{spTemplate}}\index{spTemplate@{spTemplate}!Element3Negated@{Element3Negated}}
+{\bf sp\-Element} $\ast$ {\bf Element3Negated}\label{structspTemplate_m2}
+
+\item 
+\index{Element4Negated@{Element4Negated}!spTemplate@{spTemplate}}\index{spTemplate@{spTemplate}!Element4Negated@{Element4Negated}}
+{\bf sp\-Element} $\ast$ {\bf Element4Negated}\label{structspTemplate_m3}
+
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+This data structure is used to hold pointers to four related elements in matrix. It is used in conjunction with the routines {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spBuild_8c_a13})}, {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spBuild_8c_a14})}, and {\bf sp\-Get\-Ones}() {\rm (p.\,\pageref{spBuild_8c_a15})}. These routines stuff the structure which is later used by the {\em sp\-ADD\_\-QUAD} macro functions above. It is also possible for the user to collect four pointers returned by {\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spBuild_8c_a12})} and stuff them into the template. The {\em sp\-ADD\_\-QUAD} routines stuff data into the matrix in locations specified by {\em Element1} and {\em Element2} without changing the data. The data is negated before being placed in {\em Element3} and {\em Element4}. 
+
+
+
+The documentation for this struct was generated from the following file:\begin{CompactItemize}
+\item 
+{\bf sp\-Matrix.h}\end{CompactItemize}

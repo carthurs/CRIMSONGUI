@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="VesselMeshing">
+    <file>icons/DataManagerIcon_Mesh.png</file>
+    <file>icons/DataManagerIcon_Loft.png</file>
+    <file>icons/info.png</file>
+  </qresource>
+</RCC>

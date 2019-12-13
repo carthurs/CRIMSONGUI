@@ -1,0 +1,9 @@
+/**
+  \defgroup OpenCascadeSolidKernel OpenCascadeSolidKernel
+  \ingroup CRIMSONModules
+
+  \brief The OpenCascadeSolidKernel contains the functionality responsible for creating the solid models (using lofting and blending operations).
+  
+ 
+
+*/

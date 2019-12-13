@@ -1,0 +1,54 @@
+number_of_variables 5
+number_of_nodes 5601
+number_of_elements 24197
+number_of_mesh_edges 32172
+number_of_mesh_faces 50769
+
+phasta_node_order
+
+nodes the.coordinates
+elements the.connectivity
+boundary_faces all_exterior_faces.ebc
+adjacency the.xadj
+
+# set surface IDs, walls all combined now 5->2 6->3 7->4
+# wall is tagged twice, once at the start and once at the end
+set_surface_id inflow_Descending_Aorta.ebc 2
+set_surface_id outflow_Branch.ebc 3
+set_surface_id outflow_Descending_Aorta.ebc 4
+set_surface_id wall.ebc 1
+
+# lines below commented out - no slip no longer applied on wall
+# noslip wall_Descending_Aorta.nbc
+# noslip wall_Descending_Aorta_Branch.nbc
+# noslip wall_Branch.nbc
+
+# lines below added - fsi boundary on wall
+deformable_wall wall.ebc
+fix_free_edge_nodes wall.ebc
+
+# lines below added - legacy
+deformable_create_mesh wall.ebc
+deformable_write_feap inputdataformatlab.dat
+
+# line below added - isotropic wall properties
+number_of_wall_Props 10
+
+# line below added - 80 mmHg
+initial_pressure 10664
+
+prescribed_velocities inflow_Descending_Aorta.nbc
+
+zero_pressure outflow_Descending_Aorta.ebc
+zero_pressure outflow_Branch.ebc
+
+write_geombc  geombc.dat.1
+write_restart restart.0.1
+
+deformable_Evw 500000
+deformable_nuvw 0.5
+deformable_thickness 1.0
+deformable_kcons 0.8333333
+deformable_pressure 10664
+deformable_solve
+append_displacements restart.0.1

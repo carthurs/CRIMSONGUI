@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 2.8)
+cmake_policy(SET CMP0012 NEW)
+
+# TODO if Qt uses Cocoa and it is build into dylib, where is qt_menu.nib?
+if("@QT_MAC_USE_COCOA@" AND "@QT_USE_FRAMEWORKS@")
+	message(STATUS "Copying qt_menu.nib into '@FIXUP_BUNDLE_PATH@/Contents/Resources'")
+	file(MAKE_DIRECTORY "@FIXUP_BUNDLE_PATH@/Contents/Resources/qt_menu.nib")
+	execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory
+		"@QT_LIBRARY_DIR@/QtGui.framework/Resources/qt_menu.nib"
+		"@FIXUP_BUNDLE_PATH@/Contents/Resources/qt_menu.nib")
+endif("@QT_MAC_USE_COCOA@" AND "@QT_USE_FRAMEWORKS@")
+
+include(BundleUtilities)
+fixup_bundle("@FIXUP_BUNDLE_PATH@" "@FIXUP_BUNDLE_LIBS@" "@FIXUP_BUNDLE_DIRS@")

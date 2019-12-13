@@ -1,0 +1,13 @@
+#include "VascularModelingNodeTypes.h"
+
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, Image)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, VesselTree)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, VesselPath)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, Solid)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, Loft)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, LoftPreview)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, Blend)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, BlendPreview)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, Contour)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, ContourSegmentationImage)
+DEFINE_HIERARCHY_MANAGER_NODE_TYPE(crimson::VascularModelingNodeTypes, ContourReferenceImage)

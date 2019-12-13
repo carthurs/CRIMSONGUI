@@ -1,0 +1,22 @@
+set(CPP_FILES
+    DataManagement/SolidData.cpp
+    DataManagement/OCCBRepData.cpp
+    DataManagement/DiscreteSolidData.cpp
+    DataManagement/vtkGetBoundaryFaces.cpp
+    Rendering/SolidDataMapper.cpp    
+    Initialization/SolidKernelModuleActivator.cpp
+    IO/OCCBRepDataIO.cpp
+    IO/OpenCascadeSolidKernelIOMimeTypes.cpp  
+    IO/DiscreteSolidDataIO.cpp
+    IO/DiscreteDataIOMimeTypes.cpp 
+    IO/SolidDataCoreObjectFactory.cpp 
+    ExtensionPoint/ISolidModelKernel.cpp
+    ExtensionPoint/internal/ContourParametrization.cpp
+    ExtensionPoint/internal/BRepFill_PipeShellA.cxx
+    ExtensionPoint/internal/GeomFill_GuideTrihedronAC_A.cxx
+    ExtensionPoint/internal/BRepFill_SectionPlacement_A.cxx
+    Interactions/SolidDataFacePickingObserver.cpp
+    )
+    
+set(RESOURCE_FILES
+)    

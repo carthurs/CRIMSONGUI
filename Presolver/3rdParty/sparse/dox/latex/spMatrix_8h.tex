@@ -1,0 +1,1006 @@
+\section{sp\-Matrix.h File Reference}
+\label{spMatrix_8h}\index{spMatrix.h@{spMatrix.h}}
+{\tt \#include \char`\"{}sp\-Config.h\char`\"{}}\par
+\subsection*{Compounds}
+\begin{CompactItemize}
+\item 
+struct {\bf sp\-Template}
+\end{CompactItemize}
+\subsection*{Defines}
+\begin{CompactItemize}
+\item 
+\#define {\bf sp\-OKAY}\ 0
+\item 
+\#define {\bf sp\-SMALL\_\-PIVOT}\ 1
+\item 
+\#define {\bf sp\-ZERO\_\-DIAG}\ 2
+\item 
+\#define {\bf sp\-SINGULAR}\ 3
+\item 
+\#define {\bf sp\-MANGLED}\ 4
+\item 
+\#define {\bf sp\-NO\_\-MEMORY}\ 5
+\item 
+\#define {\bf sp\-PANIC}\ 6
+\item 
+\#define {\bf sp\-FATAL}\ 2
+\item 
+\#define {\bf sp\-REAL}\ double
+\item 
+\#define {\bf sp\-DEFAULT\_\-PARTITION}\ 0
+\item 
+\#define {\bf sp\-DIRECT\_\-PARTITION}\ 1
+\item 
+\#define {\bf sp\-INDIRECT\_\-PARTITION}\ 2
+\item 
+\#define {\bf sp\-AUTO\_\-PARTITION}\ 3
+\item 
+\#define {\bf sp\-ADD\_\-REAL\_\-ELEMENT}(element, real)\ $\ast$(element) += real
+\item 
+\#define {\bf sp\-ADD\_\-IMAG\_\-ELEMENT}(element, imag)\ $\ast$(element+1) += imag
+\item 
+\#define {\bf sp\-ADD\_\-COMPLEX\_\-ELEMENT}(element, real, imag)
+\item 
+\#define {\bf sp\-ADD\_\-REAL\_\-QUAD}(template, real)
+\item 
+\#define {\bf sp\-ADD\_\-IMAG\_\-QUAD}(template, imag)
+\item 
+\#define {\bf sp\-ADD\_\-COMPLEX\_\-QUAD}(template, real, imag)
+\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef sp\-Generic\-Ptr {\bf sp\-Matrix}
+\item 
+typedef sp\-REAL {\bf sp\-Element}
+\item 
+typedef int {\bf sp\-Error}
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+spc\-EXTERN void {\bf sp\-Clear} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN sp\-REAL {\bf sp\-Condition} ({\bf sp\-Matrix}, sp\-REAL, int $\ast$)
+\item 
+spc\-EXTERN {\bf sp\-Matrix} {\bf sp\-Create} (int, int, {\bf sp\-Error} $\ast$)
+\item 
+spc\-EXTERN void {\bf sp\-Delete\-Row\-And\-Col} ({\bf sp\-Matrix}, int, int)
+\item 
+spc\-EXTERN void {\bf sp\-Destroy} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN int {\bf sp\-Element\-Count} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN {\bf sp\-Error} {\bf sp\-Error\-State} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN void {\bf sp\-Error\-Message} ({\bf sp\-Matrix}, FILE $\ast$, char $\ast$)
+\item 
+spc\-EXTERN {\bf sp\-Error} {\bf sp\-Factor} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN int {\bf sp\-File\-Matrix} ({\bf sp\-Matrix}, char $\ast$, char $\ast$, int, int, int)
+\item 
+spc\-EXTERN int {\bf sp\-File\-Stats} ({\bf sp\-Matrix}, char $\ast$, char $\ast$)
+\item 
+spc\-EXTERN int {\bf sp\-Fillin\-Count} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN {\bf sp\-Element} $\ast$ {\bf sp\-Find\-Element} ({\bf sp\-Matrix}, int, int)
+\item 
+spc\-EXTERN {\bf sp\-Error} {\bf sp\-Get\-Admittance} ({\bf sp\-Matrix}, int, int, struct {\bf sp\-Template} $\ast$)
+\item 
+spc\-EXTERN {\bf sp\-Element} $\ast$ {\bf sp\-Get\-Element} ({\bf sp\-Matrix}, int, int)
+\item 
+spc\-EXTERN sp\-Generic\-Ptr {\bf sp\-Get\-Init\-Info} ({\bf sp\-Element} $\ast$)
+\item 
+spc\-EXTERN {\bf sp\-Error} {\bf sp\-Get\-Ones} ({\bf sp\-Matrix}, int, int, int, struct {\bf sp\-Template} $\ast$)
+\item 
+spc\-EXTERN {\bf sp\-Error} {\bf sp\-Get\-Quad} ({\bf sp\-Matrix}, int, int, int, int, struct {\bf sp\-Template} $\ast$)
+\item 
+spc\-EXTERN int {\bf sp\-Get\-Size} ({\bf sp\-Matrix}, int)
+\item 
+\index{spInitialize@{spInitialize}!spMatrix.h@{spMatrix.h}}\index{spMatrix.h@{spMatrix.h}!spInitialize@{spInitialize}}
+spc\-EXTERN int {\bf sp\-Initialize} ({\bf sp\-Matrix}, int($\ast$p\-Init)({\bf sp\-Element} $\ast$, sp\-Generic\-Ptr, int, int))\label{spMatrix_8h_a41}
+
+\item 
+spc\-EXTERN void {\bf sp\-Install\-Init\-Info} ({\bf sp\-Element} $\ast$, sp\-Generic\-Ptr)
+\item 
+spc\-EXTERN sp\-REAL {\bf sp\-Largest\-Element} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN void {\bf sp\-MNA\_\-Preorder} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN sp\-REAL {\bf sp\-Norm} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN {\bf sp\-Error} {\bf sp\-Order\-And\-Factor} ({\bf sp\-Matrix}, sp\-REAL[$\,$], sp\-REAL, sp\-REAL, int)
+\item 
+spc\-EXTERN void {\bf sp\-Partition} ({\bf sp\-Matrix}, int)
+\item 
+spc\-EXTERN void {\bf sp\-Print} ({\bf sp\-Matrix}, int, int, int)
+\item 
+spc\-EXTERN sp\-REAL {\bf sp\-Pseudo\-Condition} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN sp\-REAL {\bf sp\-Roundoff} ({\bf sp\-Matrix}, sp\-REAL)
+\item 
+spc\-EXTERN void {\bf sp\-Scale} ({\bf sp\-Matrix}, sp\-REAL[$\,$], sp\-REAL[$\,$])
+\item 
+spc\-EXTERN void {\bf sp\-Set\-Complex} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN void {\bf sp\-Set\-Real} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN void {\bf sp\-Strip\-Fills} ({\bf sp\-Matrix})
+\item 
+spc\-EXTERN void {\bf sp\-Where\-Singular} ({\bf sp\-Matrix}, int $\ast$, int $\ast$)
+\item 
+spc\-EXTERN void {\bf sp\-Determinant} ({\bf sp\-Matrix}, int $\ast$, sp\-REAL $\ast$, sp\-REAL $\ast$)
+\item 
+spc\-EXTERN int {\bf sp\-File\-Vector} ({\bf sp\-Matrix}, char $\ast$, sp\-REAL[$\,$])
+\item 
+spc\-EXTERN void {\bf sp\-Multiply} ({\bf sp\-Matrix}, sp\-REAL[$\,$], sp\-REAL[$\,$])
+\item 
+spc\-EXTERN void {\bf sp\-Mult\-Transposed} ({\bf sp\-Matrix}, sp\-REAL[$\,$], sp\-REAL[$\,$])
+\item 
+spc\-EXTERN void {\bf sp\-Solve} ({\bf sp\-Matrix}, sp\-REAL[$\,$], sp\-REAL[$\,$])
+\item 
+spc\-EXTERN void {\bf sp\-Solve\-Transposed} ({\bf sp\-Matrix}, sp\-REAL[$\,$], sp\-REAL[$\,$])
+\end{CompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+This file contains definitions that are useful to the calling program. In particular, this file contains error keyword definitions, some macro functions that are used to quickly enter data into the matrix and the type definition of a data structure that acts as a template for entering admittances into the matrix. Also included is the type definitions for the various functions available to the user.
+
+Objects that begin with the {\em spc} prefix are considered private and should not be used.
+
+\begin{Desc}
+\item[Author: ]\par
+ Kenneth S. Kundert $<${\tt kundert@users.sourceforge.net}$>$\end{Desc}
+
+
+\subsection{Define Documentation}
+\index{spMatrix.h@{sp\-Matrix.h}!spADD_COMPLEX_ELEMENT@{spADD\_\-COMPLEX\_\-ELEMENT}}
+\index{spADD_COMPLEX_ELEMENT@{spADD\_\-COMPLEX\_\-ELEMENT}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-ADD\_\-COMPLEX\_\-ELEMENT(element, real, imag)}\label{spMatrix_8h_a15}
+
+
+{\bf Value:}
+
+\footnotesize\begin{verbatim}{   *(element) += real;                                 \
+    *(element+1) += imag;                               \
+}\end{verbatim}\normalsize 
+Macro function that adds data to a complex element in the matrix by a pointer. \index{spMatrix.h@{sp\-Matrix.h}!spADD_COMPLEX_QUAD@{spADD\_\-COMPLEX\_\-QUAD}}
+\index{spADD_COMPLEX_QUAD@{spADD\_\-COMPLEX\_\-QUAD}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-ADD\_\-COMPLEX\_\-QUAD(template, real, imag)}\label{spMatrix_8h_a18}
+
+
+{\bf Value:}
+
+\footnotesize\begin{verbatim}{   *((template).Element1) += real;             \
+    *((template).Element2) += real;             \
+    *((template).Element3Negated) -= real;      \
+    *((template).Element4Negated) -= real;      \
+    *((template).Element1+1) += imag;           \
+    *((template).Element2+1) += imag;           \
+    *((template).Element3Negated+1) -= imag;    \
+    *((template).Element4Negated+1) -= imag;    \
+}\end{verbatim}\normalsize 
+Macro function that adds data to each of the four complex matrix elements specified by the given template. \index{spMatrix.h@{sp\-Matrix.h}!spADD_IMAG_ELEMENT@{spADD\_\-IMAG\_\-ELEMENT}}
+\index{spADD_IMAG_ELEMENT@{spADD\_\-IMAG\_\-ELEMENT}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-ADD\_\-IMAG\_\-ELEMENT(element, imag)\ $\ast$(element+1) += imag}\label{spMatrix_8h_a14}
+
+
+Macro function that adds data to a imaginary element in the matrix by a pointer. \index{spMatrix.h@{sp\-Matrix.h}!spADD_IMAG_QUAD@{spADD\_\-IMAG\_\-QUAD}}
+\index{spADD_IMAG_QUAD@{spADD\_\-IMAG\_\-QUAD}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-ADD\_\-IMAG\_\-QUAD(template, imag)}\label{spMatrix_8h_a17}
+
+
+{\bf Value:}
+
+\footnotesize\begin{verbatim}{   *((template).Element1+1) += imag;           \
+    *((template).Element2+1) += imag;           \
+    *((template).Element3Negated+1) -= imag;    \
+    *((template).Element4Negated+1) -= imag;    \
+}\end{verbatim}\normalsize 
+Macro function that adds data to each of the four imaginary matrix elements specified by the given template. \index{spMatrix.h@{sp\-Matrix.h}!spADD_REAL_ELEMENT@{spADD\_\-REAL\_\-ELEMENT}}
+\index{spADD_REAL_ELEMENT@{spADD\_\-REAL\_\-ELEMENT}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-ADD\_\-REAL\_\-ELEMENT(element, real)\ $\ast$(element) += real}\label{spMatrix_8h_a13}
+
+
+Macro function that adds data to a real element in the matrix by a pointer. \index{spMatrix.h@{sp\-Matrix.h}!spADD_REAL_QUAD@{spADD\_\-REAL\_\-QUAD}}
+\index{spADD_REAL_QUAD@{spADD\_\-REAL\_\-QUAD}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-ADD\_\-REAL\_\-QUAD(template, real)}\label{spMatrix_8h_a16}
+
+
+{\bf Value:}
+
+\footnotesize\begin{verbatim}{   *((template).Element1) += real;             \
+    *((template).Element2) += real;             \
+    *((template).Element3Negated) -= real;      \
+    *((template).Element4Negated) -= real;      \
+}\end{verbatim}\normalsize 
+Macro function that adds data to each of the four real matrix elements specified by the given template. \index{spMatrix.h@{sp\-Matrix.h}!spAUTO_PARTITION@{spAUTO\_\-PARTITION}}
+\index{spAUTO_PARTITION@{spAUTO\_\-PARTITION}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-AUTO\_\-PARTITION\ 3}\label{spMatrix_8h_a12}
+
+
+Partition code for {\bf sp\-Partition}() {\rm (p.\,\pageref{spMatrix_8h_a47})}. Indicates that {\em Sparse} should chose the best partition for each row based on some simple rules. This is generally preferred. \begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Partition}() {\rm (p.\,\pageref{spMatrix_8h_a47})} \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spDEFAULT_PARTITION@{spDEFAULT\_\-PARTITION}}
+\index{spDEFAULT_PARTITION@{spDEFAULT\_\-PARTITION}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-DEFAULT\_\-PARTITION\ 0}\label{spMatrix_8h_a9}
+
+
+Partition code for {\bf sp\-Partition}() {\rm (p.\,\pageref{spMatrix_8h_a47})}. Indicates that the default partitioning mode should be used. \begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Partition}() {\rm (p.\,\pageref{spMatrix_8h_a47})} \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spDIRECT_PARTITION@{spDIRECT\_\-PARTITION}}
+\index{spDIRECT_PARTITION@{spDIRECT\_\-PARTITION}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-DIRECT\_\-PARTITION\ 1}\label{spMatrix_8h_a10}
+
+
+Partition code for {\bf sp\-Partition}() {\rm (p.\,\pageref{spMatrix_8h_a47})}. Indicates that all rows should be placed in the direct addressing partition. \begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Partition}() {\rm (p.\,\pageref{spMatrix_8h_a47})} \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spFATAL@{spFATAL}}
+\index{spFATAL@{spFATAL}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-FATAL\ 2}\label{spMatrix_8h_a7}
+
+
+Error code that is not an error flag, but rather the dividing line between fatal errors and warnings. \index{spMatrix.h@{sp\-Matrix.h}!spINDIRECT_PARTITION@{spINDIRECT\_\-PARTITION}}
+\index{spINDIRECT_PARTITION@{spINDIRECT\_\-PARTITION}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-INDIRECT\_\-PARTITION\ 2}\label{spMatrix_8h_a11}
+
+
+Partition code for {\bf sp\-Partition}() {\rm (p.\,\pageref{spMatrix_8h_a47})}. Indicates that all rows should be placed in the indirect addressing partition. \begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Partition}() {\rm (p.\,\pageref{spMatrix_8h_a47})} \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spMANGLED@{spMANGLED}}
+\index{spMANGLED@{spMANGLED}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-MANGLED\ 4}\label{spMatrix_8h_a4}
+
+
+Fatal error code that indicates that, matrix has been mangled, results of requested operation are garbage. \index{spMatrix.h@{sp\-Matrix.h}!spNO_MEMORY@{spNO\_\-MEMORY}}
+\index{spNO_MEMORY@{spNO\_\-MEMORY}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-NO\_\-MEMORY\ 5}\label{spMatrix_8h_a5}
+
+
+Fatal error code that indicates that not enough memory is available. \index{spMatrix.h@{sp\-Matrix.h}!spOKAY@{spOKAY}}
+\index{spOKAY@{spOKAY}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-OKAY\ 0}\label{spMatrix_8h_a0}
+
+
+Error code that indicates that no error has occurred. \index{spMatrix.h@{sp\-Matrix.h}!spPANIC@{spPANIC}}
+\index{spPANIC@{spPANIC}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-PANIC\ 6}\label{spMatrix_8h_a6}
+
+
+Fatal error code that indicates that the routines are not prepared to handle the matrix that has been requested. This may occur when the matrix is specified to be real and the routines are not compiled for real matrices, or when the matrix is specified to be complex and the routines are not compiled to handle complex matrices. \index{spMatrix.h@{sp\-Matrix.h}!spREAL@{spREAL}}
+\index{spREAL@{spREAL}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-REAL\ double}\label{spMatrix_8h_a8}
+
+
+Defines the precision of the arithmetic used by {\em Sparse} will use. Double precision is suggested as being most appropriate for circuit simulation and for C. However, it is possible to change sp\-REAL to a float for single precision arithmetic. Note that in C, single precision arithmetic is often slower than double precision. Sparse internally refers to sp\-REALs as Real\-Numbers. \index{spMatrix.h@{sp\-Matrix.h}!spSINGULAR@{spSINGULAR}}
+\index{spSINGULAR@{spSINGULAR}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-SINGULAR\ 3}\label{spMatrix_8h_a3}
+
+
+Fatal error code that indicates that, matrix is singular, so no unique solution exists. \index{spMatrix.h@{sp\-Matrix.h}!spSMALL_PIVOT@{spSMALL\_\-PIVOT}}
+\index{spSMALL_PIVOT@{spSMALL\_\-PIVOT}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-SMALL\_\-PIVOT\ 1}\label{spMatrix_8h_a1}
+
+
+Non-fatal error code that indicates that, when reordering the matrix, no element was found that satisfies the absolute threshold criteria. The largest element in the matrix was chosen as pivot. \index{spMatrix.h@{sp\-Matrix.h}!spZERO_DIAG@{spZERO\_\-DIAG}}
+\index{spZERO_DIAG@{spZERO\_\-DIAG}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}\#define sp\-ZERO\_\-DIAG\ 2}\label{spMatrix_8h_a2}
+
+
+Fatal error code that indicates that, a zero was encountered on the diagonal the matrix. This does not necessarily imply that the matrix is singular. When this error occurs, the matrix should be reconstructed and factored using {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}. 
+
+\subsection{Typedef Documentation}
+\index{spMatrix.h@{sp\-Matrix.h}!spElement@{spElement}}
+\index{spElement@{spElement}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}typedef sp\-REAL sp\-Element}\label{spMatrix_8h_a20}
+
+
+Declares the type of the a pointer to a matrix element. \index{spMatrix.h@{sp\-Matrix.h}!spError@{spError}}
+\index{spError@{spError}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}typedef int sp\-Error}\label{spMatrix_8h_a21}
+
+
+Declares the type of the Sparse error codes. \index{spMatrix.h@{sp\-Matrix.h}!spMatrix@{spMatrix}}
+\index{spMatrix@{spMatrix}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}typedef sp\-Generic\-Ptr sp\-Matrix}\label{spMatrix_8h_a19}
+
+
+Declares the type of the a pointer to a matrix. 
+
+\subsection{Function Documentation}
+\index{spMatrix.h@{sp\-Matrix.h}!spClear@{spClear}}
+\index{spClear@{spClear}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Clear ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a22}
+
+
+Sets every element of the matrix to zero and clears the error flag.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix that is to be cleared. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spCondition@{spCondition}}
+\index{spCondition@{spCondition}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN sp\-REAL sp\-Condition ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em Norm\-Of\-Matrix}, int $\ast$ {\em p\-Error})}\label{spMatrix_8h_a23}
+
+
+Computes an estimate of the condition number using a variation on the LINPACK condition number estimation algorithm. This quantity is an indicator of ill-conditioning in the matrix. To avoid problems with overflow, the reciprocal of the condition number is returned. If this number is small, and if the matrix is scaled such that uncertainties in the RHS and the matrix entries are equilibrated, then the matrix is ill-conditioned. If the this number is near one, the matrix is well conditioned. This routine must only be used after a matrix has been factored by {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})} or {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} and before it is cleared by {\bf sp\-Clear}() {\rm (p.\,\pageref{spMatrix_8h_a22})} or {\bf sp\-Initialize}().
+
+Unlike the LINPACK condition number estimator, this routines returns the L infinity condition number. This is an artifact of Sparse placing ones on the diagonal of the upper triangular matrix rather than the lower. This difference should be of no importance.
+
+{\bf References}:
+
+A.K. Cline, C.B. Moler, G.W. Stewart, J.H. Wilkinson. An estimate for the condition number of a matrix. SIAM Journal on Numerical Analysis. Vol. 16, No. 2, pages 368-375, April 1979.
+
+J.J. Dongarra, C.B. Moler, J.R. Bunch, G.W. Stewart. LINPACK User's Guide. SIAM, 1979.
+
+Roger G. Grimes, John G. Lewis. Condition number estimation for sparse matrices. SIAM Journal on Scientific and Statistical Computing. Vol. 2, No. 4, pages 384-388, December 1981.
+
+Dianne Prost O'Leary. Estimating matrix condition numbers. SIAM Journal on Scientific and Statistical Computing. Vol. 1, No. 2, pages 205-209, June 1980.
+
+\begin{Desc}
+\item[Returns :]\par
+ The reciprocal of the condition number. If the matrix was singular, zero is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+Norm\-Of\-Matrix}]The L-infinity norm of the unfactored matrix as computed by {\bf sp\-Norm}() {\rm (p.\,\pageref{spMatrix_8h_a45})}. \item[{\em 
+p\-Error}]Used to return error code. Possible errors include {\em sp\-SINGULAR} or {\em sp\-NO\_\-MEMORY}. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spCreate@{spCreate}}
+\index{spCreate@{spCreate}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Matrix} sp\-Create (int {\em Size}, int {\em Complex}, {\bf sp\-Error} $\ast$ {\em p\-Error})}\label{spMatrix_8h_a24}
+
+
+Allocates and initializes the data structures associated with a matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+ A pointer to the matrix is returned cast into {\em {\bf sp\-Matrix}} (typically a pointer to a void). This pointer is then passed and used by the other matrix routines to refer to a particular matrix. If an error occurs, the {\em NULL} pointer is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Size}]Size of matrix or estimate of size of matrix if matrix is {\em EXPANDABLE}. \item[{\em 
+Complex}]Type of matrix. If {\em Complex} is 0 then the matrix is real, otherwise the matrix will be complex. Note that if the routines are not set up to handle the type of matrix requested, then an {\em sp\-PANIC} error will occur. Further note that if a matrix will be both real and complex, it must be specified here as being complex. \item[{\em 
+p\-Error}]Returns error flag, needed because function {\em {\bf sp\-Error\-State}() {\rm (p.\,\pageref{spMatrix_8h_a28})}} will not work correctly if {\em {\bf sp\-Create}() {\rm (p.\,\pageref{spMatrix_8h_a24})}} returns {\em NULL}. Possible errors include {\em sp\-NO\_\-MEMORY} and {\em sp\-PANIC}. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spDeleteRowAndCol@{spDeleteRowAndCol}}
+\index{spDeleteRowAndCol@{spDeleteRowAndCol}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Delete\-Row\-And\-Col ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Row}, int {\em Col})}\label{spMatrix_8h_a25}
+
+
+Deletes a row and a column from a matrix.
+
+Sparse will abort if an attempt is made to delete a row or column that doesn't exist.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix in which the row and column are to be deleted. \item[{\em 
+Row}]Row to be deleted. \item[{\em 
+Col}]Column to be deleted. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spDestroy@{spDestroy}}
+\index{spDestroy@{spDestroy}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Destroy ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a26}
+
+
+Destroys a matrix and frees all memory associated with it.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix frame which is to be destroyed. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spDeterminant@{spDeterminant}}
+\index{spDeterminant@{spDeterminant}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Determinant ({\bf sp\-Matrix} {\em e\-Matrix}, int $\ast$ {\em p\-Exponent}, sp\-REAL $\ast$ {\em p\-Determinant}, sp\-REAL $\ast$ {\em pi\-Determinant})}\label{spMatrix_8h_a56}
+
+
+This routine in capable of calculating the determinant of the matrix once the LU factorization has been performed. Hence, only use this routine after {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} and before {\bf sp\-Clear}() {\rm (p.\,\pageref{spMatrix_8h_a22})}. The determinant equals the product of all the diagonal elements of the lower triangular matrix L, except that this product may need negating. Whether the product or the negative product equals the determinant is determined by the number of row and column interchanges performed. Note that the determinants of matrices can be very large or very small. On large matrices, the determinant can be far larger or smaller than can be represented by a floating point number. For this reason the determinant is scaled to a reasonable value and the logarithm of the scale factor is returned.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]A pointer to the matrix for which the determinant is desired. \item[{\em 
+p\-Exponent}]The logarithm base 10 of the scale factor for the determinant. To find the actual determinant, Exponent should be added to the exponent of Determinant. \item[{\em 
+p\-Determinant}]The real portion of the determinant. This number is scaled to be greater than or equal to 1.0 and less than 10.0. \item[{\em 
+pi\-Determinant}]The imaginary portion of the determinant. When the matrix is real this pointer need not be supplied, nothing will be returned. This number is scaled to be greater than or equal to 1.0 and less than 10.0. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spElementCount@{spElementCount}}
+\index{spElementCount@{spElementCount}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN int sp\-Element\-Count ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a27}
+
+
+This function returns the total number of elements (including fill-ins) that currently exists in a matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spErrorMessage@{spErrorMessage}}
+\index{spErrorMessage@{spErrorMessage}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Error\-Message ({\bf sp\-Matrix} {\em e\-Matrix}, FILE $\ast$ {\em Stream}, char $\ast$ {\em Originator})}\label{spMatrix_8h_a29}
+
+
+This routine prints a short message describing the error error state of sparse. No message is produced if there is no error. The error state is cleared.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Matrix for which the error message is to be printed. \item[{\em 
+Stream}]Stream to which the error message is to be printed. \item[{\em 
+Originator}]Name of originator of error message. If NULL, `sparse' is used. If zero-length string, no originator is printed. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spErrorState@{spErrorState}}
+\index{spErrorState@{spErrorState}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Error} sp\-Error\-State ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a28}
+
+
+This function returns the error status of the given matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+ The error status of the given matrix.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]The pointer to the matrix for which the error status is desired. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spFactor@{spFactor}}
+\index{spFactor@{spFactor}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Error} sp\-Factor ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a30}
+
+
+This routine is the companion routine to {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}. Unlike {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} cannot change the ordering. It is also faster than {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}. The standard way of using these two routines is to first use {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})} for the initial factorization. For subsequent factorizations, {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} is used if there is some assurance that little growth will occur (say for example, that the matrix is diagonally dominant). If {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} is called for the initial factorization of the matrix, then {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})} is automatically called with the default threshold. This routine uses \char`\"{}row at a time\char`\"{} {\em LU} factorization. Pivots are associated with the lower triangular matrix and the diagonals of the upper triangular matrix are ones.
+
+\begin{Desc}
+\item[Returns :]\par
+ The error code is returned. Possible errors are {\em sp\-NO\_\-MEMORY}, {\em sp\-SINGULAR}, {\em sp\-ZERO\_\-DIAG} and {\em sp\-SMALL\_\-PIVOT}. Error is cleared upon entering this function.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})} \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spFileMatrix@{spFileMatrix}}
+\index{spFileMatrix@{spFileMatrix}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN int sp\-File\-Matrix ({\bf sp\-Matrix} {\em e\-Matrix}, char $\ast$ {\em File}, char $\ast$ {\em Label}, int {\em Reordered}, int {\em Data}, int {\em Header})}\label{spMatrix_8h_a31}
+
+
+Writes matrix to file in format suitable to be read back in by the matrix test program.
+
+\begin{Desc}
+\item[Returns :]\par
+ One is returned if routine was successful, otherwise zero is returned. The calling function can query {\em errno} (the system global error variable) as to the reason why this routine failed.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+File}]Name of file into which matrix is to be written. \item[{\em 
+Label}]String that is transferred to file and is used as a label. \item[{\em 
+Reordered}]Specifies whether matrix should be output in reordered form, or in original order. \item[{\em 
+Data}]Indicates that the element values should be output along with the indices for each element. This parameter must be true if matrix is to be read by the sparse test program. \item[{\em 
+Header}]Indicates that header is desired. This parameter must be true if matrix is to be read by the sparse test program. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spFileStats@{spFileStats}}
+\index{spFileStats@{spFileStats}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN int sp\-File\-Stats ({\bf sp\-Matrix} {\em e\-Matrix}, char $\ast$ {\em File}, char $\ast$ {\em Label})}\label{spMatrix_8h_a32}
+
+
+Writes useful information concerning the matrix to a file. Should be executed after the matrix is factored.
+
+\begin{Desc}
+\item[Returns :]\par
+ One is returned if routine was successful, otherwise zero is returned. The calling function can query {\em errno} (the system global error variable) as to the reason why this routine failed.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+File}]Name of file into which matrix is to be written. \item[{\em 
+Label}]String that is transferred to file and is used as a label. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spFileVector@{spFileVector}}
+\index{spFileVector@{spFileVector}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN int sp\-File\-Vector ({\bf sp\-Matrix} {\em e\-Matrix}, char $\ast$ {\em File}, sp\-REAL {\em RHS}[$\,$])}\label{spMatrix_8h_a57}
+
+
+Writes vector to file in format suitable to be read back in by the matrix test program. This routine should be executed after the function sp\-File\-Matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+ One is returned if routine was successful, otherwise zero is returned. The calling function can query {\em errno} (the system global error variable) as to the reason why this routine failed.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+File}]Name of file into which matrix is to be written. \item[{\em 
+RHS}]Right-hand side vector. This is only the real portion if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \item[{\em 
+i\-RHS}]Right-hand side vector, imaginary portion. Not necessary if matrix is real or if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is set false. {\em i\-RHS} is a macro that replaces itself with `, i\-RHS' if the options {\em sp\-COMPLEX} and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} are set, otherwise it disappears without a trace. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spFillinCount@{spFillinCount}}
+\index{spFillinCount@{spFillinCount}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN int sp\-Fillin\-Count ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a33}
+
+
+This function returns the number of fill-ins that currently exists in a matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spFindElement@{spFindElement}}
+\index{spFindElement@{spFindElement}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Element}$\ast$ sp\-Find\-Element ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Row}, int {\em Col})}\label{spMatrix_8h_a34}
+
+
+This routine is used to find an element given its indices. It will not create it if it does not exist.
+
+\begin{Desc}
+\item[Returns :]\par
+ A pointer to the desired element, or {\em NULL} if it does not exist.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+Row}]Row index for element. \item[{\em 
+Col}]Column index for element.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spMatrix_8h_a36})} \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spGetAdmittance@{spGetAdmittance}}
+\index{spGetAdmittance@{spGetAdmittance}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Error} sp\-Get\-Admittance ({\bf sp\-Matrix} {\em Matrix}, int {\em Node1}, int {\em Node2}, struct {\bf sp\-Template} $\ast$ {\em Template})}\label{spMatrix_8h_a35}
+
+
+Performs same function as {\bf sp\-Get\-Element}() {\rm (p.\,\pageref{spMatrix_8h_a36})} except rather than one element, all four matrix elements for a floating two terminal admittance component are added. This routine also works if component is grounded. Positive elements are placed at [Node1,Node2] and [Node2,Node1]. This routine is only to be used after {\bf sp\-Create}() {\rm (p.\,\pageref{spMatrix_8h_a24})} and before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spMatrix_8h_a44})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} or {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}.
+
+\begin{Desc}
+\item[Returns :]\par
+ Error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}]Pointer to the matrix that component is to be entered in. \item[{\em 
+Node1}]Row and column indices for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Node zero is the ground node. In no case may {\em Node1} be less than zero. \item[{\em 
+Node2}]Row and column indices for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Node zero is the ground node. In no case may {\em Node2} be less than zero. \item[{\em 
+Template}]Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spGetElement@{spGetElement}}
+\index{spGetElement@{spGetElement}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Element}$\ast$ sp\-Get\-Element ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Row}, int {\em Col})}\label{spMatrix_8h_a36}
+
+
+Finds element [Row,Col] and returns a pointer to it. If element is not found then it is created and spliced into matrix. This routine is only to be used after {\bf sp\-Create}() {\rm (p.\,\pageref{spMatrix_8h_a24})} and before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spMatrix_8h_a44})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} or {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}. Returns a pointer to the real portion of an {\em {\bf sp\-Element}}. This pointer is later used by {\em sp\-ADD\_\-xxx\_\-ELEMENT} to directly access element.
+
+\begin{Desc}
+\item[Returns :]\par
+ Returns a pointer to the element. This pointer is then used to directly access the element during successive builds.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix that the element is to be added to. \item[{\em 
+Row}]Row index for element. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Elements placed in row zero are discarded. In no case may {\em Row} be less than zero. \item[{\em 
+Col}]Column index for element. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Elements placed in column zero are discarded. In no case may {\em Col} be less than zero.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Find\-Element}() {\rm (p.\,\pageref{spMatrix_8h_a34})} \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spGetInitInfo@{spGetInitInfo}}
+\index{spGetInitInfo@{spGetInitInfo}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN sp\-Generic\-Ptr sp\-Get\-Init\-Info ({\bf sp\-Element} $\ast$ {\em p\-Element})}\label{spMatrix_8h_a37}
+
+
+This function returns a pointer to a data structure that is used to contain initialization information to a matrix element.
+
+\begin{Desc}
+\item[Returns :]\par
+ The pointer to the initialiation information data structure that is associated with a particular matrix element.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+p\-Element}]Pointer to the matrix element.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Initialize}() \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spGetOnes@{spGetOnes}}
+\index{spGetOnes@{spGetOnes}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Error} sp\-Get\-Ones ({\bf sp\-Matrix} {\em Matrix}, int {\em Pos}, int {\em Neg}, int {\em Eqn}, struct {\bf sp\-Template} $\ast$ {\em Template})}\label{spMatrix_8h_a38}
+
+
+Addition of four structural ones to matrix by index. Performs similar function to {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spMatrix_8h_a39})} except this routine is meant for components that do not have an admittance representation.
+
+The following stamp is used: 
+
+\footnotesize\begin{verbatim}         Pos  Neg  Eqn
+  Pos  [  .    .    1  ]
+  Neg  [  .    .   -1  ]
+  Eqn  [  1   -1    .  ]
+\end{verbatim}\normalsize 
+
+
+\begin{Desc}
+\item[Returns :]\par
+ Error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}]Pointer to the matrix that component is to be entered in. \item[{\em 
+Pos}]See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Pos} be less than zero. \item[{\em 
+Neg}]See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Neg} be less than zero. \item[{\em 
+Eqn}]See stamp above. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may {\em Eqn} be less than zero. \item[{\em 
+Template}]Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spGetQuad@{spGetQuad}}
+\index{spGetQuad@{spGetQuad}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Error} sp\-Get\-Quad ({\bf sp\-Matrix} {\em Matrix}, int {\em Row1}, int {\em Row2}, int {\em Col1}, int {\em Col2}, struct {\bf sp\-Template} $\ast$ {\em Template})}\label{spMatrix_8h_a39}
+
+
+Similar to {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spMatrix_8h_a35})}, except that {\bf sp\-Get\-Admittance}() {\rm (p.\,\pageref{spMatrix_8h_a35})} only handles 2-terminal components, whereas {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spMatrix_8h_a39})} handles simple 4-terminals as well. These 4-terminals are simply generalized 2-terminals with the option of having the sense terminals different from the source and sink terminals. {\bf sp\-Get\-Quad}() {\rm (p.\,\pageref{spMatrix_8h_a39})} adds four elements to the matrix. Positive elements occur at [Row1,Col1] [Row2,Col2] while negative elements occur at [Row1,Col2] and [Row2,Col1]. The routine works fine if any of the rows and columns are zero. This routine is only to be used after {\bf sp\-Create}() {\rm (p.\,\pageref{spMatrix_8h_a24})} and before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spMatrix_8h_a44})}, {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} or {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})} unless {\em TRANSLATE} is set true.
+
+\begin{Desc}
+\item[Returns :]\par
+ Error code. Possible errors include {\em sp\-NO\_\-MEMORY}. Error is not cleared in this routine.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+Matrix}]Pointer to the matrix that component is to be entered in. \item[{\em 
+Row1}]First row index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may Row1 be less than zero. \item[{\em 
+Row2}]Second row index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground row. In no case may Row2 be less than zero. \item[{\em 
+Col1}]First column index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground column. In no case may Col1 be less than zero. \item[{\em 
+Col2}]Second column index for elements. Must be in the range of [0..Size] unless the options {\em EXPANDABLE} or {\em TRANSLATE} are used. Zero is the ground column. In no case may Col2 be less than zero. \item[{\em 
+Template}]Collection of pointers to four elements that are later used to directly address elements. User must supply the template, this routine will fill it. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spGetSize@{spGetSize}}
+\index{spGetSize@{spGetSize}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN int sp\-Get\-Size ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em External})}\label{spMatrix_8h_a40}
+
+
+Returns the size of the matrix. Either the internal or external size of the matrix is returned.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+External}]If {\em External} is set true, the external size , i.e., the value of the largest external row or column number encountered is returned. Otherwise the true size of the matrix is returned. These two sizes may differ if the {\em TRANSLATE} option is set true. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spInstallInitInfo@{spInstallInitInfo}}
+\index{spInstallInitInfo@{spInstallInitInfo}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Install\-Init\-Info ({\bf sp\-Element} $\ast$ {\em p\-Element}, sp\-Generic\-Ptr {\em p\-Init\-Info})}\label{spMatrix_8h_a42}
+
+
+This function installs a pointer to a data structure that is used to contain initialization information to a matrix element. It is is then used by {\bf sp\-Initialize}() to initialize the matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+p\-Element}]Pointer to matrix element. \item[{\em 
+p\-Init\-Info}]Pointer to the data structure that will contain initialiation information. \end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Initialize}() \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spLargestElement@{spLargestElement}}
+\index{spLargestElement@{spLargestElement}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN sp\-REAL sp\-Largest\-Element ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a43}
+
+
+This routine, along with {\bf sp\-Roundoff}() {\rm (p.\,\pageref{spMatrix_8h_a50})}, are used to gauge the stability of a factorization. If the factorization is determined to be too unstable, then the matrix should be reordered. The routines compute quantities that are needed in the computation of a bound on the error attributed to any one element in the matrix during the factorization. In other words, there is a matrix $ E = [e_{ij}] $ of error terms such that $ A+E = LU $. This routine finds a bound on $ |e_{ij}| $. Erisman \& Reid [1] showed that $ |e_{ij}| < 3.01 u \rho m_{ij} $, where $ u $ is the machine rounding unit, $ \rho = \max a_{ij} $ where the max is taken over every row $ i $, column $ j $, and step $ k $, and $ m_{ij} $ is the number of multiplications required in the computation of $ l_{ij} $ if $ i > j $ or $ u_{ij} $ otherwise. Barlow [2] showed that $ \rho < \max_i || l_i ||_p \max_j || u_j ||_q $ where $ 1/p + 1/q = 1 $.
+
+{\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spMatrix_8h_a43})} finds the magnitude on the largest element in the matrix. If the matrix has not yet been factored, the largest element is found by direct search. If the matrix is factored, a bound on the largest element in any of the reduced submatrices is computed using Barlow with $ p = \infty $ and $ q = 1 $. The ratio of these two numbers is the growth, which can be used to determine if the pivoting order is adequate. A large growth implies that considerable error has been made in the factorization and that it is probably a good idea to reorder the matrix. If a large growth in encountered after using {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})}, reconstruct the matrix and refactor using {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}. If a large growth is encountered after using {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}, refactor using {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})} with the pivot threshold increased, say to 0.1.
+
+Using only the size of the matrix as an upper bound on $ m_{ij} $ and Barlow's bound, the user can estimate the size of the matrix error terms $ e_{ij} $ using the bound of Erisman and Reid. {\bf sp\-Roundoff}() {\rm (p.\,\pageref{spMatrix_8h_a50})}  computes a tighter bound (with more work) based on work by Gear [3], $ |e_{ij}| < 1.01 u \rho (t c^3 + (1 + t)c^2) $ where $ t $ is the threshold and $ c $ is the maximum number of off-diagonal elements in any row of $ L $. The expensive part of computing this bound is determining the maximum number of off-diagonals in $ L $, which changes only when the order of the matrix changes. This number is computed and saved, and only recomputed if the matrix is reordered.
+
+[1] A. M. Erisman, J. K. Reid. Monitoring the stability of the triangular factorization of a sparse matrix. Numerische Mathematik. Vol. 22, No. 3, 1974, pp 183-186.
+
+[2] J. L. Barlow. A note on monitoring the stability of triangular decomposition of sparse matrices. \char`\"{}SIAM Journal of Scientific and Statistical Computing.\char`\"{} Vol. 7, No. 1, January 1986, pp 166-168.
+
+[3] I. S. Duff, A. M. Erisman, J. K. Reid. \char`\"{}Direct Methods for Sparse Matrices.\char`\"{} Oxford 1986. pp 99.
+
+\begin{Desc}
+\item[Returns :]\par
+ If matrix is not factored, returns the magnitude of the largest element in the matrix. If the matrix is factored, a bound on the magnitude of the largest element in any of the reduced submatrices is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spMNA_Preorder@{spMNA\_\-Preorder}}
+\index{spMNA_Preorder@{spMNA\_\-Preorder}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-MNA\_\-Preorder ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a44}
+
+
+This routine massages modified node admittance matrices to remove zeros from the diagonal. It takes advantage of the fact that the row and column associated with a zero diagonal usually have structural ones placed symmetricly. This routine should be used only on modified node admittance matrices and should be executed after the matrix has been built but before the factorization begins. It should be executed for the initial factorization only and should be executed before the rows have been linked. Thus it should be run before using {\bf sp\-Scale}() {\rm (p.\,\pageref{spMatrix_8h_a51})}, {\bf sp\-Multiply}() {\rm (p.\,\pageref{spMatrix_8h_a58})}, {\bf sp\-Delete\-Row\-And\-Col}() {\rm (p.\,\pageref{spMatrix_8h_a25})}, or {\bf sp\-Norm}() {\rm (p.\,\pageref{spMatrix_8h_a45})}.
+
+This routine exploits the fact that the structural ones are placed in the matrix in symmetric twins. For example, the stamps for grounded and a floating voltage sources are 
+
+\footnotesize\begin{verbatim}  grounded:              floating:
+  [  x   x   1 ]         [  x   x   1 ]
+  [  x   x     ]         [  x   x  -1 ]
+  [  1         ]         [  1  -1     ]
+\end{verbatim}\normalsize 
+ Notice for the grounded source, there is one set of twins, and for the floating, there are two sets. We remove the zero from the diagonal by swapping the rows associated with a set of twins. For example: 
+
+\footnotesize\begin{verbatim}  grounded:              floating 1:            floating 2:
+  [  1         ]         [  1  -1     ]         [  x   x   1 ]
+  [  x   x     ]         [  x   x  -1 ]         [  1  -1     ]
+  [  x   x   1 ]         [  x   x   1 ]         [  x   x  -1 ]
+\end{verbatim}\normalsize 
+
+
+It is important to deal with any zero diagonals that only have one set of twins before dealing with those that have more than one because swapping row destroys the symmetry of any twins in the rows being swapped, which may limit future moves. Consider 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [  x   x  -1   1 ]
+  [  1  -1         ]
+  [      1         ]
+\end{verbatim}\normalsize 
+ There is one set of twins for diagonal 4 and two for diagonal 3. Dealing with diagonal 4 first requires swapping rows 2 and 4. 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [      1         ]
+  [  1  -1         ]
+  [  x   x  -1   1 ]
+\end{verbatim}\normalsize 
+ We can now deal with diagonal 3 by swapping rows 1 and 3. 
+
+\footnotesize\begin{verbatim}  [  1  -1         ]
+  [      1         ]
+  [  x   x   1     ]
+  [  x   x  -1   1 ]
+\end{verbatim}\normalsize 
+ And we are done, there are no zeros left on the diagonal. However, if we originally dealt with diagonal 3 first, we could swap rows 2 and 3 
+
+\footnotesize\begin{verbatim}  [  x   x   1     ]
+  [  1  -1         ]
+  [  x   x  -1   1 ]
+  [      1         ]
+\end{verbatim}\normalsize 
+ Diagonal 4 no longer has a symmetric twin and we cannot continue.
+
+So we always take care of lone twins first. When none remain, we choose arbitrarily a set of twins for a diagonal with more than one set and swap the rows corresponding to that twin. We then deal with any lone twins that were created and repeat the procedure until no zero diagonals with symmetric twins remain.
+
+In this particular implementation, columns are swapped rather than rows. The algorithm used in this function was developed by Ken Kundert and Tom Quarles.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix to be preordered. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spMultiply@{spMultiply}}
+\index{spMultiply@{spMultiply}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Multiply ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spMatrix_8h_a58}
+
+
+Multiplies matrix by solution vector to find source vector. Assumes matrix has not been factored. This routine can be used as a test to see if solutions are correct. It should not be used before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spMatrix_8h_a44})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+RHS}]RHS is the right hand side. This is what is being solved for. \item[{\em 
+Solution}]Solution is the vector being multiplied by the matrix. \item[{\em 
+i\-RHS}]i\-RHS is the imaginary portion of the right hand side. This is what is being solved for. This is only necessary if the matrix is complex and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \item[{\em 
+i\-Solution}]i\-Solution is the imaginary portion of the vector being multiplied by the matrix. This is only necessary if the matrix is complex and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spMultTransposed@{spMultTransposed}}
+\index{spMultTransposed@{spMultTransposed}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Mult\-Transposed ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spMatrix_8h_a59}
+
+
+Multiplies transposed matrix by solution vector to find source vector. Assumes matrix has not been factored. This routine can be used as a test to see if solutions are correct. It should not be used before {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spMatrix_8h_a44})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+RHS}]RHS is the right hand side. This is what is being solved for. \item[{\em 
+Solution}]Solution is the vector being multiplied by the matrix. \item[{\em 
+i\-RHS}]i\-RHS is the imaginary portion of the right hand side. This is what is being solved for. This is only necessary if the matrix is complex and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \item[{\em 
+i\-Solution}]i\-Solution is the imaginary portion of the vector being multiplied by the matrix. This is only necessary if the matrix is complex and {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTORS} is true. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spNorm@{spNorm}}
+\index{spNorm@{spNorm}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN sp\-REAL sp\-Norm ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a45}
+
+
+Computes the L-infinity norm of an unfactored matrix. It is a fatal error to pass this routine a factored matrix.
+
+\begin{Desc}
+\item[Returns :]\par
+ The largest absolute row sum of matrix.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spOrderAndFactor@{spOrderAndFactor}}
+\index{spOrderAndFactor@{spOrderAndFactor}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN {\bf sp\-Error} sp\-Order\-And\-Factor ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Rel\-Threshold}, sp\-REAL {\em Abs\-Threshold}, int {\em Diag\-Pivoting})}\label{spMatrix_8h_a46}
+
+
+This routine chooses a pivot order for the matrix and factors it into {\em LU} form. It handles both the initial factorization and subsequent factorizations when a reordering is desired. This is handled in a manner that is transparent to the user. The routine uses a variation of Gauss's method where the pivots are associated with {\em L} and the diagonal terms of {\em U} are one.
+
+\begin{Desc}
+\item[Returns :]\par
+ The error code is returned. Possible errors are {\em sp\-NO\_\-MEMORY},  {\em sp\-SINGULAR} and {\em sp\-SMALL\_\-PIVOT}. Error is cleared upon entering this function.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+RHS}]Representative right-hand side vector that is used to determine pivoting order when the right hand side vector is sparse. If RHS is a NULL pointer then the RHS vector is assumed to be full and it is not used when determining the pivoting order. \item[{\em 
+Rel\-Threshold}]This number determines what the pivot relative threshold will be. It should be between zero and one. If it is one then the pivoting method becomes complete pivoting, which is very slow and tends to fill up the matrix. If it is set close to zero the pivoting method becomes strict Markowitz with no threshold. The pivot threshold is used to eliminate pivot candidates that would cause excessive element growth if they were used. Element growth is the cause of roundoff error. Element growth occurs even in well-conditioned matrices. Setting the {\em Rel\-Threshold} large will reduce element growth and roundoff error, but setting it too large will cause execution time to be excessive and will result in a large number of fill-ins. If this occurs, accuracy can actually be degraded because of the large number of operations required on the matrix due to the large number of fill-ins. A good value seems to be 0.001. The default is chosen by giving a value larger than one or less than or equal to zero. This value should be increased and the matrix resolved if growth is found to be excessive. Changing the pivot threshold does not improve performance on matrices where growth is low, as is often the case with ill-conditioned matrices. Once a valid threshold is given, it becomes the new default. The default value of {\em Rel\-Threshold} was choosen for use with nearly diagonally dominant matrices such as node- and modified-node admittance matrices. For these matrices it is usually best to use diagonal pivoting. For matrices without a strong diagonal, it is usually best to use a larger threshold, such as 0.01 or 0.1. \item[{\em 
+Abs\-Threshold}]The absolute magnitude an element must have to be considered as a pivot candidate, except as a last resort. This number should be set significantly smaller than the smallest diagonal element that is is expected to be placed in the matrix. If there is no reasonable prediction for the lower bound on these elements, then {\em Abs\-Threshold} should be set to zero. {\em Abs\-Threshold} is used to reduce the possibility of choosing as a pivot an element that has suffered heavy cancellation and as a result mainly consists of roundoff error. Once a valid threshold is given, it becomes the new default. \item[{\em 
+Diag\-Pivoting}]A flag indicating that pivot selection should be confined to the diagonal if possible. If {\em Diag\-Pivoting} is nonzero and if {\em DIAGONAL\_\-PIVOTING} is enabled pivots will be chosen only from the diagonal unless there are no diagonal elements that satisfy the threshold criteria. Otherwise, the entire reduced submatrix is searched when looking for a pivot. The diagonal pivoting in Sparse is efficient and well refined, while the off-diagonal pivoting is not. For symmetric and near symmetric matrices, it is best to use diagonal pivoting because it results in the best performance when reordering the matrix and when factoring the matrix without ordering. If there is a considerable amount of nonsymmetry in the matrix, then off-diagonal pivoting may result in a better equation ordering simply because there are more pivot candidates to choose from. A better ordering results in faster subsequent factorizations. However, the initial pivot selection process takes considerably longer for off-diagonal pivoting.\end{description}
+\end{Desc}
+\begin{Desc}
+\item[See also: ]\par
+{\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} \end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spPartition@{spPartition}}
+\index{spPartition@{spPartition}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Partition ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Mode})}\label{spMatrix_8h_a47}
+
+
+This routine determines the cost to factor each row using both direct and indirect addressing and decides, on a row-by-row basis, which addressing mode is fastest. This information is used in {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} to speed the factorization.
+
+When factoring a previously ordered matrix using {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})}, Sparse operates on a row-at-a-time basis. For speed, on each step, the row being updated is copied into a full vector and the operations are performed on that vector. This can be done one of two ways, either using direct addressing or indirect addressing. Direct addressing is fastest when the matrix is relatively dense and indirect addressing is best when the matrix is quite sparse. The user selects the type of partition used with {\em Mode}. If {\em Mode} is set to {\em sp\-DIRECT\_\-PARTITION}, then the all rows are placed in the direct addressing partition. Similarly, if {\em Mode} is set to {\em sp\-INDIRECT\_\-PARTITION}, then the all rows are placed in the indirect addressing partition. By setting {\em Mode} to {\em sp\-AUTO\_\-PARTITION}, the user allows Sparse to select the partition for each row individually. {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} generally runs faster if Sparse is allowed to choose its own partitioning, however choosing a partition is expensive. The time required to choose a partition is of the same order of the cost to factor the matrix. If you plan to factor a large number of matrices with the same structure, it is best to let Sparse choose the partition. Otherwise, you should choose the partition based on the predicted density of the matrix.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+Mode}]Mode must be one of three special codes: {\em sp\-DIRECT\_\-PARTITION}, {\em sp\-INDIRECT\_\-PARTITION}, or {\em sp\-AUTO\_\-PARTITION}. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spPrint@{spPrint}}
+\index{spPrint@{spPrint}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Print ({\bf sp\-Matrix} {\em e\-Matrix}, int {\em Print\-Reordered}, int {\em Data}, int {\em Header})}\label{spMatrix_8h_a48}
+
+
+Formats and send the matrix to standard output. Some elementary statistics are also output. The matrix is output in a format that is readable by people.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+Print\-Reordered}]Indicates whether the matrix should be printed out in its original form, as input by the user, or whether it should be printed in its reordered form, as used by the matrix routines. A zero indicates that the matrix should be printed as inputed, a one indicates that it should be printed reordered. \item[{\em 
+Data}]Boolean flag that when false indicates that output should be compressed such that only the existence of an element should be indicated rather than giving the actual value. Thus 11 times as many can be printed on a row. A zero signifies that the matrix should be printed compressed. A one indicates that the matrix should be printed in all its glory. \item[{\em 
+Header}]Flag indicating that extra information should be given, such as row and column numbers. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spPseudoCondition@{spPseudoCondition}}
+\index{spPseudoCondition@{spPseudoCondition}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN sp\-REAL sp\-Pseudo\-Condition ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a49}
+
+
+Computes the magnitude of the ratio of the largest to the smallest pivots. This quantity is an indicator of ill-conditioning in the matrix. If this ratio is large, and if the matrix is scaled such that uncertainties in the RHS and the matrix entries are equilibrated, then the matrix is ill-conditioned. However, a small ratio does not necessarily imply that the matrix is well-conditioned. This routine must only be used after a matrix has been factored by {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})} or {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})} and before it is cleared by {\bf sp\-Clear}() {\rm (p.\,\pageref{spMatrix_8h_a22})} or {\bf sp\-Initialize}(). The pseudocondition is faster to compute than the condition number calculated by {\bf sp\-Condition}() {\rm (p.\,\pageref{spMatrix_8h_a23})}, but is not as informative.
+
+\begin{Desc}
+\item[Returns :]\par
+ The magnitude of the ratio of the largest to smallest pivot used during previous factorization. If the matrix was singular, zero is returned.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spRoundoff@{spRoundoff}}
+\index{spRoundoff@{spRoundoff}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN sp\-REAL sp\-Roundoff ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em Rho})}\label{spMatrix_8h_a50}
+
+
+This routine, along with {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spMatrix_8h_a43})}, are used to gauge the stability of a factorization. See description of {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spMatrix_8h_a43})} for more information.
+
+\begin{Desc}
+\item[Returns :]\par
+ Returns a bound on the magnitude of the largest element in $ E = A - LU $.\end{Desc}
+\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix. \item[{\em 
+Rho}]The bound on the magnitude of the largest element in any of the reduced submatrices. This is the number computed by the function {\bf sp\-Largest\-Element}() {\rm (p.\,\pageref{spMatrix_8h_a43})} when given a factored matrix. If this number is negative, the bound will be computed automatically. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spScale@{spScale}}
+\index{spScale@{spScale}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Scale ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS\_\-Scale\-Factors}[$\,$], sp\-REAL {\em Solution\-Scale\-Factors}[$\,$])}\label{spMatrix_8h_a51}
+
+
+This function scales the matrix to enhance the possibility of finding a good pivoting order. Note that scaling enhances accuracy of the solution only if it affects the pivoting order, so it makes no sense to scale the matrix before {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})}. If scaling is desired it should be done before {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}. There are several things to take into account when choosing the scale factors. First, the scale factors are directly multiplied against the elements in the matrix. To prevent roundoff, each scale factor should be equal to an integer power of the number base of the machine. Since most machines operate in base two, scale factors should be a power of two. Second, the matrix should be scaled such that the matrix of element uncertainties is equilibrated. Third, this function multiplies the scale factors by the elements, so if one row tends to have uncertainties 1000 times smaller than the other rows, then its scale factor should be 1024, not 1/1024. Fourth, to save time, this function does not scale rows or columns if their scale factors are equal to one. Thus, the scale factors should be normalized to the most common scale factor. Rows and columns should be normalized separately. For example, if the size of the matrix is 100 and 10 rows tend to have uncertainties near 1e-6 and the remaining 90 have uncertainties near 1e-12, then the scale factor for the 10 should be 1/1,048,576 and the scale factors for the remaining 90 should be 1. Fifth, since this routine directly operates on the matrix, it is necessary to apply the scale factors to the RHS and Solution vectors. It may be easier to simply use {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})} on a scaled matrix to choose the pivoting order, and then throw away the matrix. Subsequent factorizations, performed with {\bf sp\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a30})}, will not need to have the RHS and Solution vectors descaled. Lastly, this function should not be executed before the function {\bf sp\-MNA\_\-Preorder}() {\rm (p.\,\pageref{spMatrix_8h_a44})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix to be scaled. \item[{\em 
+Solution\-Scale\-Factors}]The array of Solution scale factors. These factors scale the columns. All scale factors are real valued. \item[{\em 
+RHS\_\-Scale\-Factors}]The array of RHS scale factors. These factors scale the rows. All scale factors are real valued. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spSetComplex@{spSetComplex}}
+\index{spSetComplex@{spSetComplex}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Set\-Complex ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a52}
+
+
+Forces matrix to be complex.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spSetReal@{spSetReal}}
+\index{spSetReal@{spSetReal}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Set\-Real ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a53}
+
+
+Forces matrix to be real.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spSolve@{spSolve}}
+\index{spSolve@{spSolve}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Solve ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spMatrix_8h_a60}
+
+
+Performs forward elimination and back substitution to find the unknown vector from the {\em RHS} vector and factored matrix. This routine assumes that the pivots are associated with the lower triangular matrix and that the diagonal of the upper triangular matrix consists of ones. This routine arranges the computation in different way than is traditionally used in order to exploit the sparsity of the right-hand side. See the reference in sp\-Revision.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+RHS}]{\em RHS} is the input data array, the right hand side. This data is undisturbed and may be reused for other solves. \item[{\em 
+Solution}]{\em Solution} is the output data array. This routine is constructed such that {\em RHS} and {\em Solution} can be the same array. \item[{\em 
+i\-RHS}]{\em i\-RHS} is the imaginary portion of the input data array, the right hand side. This data is undisturbed and may be reused for other solves. This argument is only necessary if matrix is complex and if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set true. \item[{\em 
+i\-Solution}]{\em i\-Solution} is the imaginary portion of the output data array. This routine is constructed such that {\em i\-RHS} and {\em i\-Solution} can be the same array. This argument is only necessary if matrix is complex and if {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set true. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spSolveTransposed@{spSolveTransposed}}
+\index{spSolveTransposed@{spSolveTransposed}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Solve\-Transposed ({\bf sp\-Matrix} {\em e\-Matrix}, sp\-REAL {\em RHS}[$\,$], sp\-REAL {\em Solution}[$\,$])}\label{spMatrix_8h_a61}
+
+
+Performs forward elimination and back substitution to find the unknown vector from the RHS vector and transposed factored matrix. This routine is useful when performing sensitivity analysis on a circuit using the adjoint method. This routine assumes that the pivots are associated with the untransposed lower triangular matrix and that the diagonal of the untransposed upper triangular matrix consists of ones.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to matrix. \item[{\em 
+RHS}]{\em RHS} is the input data array, the right hand side. This data is undisturbed and may be reused for other solves. \item[{\em 
+Solution}]{\em Solution} is the output data array. This routine is constructed such that {\em RHS} and {\em Solution} can be the same array. \item[{\em 
+i\-RHS}]{\em i\-RHS} is the imaginary portion of the input data array, the right hand side. This data is undisturbed and may be reused for other solves. If {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set false, or if matrix is real, there is no need to supply this array. \item[{\em 
+i\-Solution}]{\em i\-Solution} is the imaginary portion of the output data array. This routine is constructed such that {\em i\-RHS} and {\em i\-Solution} can be the same array. If {\em sp\-SEPARATED\_\-COMPLEX\_\-VECTOR} is set false, or if matrix is real, there is no need to supply this array. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spStripFills@{spStripFills}}
+\index{spStripFills@{spStripFills}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Strip\-Fills ({\bf sp\-Matrix} {\em e\-Matrix})}\label{spMatrix_8h_a54}
+
+
+Strips the matrix of all fill-ins.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]Pointer to the matrix to be stripped. \end{description}
+\end{Desc}
+\index{spMatrix.h@{sp\-Matrix.h}!spWhereSingular@{spWhereSingular}}
+\index{spWhereSingular@{spWhereSingular}!spMatrix.h@{sp\-Matrix.h}}
+\subsubsection{\setlength{\rightskip}{0pt plus 5cm}spc\-EXTERN void sp\-Where\-Singular ({\bf sp\-Matrix} {\em e\-Matrix}, int $\ast$ {\em p\-Row}, int $\ast$ {\em p\-Col})}\label{spMatrix_8h_a55}
+
+
+This function returns the row and column number where the matrix was detected as singular (if pivoting was allowed on the last factorization) or where a zero was detected on the diagonal (if pivoting was not allowed on the last factorization). Pivoting is performed only in {\bf sp\-Order\-And\-Factor}() {\rm (p.\,\pageref{spMatrix_8h_a46})}.\begin{Desc}
+\item[Parameters: ]\par
+\begin{description}
+\item[{\em 
+e\-Matrix}]The matrix for which the error status is desired. \item[{\em 
+p\-Row}]The row number. \item[{\em 
+p\-Col}]The column number. \end{description}
+\end{Desc}

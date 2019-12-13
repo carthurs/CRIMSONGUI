@@ -1,0 +1,67 @@
+rpoly.cpp License
+~~~~~~~~~~~~~~~~~
+
+ --- This software is offered freely and without restriction ---
+
+ The above notice has been added to the file rpoly.cpp with the permission
+ of the author in order to release that file under a Public Domain-like
+ license. The permission has been granted with these two e-mails:
+
+
+ -----(1)----------------------------------------------------------------------
+   Date: Sun, 30 Jan 2011 10:52:42 +0100
+   From: Simone Rossetto <simros85@gmail.com>
+   To: crb@crbond.com
+
+      Hello, I'm packaging for Debian the software QSapecNG http://qsapecng.sourceforge.net/
+      which uses your rpoly.cpp file. The software cannot be put on Debian's main repository
+      because your file has no license information in the header.
+
+      On your website I found that "All downloadable software is offered freely and without
+      restriction". I'm writing you to ask if you can add a sentence like that ("This software
+      is offered freely...") to the header of rpoly.cpp file (which put that file under Public
+      Domain) or if you can release that file under a GPL-compatible license
+      http://www.gnu.org/licenses/license-list.html#GPLCompatibleLicenses adding to the header
+      the proper notice.
+
+
+      Thank you very much, best regards
+      Simone
+
+ 
+ -----(2)----------------------------------------------------------------------
+   Date: Sun, 30 Jan 2011 09:35:24 -0700 (GMT-07:00)
+   From: "C. Bond" <c_r_b@earthlink.net>
+   To: Simone Rossetto <simros85@gmail.com>
+   Subject: Re: License for rpoly.cpp file
+
+      Hi Simone,
+
+      Thanks for your interest in rpoly.cpp.
+
+      I have placed rpoly.cpp completely in
+      the public domain. That means there are
+      no restrictions whatsoever in its use
+      by others. You may use or modify it in
+      any way that suits your purposes. I do
+      not require any citations or acknowledgmentsI
+      It may also be repackaged or bundled
+      with other software. 
+
+      If any bugs or performance problems are
+      discovered, I will try to correct them,
+      so please notify me if any are found.
+
+      Some of the software on my website carry
+      weak copyright notices, but they are
+      only there to limit proliferation during
+      early, debug stages of development.
+
+      Best regards and good luck,
+
+      C. R. Bond, crb@crbond.com
+
+      P.S. These permissions for unrestricted
+      use allow you to place any notices of
+      your choice into the versions of rpoly.cpp
+      that you distribute.

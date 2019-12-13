@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SolverSetupWidget</class>
+ <widget class="QWidget" name="SolverSetupWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1070</width>
+    <height>1276</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_5">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="2">
+      <widget class="QToolButton" name="createSolverRootButton">
+       <property name="toolTip">
+        <string>Create a new solver instance</string>
+       </property>
+       <property name="text">
+        <string>Add</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../resources/SolverSetup.qrc">
+         <normaloff>:/contourModeling/icons/add.png</normaloff>:/contourModeling/icons/add.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="solverRootNodeName">
+       <property name="toolTip">
+        <string>Solver type</string>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string>Create or select solver</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Solver type</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QFrame" name="vesselTreeDependentControls">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QTabWidget" name="tabWidget">
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="currentIndex">
+         <number>4</number>
+        </property>
+        <widget class="QWidget" name="boundaryConditionSetSetupTab">
+         <property name="toolTip">
+          <string>Create or edit boundary condition set</string>
+         </property>
+         <attribute name="icon">
+          <iconset resource="../../resources/SolverSetup.qrc">
+           <normaloff>:/contourModeling/icons/DataManagerIcon_bcs.png</normaloff>:/contourModeling/icons/DataManagerIcon_bcs.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>BC Set</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string>Boundary condition set</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="boundaryConditionSetNodeName">
+              <property name="toolTip">
+               <string>Boundary condition set name</string>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string>Create or select BC set</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="createBoundaryConditionSetButton">
+              <property name="toolTip">
+               <string>Create a new set of boundary conditions</string>
+              </property>
+              <property name="text">
+               <string>Add</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/SolverSetup.qrc">
+                <normaloff>:/contourModeling/icons/add.png</normaloff>:/contourModeling/icons/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QFrame" name="editBoundaryConditionSetFrame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>587</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="boundaryConditionSetupTab">
+         <property name="toolTip">
+          <string>Create or edit boundary condition</string>
+         </property>
+         <attribute name="icon">
+          <iconset resource="../../resources/SolverSetup.qrc">
+           <normaloff>:/contourModeling/icons/DataManagerIcon_bc.png</normaloff>:/contourModeling/icons/DataManagerIcon_bc.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>BC</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>Boundary condition</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="boundaryConditionNodeName">
+              <property name="toolTip">
+               <string>Boundary condition name</string>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string>Create or select boundary condition</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="createBoundaryConditionButton">
+              <property name="toolTip">
+               <string>Create a new boundary condition</string>
+              </property>
+              <property name="text">
+               <string>Add</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/SolverSetup.qrc">
+                <normaloff>:/contourModeling/icons/add.png</normaloff>:/contourModeling/icons/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="crimson::FaceDataEditorWidget" name="boundaryConditionEditor" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="materialSetupTab">
+         <property name="toolTip">
+          <string>Create or edit material</string>
+         </property>
+         <attribute name="icon">
+          <iconset resource="../../resources/SolverSetup.qrc">
+           <normaloff>:/contourModeling/icons/DataManagerIcon_material.png</normaloff>:/contourModeling/icons/DataManagerIcon_material.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Material</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>Material</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="materialNodeName">
+              <property name="toolTip">
+               <string>Material name</string>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string>Create or select boundary condition</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="createMaterialButton">
+              <property name="toolTip">
+               <string>Create new material</string>
+              </property>
+              <property name="text">
+               <string>Add</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/SolverSetup.qrc">
+                <normaloff>:/contourModeling/icons/add.png</normaloff>:/contourModeling/icons/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="crimson::FaceDataEditorWidget" name="materialEditor" native="true"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="solverParametersTab">
+         <property name="toolTip">
+          <string>Create or edit solver parameters</string>
+         </property>
+         <attribute name="icon">
+          <iconset resource="../../resources/SolverSetup.qrc">
+           <normaloff>:/contourModeling/icons/DataManagerIcon_ss.png</normaloff>:/contourModeling/icons/DataManagerIcon_ss.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Solver Parameters</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Solver Parameters</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="solverParametersNodeName">
+              <property name="toolTip">
+               <string>Solver parameters name</string>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string>Create or select solver parameters</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="createSolverParametersButton">
+              <property name="toolTip">
+               <string>Create a new solver parameters</string>
+              </property>
+              <property name="text">
+               <string>Add</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/SolverSetup.qrc">
+                <normaloff>:/contourModeling/icons/add.png</normaloff>:/contourModeling/icons/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QFrame" name="editSolverParametersFrame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QtTreePropertyBrowser" name="solverPropertyBrowser" native="true"/>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="solverStudyTab">
+         <property name="toolTip">
+          <string>Create or edit solver study</string>
+         </property>
+         <attribute name="icon">
+          <iconset resource="../../resources/SolverSetup.qrc">
+           <normaloff>:/contourModeling/icons/DataManagerIcon_SolverStudy.png</normaloff>:/contourModeling/icons/DataManagerIcon_SolverStudy.png</iconset>
+         </attribute>
+         <attribute name="title">
+          <string>Study</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Solver study</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="solverStudyNodeName">
+              <property name="toolTip">
+               <string>Solver study name</string>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+              <property name="placeholderText">
+               <string>Create or select solver study</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="createSolverStudyButton">
+              <property name="toolTip">
+               <string>Create a new solver study</string>
+              </property>
+              <property name="text">
+               <string>Add</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../../resources/SolverSetup.qrc">
+                <normaloff>:/contourModeling/icons/add.png</normaloff>:/contourModeling/icons/add.png</iconset>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QFrame" name="editSolverStudyFrame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <layout class="QGridLayout" name="gridLayout_2">
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_8">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Mesh</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QmitkDataStorageComboBox" name="meshNodeComboBox">
+                 <property name="toolTip">
+                  <string>Mesh used in this study</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_10">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>Solver parameters</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QmitkDataStorageComboBox" name="solverParametersNodeComboBox">
+                 <property name="toolTip">
+                  <string>Solver parameters used in this study</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_11">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Boundary condition sets</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableView" name="boundaryConditionSetsTableView">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>150</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Boundary condition sets used in this study</string>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="sortingEnabled">
+                <bool>true</bool>
+               </property>
+               <attribute name="horizontalHeaderStretchLastSection">
+                <bool>true</bool>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_12">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Materials</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableView" name="materialsTableView">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>150</height>
+                </size>
+               </property>
+               <property name="toolTip">
+                <string>Materials used in this study</string>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="sortingEnabled">
+                <bool>true</bool>
+               </property>
+               <attribute name="horizontalHeaderStretchLastSection">
+                <bool>true</bool>
+               </attribute>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <spacer name="horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QPushButton" name="setupSolverButton">
+                 <property name="toolTip">
+                  <string>Write the solver setup to disk</string>
+                 </property>
+                 <property name="text">
+                  <string>Setup Solver</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="runSimulationButton">
+                 <property name="toolTip">
+                  <string>Run simulation on local machine</string>
+                 </property>
+                 <property name="text">
+                  <string>Run Simulation</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <spacer name="verticalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Fixed</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>10</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
+              <widget class="QGroupBox" name="groupBox_2">
+               <property name="title">
+                <string>Material management</string>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_11">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <item>
+                   <widget class="QPushButton" name="showMaterialButton">
+                    <property name="toolTip">
+                     <string>Compute and show the material values</string>
+                    </property>
+                    <property name="text">
+                     <string>Show materials</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../resources/SolverSetup.qrc">
+                      <normaloff>:/contourModeling/icons/DataManagerIcon_material.png</normaloff>:/contourModeling/icons/DataManagerIcon_material.png</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_4">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QToolButton" name="exportMaterialsButton">
+                    <property name="toolTip">
+                     <string>Export the surface with material values to file</string>
+                    </property>
+                    <property name="text">
+                     <string>...</string>
+                    </property>
+                    <property name="icon">
+                     <iconset resource="../../resources/SolverSetup.qrc">
+                      <normaloff>:/contourModeling/icons/go-up.svg</normaloff>:/contourModeling/icons/go-up.svg</iconset>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <widget class="MaterialVisualizationWidget" name="materialVisualizationWidget" native="true">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::HLine</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="solutionManagementFrame">
+            <property name="title">
+             <string>Solution management</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_10">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_9">
+               <item>
+                <widget class="QPushButton" name="loadSolutionButton">
+                 <property name="toolTip">
+                  <string>Load the computed solutions from disk</string>
+                 </property>
+                 <property name="text">
+                  <string>Load solution</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../resources/SolverSetup.qrc">
+                   <normaloff>:/contourModeling/icons/DataManagerIcon_solution.png</normaloff>:/contourModeling/icons/DataManagerIcon_solution.png</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="showSolutionButton">
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Show solution in 3D window&lt;/p&gt;&lt;p&gt;Use Mesh Exploration view to slice through the mesh&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="text">
+                  <string>Show solution</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../resources/SolverSetup.qrc">
+                   <normaloff>:/contourModeling/icons/vis_on.png</normaloff>
+                   <normalon>:/contourModeling/icons/vis_off.png</normalon>:/contourModeling/icons/vis_on.png</iconset>
+                 </property>
+                 <property name="checkable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer_2">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="MaterialVisualizationWidget" name="solutionVisualizationWidget" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QtTreePropertyBrowser</class>
+   <extends>QWidget</extends>
+   <header location="global">QtTreePropertyBrowser</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QmitkDataStorageComboBox</class>
+   <extends>QComboBox</extends>
+   <header location="global">QmitkDataStorageComboBox.h</header>
+  </customwidget>
+  <customwidget>
+   <class>crimson::FaceDataEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>internal/FaceDataEditorWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MaterialVisualizationWidget</class>
+   <extends>QWidget</extends>
+   <header>internal/MaterialVisualizationWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>solverRootNodeName</tabstop>
+  <tabstop>createSolverRootButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>boundaryConditionSetNodeName</tabstop>
+  <tabstop>createBoundaryConditionSetButton</tabstop>
+  <tabstop>boundaryConditionNodeName</tabstop>
+  <tabstop>createBoundaryConditionButton</tabstop>
+  <tabstop>materialNodeName</tabstop>
+  <tabstop>createMaterialButton</tabstop>
+  <tabstop>solverParametersNodeName</tabstop>
+  <tabstop>createSolverParametersButton</tabstop>
+  <tabstop>solverStudyNodeName</tabstop>
+  <tabstop>createSolverStudyButton</tabstop>
+  <tabstop>meshNodeComboBox</tabstop>
+  <tabstop>solverParametersNodeComboBox</tabstop>
+  <tabstop>boundaryConditionSetsTableView</tabstop>
+  <tabstop>materialsTableView</tabstop>
+  <tabstop>setupSolverButton</tabstop>
+  <tabstop>showMaterialButton</tabstop>
+  <tabstop>exportMaterialsButton</tabstop>
+  <tabstop>loadSolutionButton</tabstop>
+  <tabstop>showSolutionButton</tabstop>
+ </tabstops>
+ <resources>
+  <include location="../../resources/SolverSetup.qrc"/>
+ </resources>
+ <connections/>
+</ui>

@@ -1,0 +1,24 @@
+set(CPP_FILES
+  Initialization/VesselTreeModuleActivator.cpp
+  DataManagement/VesselForestData.cpp   
+  DataManagement/VesselPathAbstractData.cpp
+  DataManagement/vtkParametricSplineVesselPathData.cpp
+  DataManagement/VesselPathOperation.cpp   
+  IO/IOUtilDataSerializer.h
+  IO/VesselTreeIOMimeTypes.cpp
+  IO/VesselForestCoreObjectFactory.cpp   
+  IO/VesselForestDataIO.cpp 
+  IO/vtkParametricSplineVesselPathIO.cpp 
+  Interactions/VesselPathInteractor.cpp
+  Rendering/vtkParametricSplineVesselPathVtkMapper3D.cpp
+)
+
+set(RESOURCE_FILES
+  Interactions/VesselPathConfig.xml
+  Interactions/VesselPathInteraction.xml
+  cursor_normal.png
+  cursor_addpoint.png
+  cursor_insertpoint.png
+  cursor_movepoint.png
+  cursor_removepoint.png
+)

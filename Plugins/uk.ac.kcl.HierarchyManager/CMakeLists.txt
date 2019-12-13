@@ -1,0 +1,8 @@
+project(uk_ac_kcl_HierarchyManager)
+
+mitk_create_plugin(
+  EXPORT_DIRECTIVE HIERARCHYMANAGER_EXPORT
+  EXPORTED_INCLUDE_SUFFIXES src
+  MODULE_DEPENDS VesselTree CRIMSONUtils
+  PACKAGE_DEPENDS GSL Boost
+)

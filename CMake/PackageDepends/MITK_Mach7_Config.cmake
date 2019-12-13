@@ -1,0 +1,3 @@
+find_package(Mach7 REQUIRED)
+
+list(APPEND ALL_INCLUDE_DIRECTORIES ${Mach7_INCLUDE_DIR})
