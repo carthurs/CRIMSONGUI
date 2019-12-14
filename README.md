@@ -85,6 +85,8 @@ Get the source code via git by cloning into the root folder selected above by fo
 	
 		![Visual studio image](./Documentation/Images/vs5.PNG "Project modification")	
 
+ 	- Sometimes this does not work, so you are very strongly advised to also locate the `fttypes.h` file (`C:\Program Files (x86)\Windows Kits\8.1\Include\shared\fttypes.h`) and rename it temporarily to something else. After the build process completes, you should rename it back to `fttypes.h` so that it doesn't interfere with other compilation work on your system.
+ 
  - In the Solution Explorer pane on the right, right-click the "ALL\_BUILD" node and press "Build"
 
 	![Visual studio image](./Documentation/Images/vs2.PNG "Building")
@@ -93,11 +95,16 @@ Get the source code via git by cloning into the root folder selected above by fo
 
 ## Running the built project inside Visual Studio
  - In order to run CRIMSON from Visual Studio (e.g. for debugging purposes) navigate to the CRIMSON build folder (`C:\CRIMSON\sb\CRIMSON-build`) and open the file named `CRIMSON` of the type "Microsoft Visual Studio Solution". This opens the CRIMSON core build project in Visual Studio.
+
  - Right-click on the node "CRIMSON" in Solution Explorer and select "Set as StartUp project"
 	
 	![Visual studio image](./Documentation/Images/vs3.PNG "Set up for running")
 	
- - You are now ready to run/debug CRIMSON from within Visual Studio.
+ - You are now ready to run/debug CRIMSON from within Visual Studio
+  - Ensure that the build type matches the build you created (recommended: `Release`) in the build type in the Visual Studio toolbar
+  - Click the "Local Windows Debugger" button with the green triangle to launch CRIMSON
+  - You may get pop-ups informing you that the project is out of date, and asking if you want to rebuild. Click "No"
+  - If you get a pop-up informing you that the debugging information is missing and asking if you want to continue, click "Yes"
 
 ## Adding flowsolver to your CRIMSON build
  - Run the flowsolver installer. 
