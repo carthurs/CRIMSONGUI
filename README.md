@@ -51,13 +51,13 @@ Get the source code via git by cloning into the root folder selected above by fo
 	![CMake image](./Documentation/Images/cmake3.PNG "An expected error")
 	
  - The large window in the centre now contains pairs of variable names and values colored red, some of which need to be manually set for a succesfull build. Find a variable `Qt5\_DIR` and set it to `C:\Qt\Qt5.7.0\5.7\msvc2013_64\lib\cmake\Qt5` (assuming that you installed Qt in the default directory `C:\Qt`, otherwise replace the `Qt` part by the path which you chose during Qt installation - you may have to adjust this path slightly, sometimes it has `Qt5.7.0` as one of the folders; sometimes it does not).
- - Change `CMAKE\_BUILD\_TYPE` as desired (`Release`, `Debug` or `RelWithDebInfo`). `Release` is recommended. Leave other variables as they are. Caution - ensure that before you build in Visual Studio, you set the same mode in the toolbar at the top. Again, `Release` is very strongly recommended.
+ - Change `CMAKE_BUILD_TYPE` as desired (`Release`, `Debug` or `RelWithDebInfo`). `Release` is recommended. Leave other variables as they are. Caution - ensure that before you build in Visual Studio, you set the same mode in the toolbar at the top. Again, `Release` is very strongly recommended.
  - Press "Configure".
  - Additional variables that can be modified appear now. You need to manually specify the locations of flowsolver and presolver:
 
-	 - For `flowsolver\_folder` enter e.g. `C:\CRIMSON\sb\CMakeExternals\Source\flowsolver`
-		\linebreak Note: This is simply a stub folder for where CRIMSON expects flowsolver files to be located. Actual flowsolver files are copied there after running the separate flowsolver installer.
-	 - For `presolver\_executable` enter e.g. `C:\CRIMSON\sb\CMakeExternals\Source\presolver\presolver.exe`.
+	 - For `flowsolver_folder` enter e.g. `C:\CRIMSON\sb\CMakeExternals\Source\flowsolver`
+	     - Note: This is simply a stub folder for where CRIMSON expects flowsolver files to be located. Actual flowsolver files are copied there after running the separate flowsolver installer.
+	 - For `presolver_executable` enter e.g. `C:\CRIMSON\sb\CMakeExternals\Source\presolver\presolver.exe`.
 		In variables above replace `C:\CRIMSON\sb` with your own custom location of CRIMSON superbuild folder as necessary.
 
  - Press "Configure"
@@ -108,4 +108,4 @@ Get the source code via git by cloning into the root folder selected above by fo
 
 ## Adding flowsolver to your CRIMSON build
  - Run the flowsolver installer. 
- - Make sure to specify the same folder for unpacking as the one specified under `flowsolver\_folder` variable during CMake configuration.
+ - Make sure to specify the same folder for unpacking as the one specified under `flowsolver_folder` variable during CMake configuration.
