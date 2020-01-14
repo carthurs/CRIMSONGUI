@@ -117,3 +117,8 @@ The build process will primarily use the Output and Error List windows, we recom
 ## Adding flowsolver to your CRIMSON build
  - Run the flowsolver installer. 
  - Make sure to specify the same folder for unpacking as the one specified under `flowsolver_folder` variable during CMake configuration.
+ 
+## Running CRIMSON outside of Visual Studio
+
+- The executable file for CRIMSON will be written to, e.g., `"C:\crimson\sb\CRIMSON-build\bin\Release\CRIMSON.exe"`. 
+- To run CRIMSON, use the batch file in e.g., `"C:\crimson\sb\CRIMSON-build\bin\startCRIMSON_release.bat"`
