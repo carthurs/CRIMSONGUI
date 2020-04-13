@@ -2,6 +2,7 @@ CRIMSON GUI: The computational haemodynamics model creation software.
 
 Copyright (C) 2014 The Regents of the University of Michigan 
 Copyright (C) 2013 King's College London
+And others; see source code headers.
 
 http://www.crimson.software
 https://bloodflow.engin.umich.edu/
