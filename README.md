@@ -1,5 +1,5 @@
 # CRIMSON Build instructions for Windows
-### by Marija Marcan
+### by Marija Marcan, Chris Arthurs and Alex Melville
 
 ## Cautionary Note
 Please be aware that CRIMSON is a very large project, and compilation will take a very long time. Additionally, be aware that it must be built precisely following these instructions. If an incorrect step is taken, the best course of action is most likely to delete the CRIMSON folder and start again. Your system will require up to 55 GB of available hard drive space.
@@ -9,7 +9,7 @@ Before building CRIMSON software itself you will need to download and install th
 
  - Git - 2.19.2 or later (https://git-scm.com/downloads)
  - CMake - 3.13.0 (https://cmake.org/download/)
- - Qt - 5.7 (exactly) - (archived here: https://umich.app.box.com/s/kcvgbavtyy1y6yubgang5l7re4xso2fa - download the msvc2013 64 bit windows installer executable: qt-opensource-windows-x86-msvc2013_64-5.7.0.exe). During installation, amongst the components under 5.7, you only need "msvc2013 64-bit", "Qt WebEngine" and "Qt Script"
+ - Qt - 5.7 (exactly) - archived here: https://umich.app.box.com/s/kcvgbavtyy1y6yubgang5l7re4xso2fa/file/653204395845 (or, in case of problems with that link, https://umich.app.box.com/s/kcvgbavtyy1y6yubgang5l7re4xso2fa and download the msvc2013 64 bit windows installer executable: qt-opensource-windows-x86-msvc2013_64-5.7.0.exe). During installation, amongst the components under 5.7, you only need "msvc2013 64-bit", "Qt WebEngine" and "Qt Script"
  - Visual Studio - VS2013 (tested with Update 5)
 
 For installing the above software follow the instructions as provided by their publisher.
