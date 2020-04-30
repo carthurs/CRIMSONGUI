@@ -1,15 +1,16 @@
 Contributors to CRIMSON Flowsolver
 
-Alberto Figueroa <figueroc@med.umich.edu>
-Marija Marcan <marija.marcan@gmail.com>
-Rostislav Khlebnikov <r.khlebnikov@gmail.com>
-Kevin Lau <kevin.d.lau@gmail.com>
-Chris Arthurs <carthurs@gmail.com>
-Nitesh Nama <nitesh.nama@gmail.com>
-Miquel Aguirre Font <miquel.aguirre@gmail.com>
-Sabrina Lynch <srlynch@umich.edu>
-Nan Xiao <nanxiao@gmail.com>
-Eoin Hyde <eoinhyde@gmail.com>
-Federica Cuomo <cuomofed@umich.edu>
-Vasilina Filonova <vasilina.filonova@gmail.com>
-Kritika Iyer <iyerkriti@gmail.com>
+Alberto Figueroa <figueroc AT med DOT umich DOT edu>
+Marija Marcan <marija DOT marcan AT gmail DOT com>
+Rostislav Khlebnikov <r DOT khlebnikov AT gmail DOT com>
+Kevin Lau <kevin DOT d DOT lau AT gmail DOT com>
+Chris Arthurs <carthurs AT gmail DOT com>
+Nitesh Nama <nitesh DOT nama AT gmail DOT com>
+Miquel Aguirre Font <miquel DOT aguirre AT gmail DOT com>
+Sabrina Lynch <srlynch AT umich DOT edu>
+Nan Xiao <nanxiao AT gmail DOT com>
+Eoin Hyde <eoinhyde AT gmail DOT com>
+Federica Cuomo <cuomofed AT umich DOT edu>
+Vasilina Filonova <vasilina DOT filonova AT gmail DOT com>
+Kritika Iyer <iyerkriti AT gmail DOT com>
+Alex Melville <amelvill AT umich DOT edu>
