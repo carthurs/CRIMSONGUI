@@ -113,6 +113,10 @@ if(NOT MITK_DIR)
   # Create options to inject pre-build dependencies
   #-----------------------------------------------------------------------------
   
+  # [AJM] NOTE: The foreach control variable has different scoping rules,
+  #             https://cmake.org/pipermail/cmake/2005-June/006729.html
+  #             I don't think this is an actual variable of its own, it just references... existing variables?
+  #             So there is no name collision / data overwriting issue with using proj here as a loop variable.
   foreach(proj CTK DCMTK GDCM VTK ITK OpenCV CableSwig)
     if(MITK_USE_${proj})
       set(MITK_${proj}_DIR "${${proj}_DIR}" CACHE PATH "Path to ${proj} build directory")
@@ -133,9 +137,12 @@ if(NOT MITK_DIR)
   endif()
   
   set(MITK_SOURCE_DIR "" CACHE PATH "MITK source code location. If empty, MITK will be cloned from MITK_GIT_REPOSITORY") #use this to test local changes before pushing to github
-  #set(MITK_SOURCE_DIR "" CACHE PATH "MITK source code location. If empty, MITK will be cloned from MITK_GIT_REPOSITORY")
-  set(MITK_GIT_REPOSITORY "https://github.com/rkhlebnikov/MITK.git" CACHE STRING "The git repository for cloning MITK")
-  set(MITK_GIT_TAG "origin/development" CACHE STRING "The git tag/hash to be used when cloning from MITK_GIT_REPOSITORY")
+
+  # [AJM] Note: this is a custom version of MITK for CRIMSON's purposes.
+  set(MITK_GIT_REPOSITORY "https://github.com/carthurs/MITK.git" CACHE STRING "The git repository for cloning MITK")
+
+  # [AJM] Don't just pull whatever the latest is on the development branch, that will make it impossible to compile older versions of the program later on.
+  set(MITK_GIT_TAG "CRIMSON_2020.03.12" CACHE STRING "The git tag/hash to be used when cloning from MITK_GIT_REPOSITORY")
   mark_as_advanced(MITK_SOURCE_DIR MITK_GIT_REPOSITORY MITK_GIT_TAG)
   
   #-----------------------------------------------------------------------------
@@ -187,9 +194,19 @@ if(NOT MITK_DIR)
        )
   endif()
 
+  # MITK Python only supports release builds, so we need to set the CMAKE_BUILD_TYPE accordingly
+  set(mitkBuildType ${CMAKE_BUILD_TYPE})
+  if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    message("Debug builds are not supported for MITK Python, using RelWithDebInfo instead.")
+
+    set(mitkBuildType "RelWithDebInfo")
+  endif()
+  
+
   ExternalProject_Add(${proj}
     ${mitk_source_location}
     BINARY_DIR ${MITK_BINARY_DIR}
+    # where ep_suffix is -cmake, set in SuperBuild.cmake; I think ep stands for "External Project"
     PREFIX ${proj}${ep_suffix}
     INSTALL_COMMAND ""
     CMAKE_GENERATOR ${gen}
@@ -199,6 +216,7 @@ if(NOT MITK_DIR)
       ${additional_mitk_cmakevars}
       -DBUILD_SHARED_LIBS:BOOL=ON
       -DBUILD_TESTING:BOOL=${MITK_BUILD_TESTING}
+      -DCMAKE_BUILD_TYPE:STRING=${mitkBuildType}
     CMAKE_CACHE_ARGS
       ${ep_common_cache_args}
     CMAKE_CACHE_DEFAULT_ARGS

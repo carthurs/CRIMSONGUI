@@ -1,3 +1,9 @@
+# Top level CMake build script for CRIMSON.
+# 
+# Note that this script is used for both:
+# - Top level Superbuild configuration
+# - Crimson-Configure project for building the CRIMSON application itself.
+
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 
 # Change project and application name to your own
@@ -12,7 +18,7 @@ set(CMAKE_INSTALL_OPENMP_LIBRARIES TRUE)
 
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to 'Debug' as none was specified.")
-  set(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build." FORCE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build (Release recommended)." FORCE)
 
   # Set the possible values of build type for cmake-gui
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY
@@ -20,10 +26,15 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 #-----------------------------------------------------------------------------
-# Superbuild Option - Enabled by default
+# Superbuild Cache variable
+# 
+# This is more than just a user-modifiable setting, if you set this to ON,
+# the build scripts will:
+# 1. run this script once with it ON (and download the external projects)
+# 2. run this script once with it OFF (to compile the CRIMSON application)
 #-----------------------------------------------------------------------------
 
-option(${MY_PROJECT_NAME}_USE_SUPERBUILD "Build ${MY_PROJECT_NAME} and the projects it depends on via SuperBuild.cmake." ON)
+option(${MY_PROJECT_NAME}_USE_SUPERBUILD "Build ${MY_PROJECT_NAME} and the projects it depends on via SuperBuild.cmake (it's strongly recommended that you leave this ON for CRIMSON)." ON)
 
 if(${MY_PROJECT_NAME}_USE_SUPERBUILD)
   project(${MY_PROJECT_NAME}-superbuild)
@@ -162,9 +173,9 @@ include(crimsonFunctionConfigureVisualStudioUserProjectFile)
 # Set project specific options and variables (NOT available during superbuild)
 #-----------------------------------------------------------------------------
 
-set(${MY_PROJECT_NAME}_VERSION_MAJOR "2019")
+set(${MY_PROJECT_NAME}_VERSION_MAJOR "2020")
 set(${MY_PROJECT_NAME}_VERSION_MINOR "11")
-set(${MY_PROJECT_NAME}_VERSION_PATCH "01")   
+set(${MY_PROJECT_NAME}_VERSION_PATCH "30")   
 set(${MY_PROJECT_NAME}_VERSION_STRING "${${MY_PROJECT_NAME}_VERSION_MAJOR}.${${MY_PROJECT_NAME}_VERSION_MINOR}.${${MY_PROJECT_NAME}_VERSION_PATCH}")
 
 # Ask the user if a console window should be shown with the applications

@@ -32,6 +32,8 @@ endif()
 # ExternalProjects
 #-----------------------------------------------------------------------------
 
+set(PACKAGE_FLOWSOLVER OFF CACHE BOOL "Download the flowsolver as part of the build process (not currently supported)")
+
 set(external_projects
   freetype
   TBB
@@ -39,9 +41,12 @@ set(external_projects
   WM5
   QtPropertyBrowser
   presolver
-  flowsolver
   GSL
   )
+
+if(PACKAGE_FLOWSOLVER)
+  list(APPEND external_projects flowsolver)
+endif()
 
 if(NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   list(APPEND external_projects PythonModules parse)
@@ -177,12 +182,14 @@ set(${MY_PROJECT_NAME}_ADDITIONAL_MODULE_LINKER_FLAGS "" CACHE STRING "Additiona
 mark_as_advanced(${MY_PROJECT_NAME}_ADDITIONAL_EXE_LINKER_FLAGS ${MY_PROJECT_NAME}_ADDITIONAL_SHARED_LINKER_FLAGS ${MY_PROJECT_NAME}_ADDITIONAL_MODULE_LINKER_FLAGS)
 
 #-----------------------------------------------------------------------------
-# Project Configure
+# CRIMSON-Configure
 #-----------------------------------------------------------------------------
+# This section is responsible for creating the C:\cb\CRIMSON-build directory,
+# and its contents, including CRIMSON.sln in that directory.
 
 set(proj ${MY_PROJECT_NAME}-Configure)
 
-
+# NOTE: This project "Recycles" ./CMakeLists.txt...
 ExternalProject_Add(${proj}
   DOWNLOAD_COMMAND ""
   CMAKE_GENERATOR ${gen}
@@ -212,6 +219,9 @@ ExternalProject_Add(${proj}
     "-DCMAKE_MODULE_LINKER_FLAGS:STRING=${CMAKE_MODULE_LINKER_FLAGS} ${${MY_PROJECT_NAME}_ADDITIONAL_MODULE_LINKER_FLAGS}"
     # ------------- Boolean build options --------------
     ${my_superbuild_boolean_args}
+
+    #[AJM]  Deliberately always OFF (even if it's ON for the main script); if SuperBuild isn't OFF for this project, then it'll just re-run the SuperBuild.cmake 
+    #       script instead of building CRIMSON itself
     -D${MY_PROJECT_NAME}_USE_SUPERBUILD:BOOL=OFF
     -D${MY_PROJECT_NAME}_CONFIGURED_VIA_SUPERBUILD:BOOL=ON
     -DCTEST_USE_LAUNCHERS:BOOL=${CTEST_USE_LAUNCHERS}
@@ -227,8 +237,9 @@ ExternalProject_Add(${proj}
     -DQtPropertyBrowser_DIR:PATH=${QtPropertyBrowser_DIR}
     -DPRESOLVER_EXECUTABLE:FILEPATH=${presolver_executable}
     -DGSL_INCLUDE_DIR:PATH=${GSL_INCLUDE_DIR}
-    
-  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+    -DCRIMSON_MESHING_KERNEL:STRING=${CRIMSON_MESHING_KERNEL}
+
+  SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} # Since we're running in ./, this will cause cmake to re-run ./CMakeLists.txt!
   BINARY_DIR ${CMAKE_BINARY_DIR}/${MY_PROJECT_NAME}-build
   BUILD_COMMAND ""
   INSTALL_COMMAND ""

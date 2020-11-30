@@ -2,6 +2,11 @@
 # Flowsolver
 #-----------------------------------------------------------------------------
 
+if(NOT PACKAGE_FLOWSOLVER)
+  return()
+endif()
+
+
 # Sanity checks
 if(DEFINED flowsolver_DIR AND NOT EXISTS ${flowsolver_DIR})
 message(FATAL_ERROR "flowsolver_DIR variable is defined but corresponds to non-existing directory")
