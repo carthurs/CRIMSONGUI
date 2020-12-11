@@ -1,5 +1,7 @@
 project(uk_ac_kcl_VesselMeshing)
 
+message("VesselMesshing: Kernel is " ${CRIMSON_MESHING_KERNEL})
+
 mitk_create_plugin(
   EXPORT_DIRECTIVE VESSELMESHING_EXPORT
   EXPORTED_INCLUDE_SUFFIXES src

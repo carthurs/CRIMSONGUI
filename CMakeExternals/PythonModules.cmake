@@ -116,11 +116,13 @@ message(\"End of build/CMakeExternals/tmp/PythonModules_configure_step.cmake\")
 
     set(PY_SOURCE_DIR "" CACHE PATH "source code location. If empty, will be cloned from GIT_REPOSITORY")
     set(PY_GIT_REPOSITORY "https://github.com/carthurs/CRIMSONPythonModules.git" CACHE STRING "The git repository for the CRIMSON Python modules")
+    set(PY_GIT_TAG "20201101_particles" CACHE STRING "The tag or commit hash of the desired revision of the CRIMSON Python modules")
     
     if(NOT PY_SOURCE_DIR)
       set(py_source_location
           SOURCE_DIR ${CMAKE_BINARY_DIR}/${proj}
           GIT_REPOSITORY ${PY_GIT_REPOSITORY}
+          GIT_TAG ${PY_GIT_TAG}
           )
     else()
       set(py_source_location

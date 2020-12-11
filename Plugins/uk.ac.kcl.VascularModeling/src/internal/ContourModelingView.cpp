@@ -1097,6 +1097,7 @@ void ContourModelingView::computePathThroughContourCenters()
 
 void ContourModelingView::createLoft() { LoftAction().Run(currentNode()); }
 
+//TODO: use similar mechanism to check if PCMRI mapping is done and set the python data object
 void ContourModelingView::previewLoft()
 {
     if (crimson::AsyncTaskManager::getInstance()->getTaskState(

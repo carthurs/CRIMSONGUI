@@ -15,9 +15,6 @@ set(INTERNAL_CPP_FILES
   PCMRIMappingWidget.cpp
   MapAction.cpp
   TimeInterpolationDialog.cpp
-  3rdParty/BestFit/BestFit.cpp #
-  3rdParty/BestFit/Double.cpp #
-  3rdParty/BestFit/Shapes.cpp #
   )
 #TODO: only add files that are different than ones in VascularModeling plugin (try to export reusable ones from there)
 

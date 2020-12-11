@@ -1,3 +1,13 @@
+message("Entering ./SuperBuild.cmake")
+# This file is used for collecting and compiling CRIMSON's dependencies. 
+# It will also run NonSuperBuild.cmake to compile crimson itself.
+
+#-----------------------------------------------------------------------------
+# CMake Function(s) and Macro(s)
+#-----------------------------------------------------------------------------
+
+include(MacroEmptyExternalProject)
+
 #-----------------------------------------------------------------------------
 # Convenient macro allowing to download a file
 #-----------------------------------------------------------------------------
@@ -42,24 +52,36 @@ set(external_projects
   QtPropertyBrowser
   presolver
   GSL
+
   )
 
 if(PACKAGE_FLOWSOLVER)
   list(APPEND external_projects flowsolver)
 endif()
 
+# [AJM] why is this excluded from debug builds?
 if(NOT ${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   list(APPEND external_projects PythonModules parse)
 endif()
   
 
-set(EXTERNAL_MITK_DIR "${MITK_DIR}" CACHE PATH "Path to MITK build directory")
+set(EXTERNAL_MITK_DIR "${MITK_DIR}" CACHE PATH "Path to MITK build directory (if you want to re-use a prebuilt directory for speed reasons). Example: C:/cr/MITK-superbuild/MITK-build")
 mark_as_advanced(EXTERNAL_MITK_DIR)
 if(EXTERNAL_MITK_DIR)
   set(MITK_DIR ${EXTERNAL_MITK_DIR})
 endif()
 
+# [AJM]
+set(EXTERNAL_OCC_DIR "" CACHE PATH "Path to OCC directory (if you want to re-use a prebuilt directory for speed reasons), example: C:/cr/CMakeExternals/Install/OCC_src/ directory")
+mark_as_advanced(EXTERNAL_OCC_DIR)
+if(EXTERNAL_OCC_DIR)
+  set(OCC_DIR ${EXTERNAL_OCC_DIR})
+endif()
+
 # Look for git early on, if needed
+# [AJM] this does not necessarily mean that git is ready to commit, though
+#   some parts of the build script (unfortunately) use stash, which will fail
+#   if you haven't set your name and e-mail.
 if(NOT MITK_DIR AND MITK_USE_CTK AND NOT CTK_DIR)
   find_package(Git REQUIRED)
 endif()
@@ -122,7 +144,7 @@ set(ep_common_args
   -DCMAKE_MODULE_LINKER_FLAGS:STRING=${CMAKE_MODULE_LINKER_FLAGS}
 )
 
-# Include external projects
+# Include the .cmake file for each external project
 foreach(p MITK ${external_projects})
   include(CMakeExternals/${p}.cmake)
 endforeach()
@@ -147,11 +169,11 @@ foreach(my_cmake_arg ${my_cmake_boolean_args})
 endforeach()
 
 #-----------------------------------------------------------------------------
-# Project Utilities
+# CRIMSON Utilities
 #-----------------------------------------------------------------------------
 
 set(proj ${MY_PROJECT_NAME}-Utilities)
-ExternalProject_Add(${proj}
+ExternalProject_Add(${proj} # where proj is CRIMSON-Utilities
   DOWNLOAD_COMMAND ""
   CONFIGURE_COMMAND ""
   BUILD_COMMAND ""
@@ -187,10 +209,23 @@ mark_as_advanced(${MY_PROJECT_NAME}_ADDITIONAL_EXE_LINKER_FLAGS ${MY_PROJECT_NAM
 # This section is responsible for creating the C:\cb\CRIMSON-build directory,
 # and its contents, including CRIMSON.sln in that directory.
 
+message("Running CRIMSON-Configure (creating CRIMSON-build directory)")
+
+message("OCC_DIR is " ${OCC_DIR})
+message("QtPropertyBrowser_DIR is " ${QtPropertyBrowser_DIR})
+message("CMAKE_MODULE_PATH  " ${CMAKE_MODULE_PATH})
+
 set(proj ${MY_PROJECT_NAME}-Configure)
 
-# NOTE: This project "Recycles" ./CMakeLists.txt...
-ExternalProject_Add(${proj}
+# [AJM] it looks like this is reconfiguring a new project, and it attempts to ... manually transfer all of the custom settings.
+#       I am not sure why it's doing that, seems like there must be a better way than this.
+#       Why exactly can't this just re-use the CMAKE_ARGS that we already set? Can it? 
+#       - Do any of the other projects successfully re-use CMAKE_ARGS?
+#       - Can I just do something like CMAKE_ARGS ${CMAKE_ARGS}?
+#
+#       NOTE: This project "Recycles" ./CMakeLists.txt...
+#             I wonder if this is well defined behavior, I am not sure if this is a good idea...
+ExternalProject_Add(${proj} #where proj is CRIMSON-Configure
   DOWNLOAD_COMMAND ""
   CMAKE_GENERATOR ${gen}
   CMAKE_ARGS
@@ -238,7 +273,7 @@ ExternalProject_Add(${proj}
     -DPRESOLVER_EXECUTABLE:FILEPATH=${presolver_executable}
     -DGSL_INCLUDE_DIR:PATH=${GSL_INCLUDE_DIR}
     -DCRIMSON_MESHING_KERNEL:STRING=${CRIMSON_MESHING_KERNEL}
-
+    
   SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR} # Since we're running in ./, this will cause cmake to re-run ./CMakeLists.txt!
   BINARY_DIR ${CMAKE_BINARY_DIR}/${MY_PROJECT_NAME}-build
   BUILD_COMMAND ""
@@ -280,4 +315,3 @@ add_custom_target(${MY_PROJECT_NAME}
   COMMAND ${_build_cmd}
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/${MY_PROJECT_NAME}-build
 )
-

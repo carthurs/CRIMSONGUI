@@ -30,7 +30,8 @@
 #! \endcode
 #!
 function(crimsonFunctionCreateBlueBerryApplication)
-
+# [AJM] note that this appears to be based on https://github.com/MITK/MITK/blob/master/CMake/mitkFunctionCreateBlueBerryApplication.cmake
+#       note that cmake_parse_arguments will cause the value of PLUGINS will end up in _APP_PLUGINS
 cmake_parse_arguments(_APP "SHOW_CONSOLE;NO_PROVISIONING;NO_INSTALL" "NAME;DESCRIPTION" "SOURCES;PLUGINS;EXCLUDE_PLUGINS;LINK_LIBRARIES;LIBRARY_DIRS" ${ARGN})
 
 if(NOT _APP_NAME)
@@ -41,11 +42,15 @@ if(NOT _APP_SOURCES)
   set(_APP_SOURCES ${_APP_NAME}.cpp)
 endif()
 
+
 if(NOT _APP_PLUGINS)
+  # [AJM] Note: CRIMSON never provides the plugins parameter, so it will always run this part
   ctkFunctionGetAllPluginTargets(_APP_PLUGINS)
 else()
   set(_plugins ${_APP_PLUGINS})
   set(_APP_PLUGINS)
+
+  # [AJM] what is the purpose of this string replacement operation?
   foreach(_plugin ${_plugins})
     string(REPLACE "." "_" _plugin_target ${_plugin})
     list(APPEND _APP_PLUGINS ${_plugin_target})

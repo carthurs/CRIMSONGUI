@@ -16,15 +16,13 @@ if(NOT DEFINED TBB_DIR)
 
     if (WIN32)
         set(TBB_URL  https://github.com/01org/tbb/releases/download/2018_U2/tbb2018_20171205oss_win.zip)
-        #"https://www.threadingbuildingblocks.org/sites/default/files/software_releases/windows/tbb43_20150611oss_win.zip")
     else()
         set(TBB_URL "https://www.threadingbuildingblocks.org/sites/default/files/software_releases/linux/tbb43_20150611oss_lin.tgz")
     endif()
     
-    ExternalProject_Add(${proj}
+    ExternalProject_Add(${proj} # where proj is TBB
       LIST_SEPARATOR ${sep}
       URL ${TBB_URL}
-      #URL_MD5 ba87fe9f5ca47e3dfd62aad7223f0e7f
       
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
@@ -34,9 +32,7 @@ if(NOT DEFINED TBB_DIR)
 
     ExternalProject_Get_Property(${proj} source_dir)
     set(TBB_DIR ${source_dir})
-    #set(TBB_DIR ${ep_prefix})
-    #mitkFunctionInstallExternalCMakeProject(${proj})
 
 else()
-    #mitkMacroEmptyExternalProject(${proj} "${proj_DEPENDENCIES}")
+
 endif()

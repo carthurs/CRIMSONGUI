@@ -60,6 +60,9 @@
 
 #include <Wm5IntrRay3Plane3.h>
 
+//#define _DEBUG
+//#ifdef _DEBUG
+//#endif // _DEBUG
 
 #include <chrono>
 #include <numeric>
@@ -138,6 +141,17 @@ std::vector <std::string> initial_coeffs_filename;
 #define MAX2_V_abs(x) std::max( std::max( std::abs(x[0]), std::abs(x[1])), std::abs(x[2])  )
 
 
+//template <typename TBsplineGridType>
+//void fit_cyclicBspline1D(const std::vector<typename TBsplineGridType::PointType > &t, const std::vector< typename TBsplineGridType::CoefficientType > &v,
+//	double lambda, typename TBsplineGridType::Pointer control_points);
+//
+//
+//
+//template <typename TBsplineGrid1DType, typename TBsplineGrid2DType>
+//void interpolateClosedContour(const std::vector< typename TBsplineGrid2DType::PointType> &coordinates, const std::vector< typename TBsplineGrid1DType::PointType> &interpolated_contour_angle,
+//	std::vector< typename TBsplineGrid2DType::PointType> &interpolated_contour);
+
+
 namespace crimson
 {
 
@@ -197,6 +211,10 @@ namespace crimson
 
 
 		double vscale = (venscale*M_PI) / (double)phaseEncodingVelocityValue;
+
+#ifdef _DEBUG
+		MITK_INFO << vscale;
+#endif
 
 		return vscale;
 	}
@@ -262,19 +280,45 @@ namespace crimson
 				coordinatesMesh.push_back(mesh->getNodeCoordinates(*it));
 			}
 
+			#ifdef _DEBUG
+				{
+					std::ofstream file;
+					std::string filename = "./output/mesh3D.txt";
+					file.open(filename, ofstream::out);
+					for (int i = 0; i < coordinatesMesh.size(); i++){
+						file << coordinatesMesh[i][0] << " " << coordinatesMesh[i][1] << " " << coordinatesMesh[i][2] << std::endl;
+					}
+					file.close();
+					std::cout << "output in " << filename << std::endl;
+				}
 
+			#endif
 			//transform model points to 2D
 
 			std::vector<mitk::Point2D> coordinatesOut;
 
+			//TODO: check if reference image spacing here messes up mapping geometries
 			mitk::PlaneGeometry::Pointer plane = contourModel->GetPlaneGeometry()->Clone();
 
 			for (std::vector<mitk::Point3D>::iterator it = coordinatesMesh.begin(); it < coordinatesMesh.end(); it++) {
 				mitk::Point2D projectedPoint;
 				plane->Map(*it, projectedPoint);
+				//TODO: mm and index-to-world coordinates?
 				coordinatesOut.push_back(projectedPoint);
 			}
+#ifdef _DEBUG
+					{
+						std::ofstream file;
+						std::string filename = "./output/mesh2D.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesOut.size(); i++){
+							file << coordinatesOut[i][0] << " " << coordinatesOut[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
 
+#endif
 	
 			//transfer model contour points into std::vector< PointType > format
 
@@ -348,9 +392,11 @@ namespace crimson
 					for (std::vector<mitk::Point3D>::iterator it = polyLineImage3.begin(); it < polyLineImage3.end(); it++) {
 						mitk::Point2D projectedPoint;
 						planePCMRI->Map(*it, projectedPoint);
+						//TODO: mm and index-to-world coordinates?
 						polyLineImage2D.push_back(projectedPoint);
 					}
 
+					//TODO: polylineimage2 or polylineimage2D?
 					std::vector<IPCMRIKernel::PointType> coordinatesImage;
 					coordinatesImage.reserve(polyLineImage2.size());    //  avoids unnecessary reallocations
 					std::transform(polyLineImage2.begin(), polyLineImage2.end(),
@@ -410,7 +456,7 @@ namespace crimson
 						rotated_centred_coordinatesModel[i][1] = Rot(1, 0) * centred_coordinatesModel[i][0] + Rot(1, 1) * centred_coordinatesModel[i][1];
 					}
 
-					//warp the rest of the model face 
+					//warp the rest of the model face - DOUBLE CHECK IF WE NEED ROTATION HERE???!!!
 
 					std::vector<IPCMRIKernel::PointType> coordinatesOutBS;
 					coordinatesOutBS.reserve(coordinatesOut.size());    //  avoids unnecessary reallocations
@@ -696,7 +742,11 @@ namespace crimson
 					MITK_INFO << "Planar figure area " << areaContour;
 					MITK_INFO << "Mesh face area " << area;
 					MITK_INFO << "Area scaling factor " << scalingFactor;
-
+#ifdef _DEBUG
+					MITK_INFO << "Planar figure area " << areaContour;
+					MITK_INFO << "Mesh face area " << area;
+					MITK_INFO << "Area scaling factor " << scalingFactor;
+#endif
 					//interpolate pre-calculated profile points to mesh warped points
 					typedef itk::LinearInterpolateImageFunction<WholeImageTypeFloat, float>	LinearInterpolatorType;
 					auto interpolator = LinearInterpolatorType::New();
@@ -727,6 +777,234 @@ namespace crimson
 					}
 
 
+					///---------------------------------------------------------------------------//
+					///                       PRINT RESULTS TO FILE                               //
+					///---------------------------------------------------------------------------//
+
+					#ifdef _DEBUG
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/centredModel.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < centred_coordinatesModel.size(); i++){
+							file << centred_coordinatesModel[i][0] << " " << centred_coordinatesModel[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/rotated_centredModel.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < rotated_centred_coordinatesModel.size(); i++){
+							file << rotated_centred_coordinatesModel[i][0] << " " << rotated_centred_coordinatesModel[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/rotated_centredMesh.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < rotated_centred_coordinatesOut.size(); i++){
+							file << rotated_centred_coordinatesOut[i][0] << " " << rotated_centred_coordinatesOut[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/coordinatesMesh2D.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesOut.size(); i++){
+							file << coordinatesOut[i][0] << " " << coordinatesOut[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/centred_coordinatesMesh.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesOut_centred.size(); i++){
+							file << coordinatesOut_centred[i][0] << " " << coordinatesOut_centred[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/interpolatedModelContour.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < interpolated_contourA.size(); i++){
+							file << interpolated_contourA[i][0] << " " << interpolated_contourA[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/originalImageContour.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesImage.size(); i++){
+							file << coordinatesImage[i][0] << " " << coordinatesImage[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/centredImageContour.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < centred_coordinatesImage.size(); i++){
+							file << centred_coordinatesImage[i][0] << " " << centred_coordinatesImage[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/interpolatedImageContour.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < interpolated_contourB.size(); i++){
+							file << interpolated_contourB[i][0] << " " << interpolated_contourB[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/contourVectors.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < interpolated_contourA.size(); i++){
+							file <<  contour_deformation_vectorsx[i][0] << " " << contour_deformation_vectorsy[i][0] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/denseDeformation.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesOut_centred.size(); i++){
+							file << interpolated_vectorsx[i][0] << " " << interpolated_vectorsy[i][0] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/denseDeformationBorder.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < interpolated_vectorsxBorder.size(); i++){
+							file << interpolated_vectorsxBorder[i][0] << " " << interpolated_vectorsyBorder[i][0] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/coordinatesDisplaced.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesDisplaced.size(); i++){
+							file <<  coordinatesDisplaced[i][0] << " " << coordinatesDisplaced[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/coordinatesDisplacedBorder.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesDisplacedBorder.size(); i++){
+							file << coordinatesDisplacedBorder[i][0] << " " << coordinatesDisplacedBorder[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/coordinatesDisplacedIndex.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesDisplaced.size(); i++){
+							file <<  coordinatesDisplacedIndex[i][0] << " " << coordinatesDisplacedIndex[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/coordinatesDisplacedIndexMapped.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesDisplaced.size(); i++){
+							file << coordinatesDisplacedIndexMapped[i][0] << " " << coordinatesDisplacedIndexMapped[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					{
+						std::ofstream file;
+						std::string filename = "./output/mappedPcmriValues" + std::to_string(slice) + ".txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesMesh.size(); i++){
+							file << _mappedPCMRIvalues[i][slice] << " " << coordinatesDisplaced[i][0] << " "
+								<< " " << coordinatesDisplaced[i][1] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}
+
+					/*{
+						std::ofstream file;
+						std::string filename = "./output/mappedPcmriValues3D.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesMesh.size(); i++){
+							file << mappedPcmriValues3D[i][0] << " " << mappedPcmriValues3D[i][1] << " " << mappedPcmriValues3D[i][2] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}*/
+
+					/*{
+						std::ofstream file;
+						std::string filename = "./output/mappedPcmriVectors3D.txt";
+						file.open(filename, ofstream::out);
+						for (int i = 0; i < coordinatesMesh.size(); i++){
+							file << _mappedPCMRIvectors[i][slice][0] << " " << _mappedPCMRIvectors[i][slice][1] << " " << _mappedPCMRIvectors[i][slice][2] << std::endl;
+						}
+						file.close();
+						std::cout << "output in " << filename << std::endl;
+					}*/
+
+					//{
+					//	std::ofstream file;
+					//	std::string filename = "./output/originalImagePointsIndex.txt";
+					//	file.open(filename, ofstream::out);
+					//	for (int i = 0; i < _originalPCMRIcoordinates.size(); i++){
+					//		file << _originalPCMRIcoordinates[i][0] << " " << _originalPCMRIcoordinates[i][1] << " " << _originalPCMRIcoordinates[i][2] << " " << _originalPCMRIvalues[i] << std::endl;
+					//	}
+					//	file.close();
+					//	std::cout << "output in " << filename << std::endl;
+					//}
+
+					#endif
 					
 					progressMadeSignal(1);
 
@@ -744,6 +1022,18 @@ namespace crimson
 					flowWaveformAbs.push_back(abs(*itflow));
 				}
 
+				#ifdef _DEBUG
+				{
+					std::ofstream file;
+					std::string filename = "./output/flowWaveform.txt";
+					file.open(filename, ofstream::out);
+					for (int i = 0; i < flowWaveform.size(); i++){
+						file << flowWaveform[i] << std::endl;
+					}
+					file.close();
+					std::cout << "output in " << filename << std::endl;
+				}
+				#endif
 
 				double area = mesh->calculateArea(face);
 				auto radius = sqrt(area / 3.14);
@@ -828,6 +1118,7 @@ namespace crimson
 	mitk::Surface::Pointer IPCMRIKernel::generateSurfaceRepresentation(std::vector<mitk::Vector3D> timePointPCMRIVectorsInterpolated, mitk::Surface::Pointer meshSurfaceRepresentation)
 	{
 
+		//TODO: pass _meshSurfaceRepresentation for the whole mesh
 		vtkPolyData* meshSurfaceOriginal = meshSurfaceRepresentation->GetVtkPolyData();
 		vtkNew<vtkPolyData> polyData;
 		vtkNew<vtkPoints> points;
@@ -914,6 +1205,7 @@ namespace crimson
 				point1 = mesh->getNodeCoordinates(nodeIdx[0]);
 				point2 = mesh->getNodeCoordinates(nodeIdx[1]);
 				point3 = mesh->getNodeCoordinates(nodeIdx[2]);
+				//TODO: check what happens when the node has no velocity in the map
 				double vel1 = 0, vel2 = 0, vel3 = 0;
 				if (velocitiesMap.find(nodeIdx[0]) != velocitiesMap.end())
 					vel1 = velocitiesMap.find(nodeIdx[0])->second;

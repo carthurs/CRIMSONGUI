@@ -322,34 +322,61 @@ std::vector<int> MeshData::getNodeIdsForFace(const FaceIdentifier& faceId) const
     vtkUnstructuredGridBase* ug = getUnstructuredGridRepresentation()->GetVtkUnstructuredGrid();
     vtkDataArray* array = ug->GetCellData()->GetArray("Face IDs");
 
+    // index of face Id to find (the one that was passed in as a parameter)
     int faceIdentifierIndex = _faceIdentifierMap.faceIdentifierIndex(faceId);
+
+    // where item nodeIndicies[nodeIndex] is present iff (???)
     std::unordered_set<int> nodeIndices;
 
     vtkNew<vtkIdList> singlePointIdList;
     singlePointIdList->SetNumberOfIds(1);
     vtkNew<vtkIdList> pointNeighbors;
+
+    // for each faceId
     for (int cellId = _firstTriangleCellId; cellId < array->GetNumberOfTuples(); ++cellId) {
+        // if this is the face we want to find
         if (faceIdentifierIndex == array->GetTuple1(cellId)) {
             vtkIdList* pointIds = ug->GetCell(cellId)->GetPointIds();
 
-            boost::copy(
+            boost::copy
+            (
+                // source data (compound filter):
+                // start with the first point pointed to by the pointer and go to the last pointID
                 boost::make_iterator_range_n(pointIds->GetPointer(0), pointIds->GetNumberOfIds()) |
+                // use only pointIDs that aren't already in nodeIndicies
                 boost::adaptors::filtered([&](int ptId) { return nodeIndices.count(ptId) == 0; }) |
-                boost::adaptors::filtered([&](int ptId) {
-                    if (faceId.faceType == FaceIdentifier::ftWall) {
-                        return true;
-                    }
-                    singlePointIdList->SetId(0, ptId);
-                    ug->GetCellNeighbors(cellId, singlePointIdList.Get(), pointNeighbors.Get());
-                    auto neighIdRng = boost::make_iterator_range_n(pointNeighbors->GetPointer(0), pointNeighbors->GetNumberOfIds());
-                    return boost::find_if(
-                        neighIdRng, 
-                        [&](vtkIdType neighId) {
-                            return ug->GetCellType(neighId) == VTK_TRIANGLE && 
-                                _faceIdentifierMap.getFaceIdentifier(array->GetTuple1(neighId)).faceType == FaceIdentifier::ftWall;
+
+                // ???
+                boost::adaptors::filtered
+                (
+                    [&](int ptId) 
+                    {
+                        // seems like this could have been a special case outside of 
+                        // the copy functions to save on processing time / improve readability
+                        if (faceId.faceType == FaceIdentifier::ftWall) {
+                            return true;
                         }
-                    ) == neighIdRng.end();
-                }),
+
+                        singlePointIdList->SetId(0, ptId);
+
+                        // I think this is finding all cells that are adjacent to the current one
+                        ug->GetCellNeighbors(cellId, singlePointIdList.Get(), pointNeighbors.Get());
+                        auto neighIdRng = boost::make_iterator_range_n(pointNeighbors->GetPointer(0), pointNeighbors->GetNumberOfIds());
+
+                        // return whether the first matching entry is the end()
+                        return boost::find_if
+                        (
+                            // return the first neighboring entry that is a triangle and a wall
+                            neighIdRng, 
+                            [&](vtkIdType neighId) 
+                            {
+                                return  ug->GetCellType(neighId) == VTK_TRIANGLE && 
+                                        _faceIdentifierMap.getFaceIdentifier(array->GetTuple1(neighId)).faceType == FaceIdentifier::ftWall;
+                            }
+                        ) == neighIdRng.end();
+                    }
+                ),
+                // destination data
                 std::inserter(nodeIndices, nodeIndices.end())
             );
         }
@@ -430,6 +457,13 @@ int MeshData::getNEdges() const { return _nEdges; }
 int MeshData::getNFaces() const { return _nFaces; }
 
 int MeshData::getNElements() const { return _firstTriangleCellId; }
+
+std::string MeshData::getDataNodeName() const
+{
+	std::string nodeName;
+	GetPropertyList()->GetStringProperty("name", nodeName);
+	return nodeName;
+}
 
 mitk::Point3D MeshData::getNodeCoordinates(int nodeIndex) const
 {

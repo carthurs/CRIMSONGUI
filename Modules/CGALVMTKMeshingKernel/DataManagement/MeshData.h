@@ -102,6 +102,11 @@ public:
      */
     int getNElements() const;
 
+	/*!
+	* \brief   Gets the name of the data node (as shown in the Data Manager panel in the GUI).
+	*/
+	std::string getDataNodeName() const;
+
     /*!
      * \brief   Gets coordinates of the node with index nodeIndex.
      */

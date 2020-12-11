@@ -294,6 +294,7 @@ void FaceDataEditorWidget::_syncFaceSelectionToObserver()
             selectedFaces.insert(brepData->getFaceIdentifierMap().getFaceIdentifier(i));
         }
     }
+	//TODO: wrap this in a function and connect to a call via slot?
 	//if PCMRIMappingWidget exists, update its ResliceView and selected face geometry
 	if ((gsl::to_string(faceData->getName()) == "Prescribed velocities (PC-MRI)") || (gsl::to_string(faceData->getName()) == "PCMRI"))
 	{

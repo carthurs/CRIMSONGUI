@@ -33,11 +33,18 @@ public:
     ImmutableValueRange<gsl::cstring_span<>> getMaterialNodeUIDs() const override;
     void setMaterialNodeUIDs(ImmutableValueRange<gsl::cstring_span<>> nodeUIDs) override;
 
+	ImmutableValueRange<gsl::cstring_span<>> getParticleBinMeshNodeUIDs() const override;
+	void setParticleBinMeshNodeUIDs(ImmutableValueRange<gsl::cstring_span<>> nodeUIDs) override;
+
+	gsl::cstring_span<> getParticleBolusMeshNodeUID() const override;
+	void setParticleBolusMeshNodeUID(gsl::cstring_span<> nodeUID) override;
+
 	bool runFlowsolver() override;
 
     bool writeSolverSetup(const IDataProvider& dataProvider, const mitk::BaseData* vesselForestData,
                           gsl::not_null<const mitk::BaseData*> solidModelData,
-                          gsl::span<const SolutionData*> solutions) override;
+                          gsl::span<const SolutionData*> solutions,
+						  const bool setupParticleProblem) override;
 
     std::vector<SolutionData::Pointer> loadSolution() override;
     std::vector<SolutionData::Pointer> computeMaterials(const IDataProvider& dataProvider,
@@ -45,6 +52,8 @@ public:
                                                         gsl::not_null<const mitk::BaseData*> solidModelData) override;
 
     PythonQtObjectPtr getPythonObject() const;
+
+	std::string setupParticleTrackingPathsAndGetParticleTrackingFolder() override;
 
 protected:
     template <typename ExpectedResultT>
@@ -67,5 +76,9 @@ protected:
     mutable std::string _solverParametersNodeUIDCache;
     mutable std::vector<std::string> _boundaryConditionSetNodeUIDsCache;
     mutable std::vector<std::string> _materialNodeUIDsCache;
+	
+	mutable std::string _particleBolusMeshNodeUIDCache;
+	mutable std::vector<std::string> _particleBinMeshNodeUIDsCache;
 };
+
 }

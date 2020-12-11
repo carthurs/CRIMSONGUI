@@ -1,6 +1,7 @@
 #include <mitkPythonService.h>
 
 #include <QMessageBox>
+#include <QFileDialog>
 #include <ctkPopupWidget.h>
 
 #include <PythonSolverStudyData.h>
@@ -64,13 +65,48 @@ void PythonSolverStudyData::_setStudyPartNodeUIDs(gsl::cstring_span<> functionNa
     this->Modified();
 }
 
+ImmutableValueRange<gsl::cstring_span<>> PythonSolverStudyData::getParticleBinMeshNodeUIDs() const
+{
+	auto resultList = _getStudyPartNodeUIDs<QVariantList>("getParticleBinMeshNodeUIDs");
+
+	_particleBinMeshNodeUIDsCache.clear();
+	_particleBinMeshNodeUIDsCache.reserve(resultList.size());
+	std::transform(resultList.begin(), resultList.end(), std::back_inserter(_particleBinMeshNodeUIDsCache),
+		[](const QVariant& element) { return element.toString().toStdString(); });
+
+	return make_transforming_immutable_range<gsl::cstring_span<>>(_particleBinMeshNodeUIDsCache);
+}
+
+void PythonSolverStudyData::setParticleBinMeshNodeUIDs(ImmutableValueRange<gsl::cstring_span<>> nodeUIDs)
+{
+	auto uidList = QVariantList{};
+	std::transform(nodeUIDs.begin(), nodeUIDs.end(), std::back_inserter(uidList),
+		[](gsl::cstring_span<> uid) { return QVariant::fromValue(gsl::to_QString(uid)); });
+
+	_setStudyPartNodeUIDs("setParticleBinMeshNodeUIDs", QVariantList{ QVariant::fromValue(uidList) });
+}
+
+gsl::cstring_span<> PythonSolverStudyData::getParticleBolusMeshNodeUID() const
+{
+	_particleBolusMeshNodeUIDCache = _getStudyPartNodeUIDs<QString>("getParticleBolusMeshNodeUID").toStdString();
+	return _particleBolusMeshNodeUIDCache;
+}
+
+void PythonSolverStudyData::setParticleBolusMeshNodeUID(gsl::cstring_span<> nodeUID)
+{
+	_setStudyPartNodeUIDs("setParticleBolusMeshNodeUID", QVariantList{ gsl::to_QString(nodeUID) });
+}
+
 gsl::cstring_span<> PythonSolverStudyData::getMeshNodeUID() const
 {
     _meshNodeUIDCache = _getStudyPartNodeUIDs<QString>("getMeshNodeUID").toStdString();
     return _meshNodeUIDCache;
 }
 
-void PythonSolverStudyData::setMeshNodeUID(gsl::cstring_span<> nodeUID) { _setStudyPartNodeUIDs("setMeshNodeUID", QVariantList{gsl::to_QString(nodeUID)}); }
+void PythonSolverStudyData::setMeshNodeUID(gsl::cstring_span<> nodeUID) 
+{
+	_setStudyPartNodeUIDs("setMeshNodeUID", QVariantList{gsl::to_QString(nodeUID)});
+}
 
 gsl::cstring_span<> PythonSolverStudyData::getSolverParametersNodeUID() const
 {
@@ -101,7 +137,7 @@ void PythonSolverStudyData::setBoundaryConditionSetNodeUIDs(ImmutableValueRange<
     std::transform(nodeUIDs.begin(), nodeUIDs.end(), std::back_inserter(uidList),
                    [](gsl::cstring_span<> uid) { return QVariant::fromValue(gsl::to_QString(uid)); });
 
-    return _setStudyPartNodeUIDs("setBoundaryConditionSetNodeUIDs", QVariantList{QVariant::fromValue(uidList)});
+    _setStudyPartNodeUIDs("setBoundaryConditionSetNodeUIDs", QVariantList{QVariant::fromValue(uidList)});
 }
 
 ImmutableValueRange<gsl::cstring_span<>> PythonSolverStudyData::getMaterialNodeUIDs() const
@@ -122,7 +158,7 @@ void PythonSolverStudyData::setMaterialNodeUIDs(ImmutableValueRange<gsl::cstring
     std::transform(nodeUIDs.begin(), nodeUIDs.end(), std::back_inserter(uidList),
                    [](gsl::cstring_span<> uid) { return QVariant::fromValue(gsl::to_QString(uid)); });
 
-    return _setStudyPartNodeUIDs("setMaterialNodeUIDs", QVariantList{QVariant::fromValue(uidList)});
+    _setStudyPartNodeUIDs("setMaterialNodeUIDs", QVariantList{QVariant::fromValue(uidList)});
 }
 
 PythonQtObjectPtr PythonSolverStudyData::_createSolutionStorage(gsl::span<const SolutionData*> solutions) const
@@ -284,6 +320,29 @@ QVariantList PythonSolverStudyData::_gatherMaterials(const IDataProvider& dataPr
     return pyMaterialObjects;
 }
 
+std::string PythonSolverStudyData::setupParticleTrackingPathsAndGetParticleTrackingFolder() {
+
+	const std::string failure(""); // empty string to return if required by the logic below, as an indicator of failure
+
+	QString particle_simulation_directory = QFileDialog::getExistingDirectory(nullptr, "Select particle directory");
+
+	std::string particle_tracking_simulation_folder = particle_simulation_directory.toStdString();
+
+	if (particle_tracking_simulation_folder.size() != 0) {
+		QVariantList pythonArgs = QVariantList{ particle_simulation_directory };
+		_pyStudyObject.call("setNProcsCaseFolderToReadForParticleSim", pythonArgs);
+
+		if (PythonQt::self()->hadError()) {
+			return failure;
+		}
+	}
+	else {
+		return failure;
+	}
+
+	return particle_tracking_simulation_folder;
+}
+
 bool PythonSolverStudyData::runFlowsolver()
 {
 	_pyStudyObject.call("runFlowsolver");
@@ -292,7 +351,8 @@ bool PythonSolverStudyData::runFlowsolver()
 }
 
 bool PythonSolverStudyData::writeSolverSetup(const IDataProvider& dataProvider, const mitk::BaseData* vesselForestData,
-                                             gsl::not_null<const mitk::BaseData*> solidModelData_, gsl::span<const SolutionData*> solutions)
+                                             gsl::not_null<const mitk::BaseData*> solidModelData_, gsl::span<const SolutionData*> solutions,
+											 const bool setupParticleProblem)
 {
     // Gather boundary conditions
     // Test variables
@@ -337,10 +397,42 @@ bool PythonSolverStudyData::writeSolverSetup(const IDataProvider& dataProvider, 
 	if (bcs.empty())
 		return false;
 
-    _pyStudyObject.call("writeSolverSetup",
-		QVariantList{ vesselForestDataVariant, QVariant::fromValue(SolidDataQtWrapper{ solidModelData }),
-                                     QVariant::fromValue(MeshDataQtWrapper{meshData}), QVariant::fromValue(pySolverParametersData->getPythonObject()),
-									 bcs, _gatherMaterials(dataProvider), uidToFileNameMap, solutionStorageVariant });
+	QVariantList solverSetupData = QVariantList{ vesselForestDataVariant,
+												 QVariant::fromValue(SolidDataQtWrapper{ solidModelData }),
+												 QVariant::fromValue(MeshDataQtWrapper{ meshData }),
+												 QVariant::fromValue(pySolverParametersData->getPythonObject()),
+												 bcs,
+												 _gatherMaterials(dataProvider),
+												 uidToFileNameMap,
+												 solutionStorageVariant };
+	if (setupParticleProblem)
+	{
+		const MeshData* particleBolusMeshData = dynamic_cast<const MeshData*>(dataProvider.findDataByUID(getParticleBolusMeshNodeUID()));
+		if (particleBolusMeshData)
+		{
+			solverSetupData.append(QVariant::fromValue(MeshDataQtWrapper{ particleBolusMeshData }));
+		}
+		else
+		{
+			MITK_WARN << "No particle bolus mesh data support in scene. This may be due to loading an .mitk scene created in an older version of CRIMSON GUI.";
+		}
+		
+		QVariantList particleBinMeshesData = QVariantList{};
+		for (auto& binMeshUID : getParticleBinMeshNodeUIDs()) {
+			const MeshData* particleBinMeshData = dynamic_cast<const MeshData*>(dataProvider.findDataByUID(binMeshUID));
+			if (particleBinMeshData){  // Python may still have UIDs of deleted nodes. It's safe to ignore these.
+				particleBinMeshesData.append(QVariant::fromValue(MeshDataQtWrapper{ particleBinMeshData }));
+			}
+		}
+		const int atEnd = solverSetupData.size();
+		solverSetupData.insert(atEnd, particleBinMeshesData);
+		_pyStudyObject.call("writeParticleSetup", solverSetupData);
+	}
+	else
+	{
+		_pyStudyObject.call("writeSolverSetup", solverSetupData);
+	}
+
 
     return !PythonQt::self()->hadError();
 }

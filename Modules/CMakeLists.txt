@@ -1,11 +1,12 @@
 # Modules must be listed according to their dependencies
 set(module_dirs
+    CRIMSONParticles
     AsyncTask 
     CRIMSONUtils
-	VesselTree
-	SolidKernel
+    VesselTree
+    SolidKernel
     ${CRIMSON_MESHING_KERNEL}MeshingKernel
-	PCMRIKernel	
+    PCMRIKernel 
     SolverSetupService
     PythonSolverSetupService
 )

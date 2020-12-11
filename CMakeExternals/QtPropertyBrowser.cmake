@@ -14,7 +14,7 @@ set(QtPropertyBrowser_DEPENDS ${proj})
 if(NOT DEFINED QtPropertyBrowser_DIR)
     set(additional_args )
 
-    ExternalProject_Add(${proj}
+    ExternalProject_Add(${proj} # where proj is QtPropertyBrowser
       LIST_SEPARATOR ${sep}
       GIT_REPOSITORY https://github.com/rkhlebnikov/QtPropertyBrowser.git
       CMAKE_GENERATOR ${gen}
@@ -37,10 +37,7 @@ if(NOT DEFINED QtPropertyBrowser_DIR)
 
     ExternalProject_Get_Property(${proj} binary_dir)
     set(QtPropertyBrowser_DIR ${binary_dir})
-      
-    #set(QtPropertyBrowser_DIR ${ep_prefix})
-    #mitkFunctionInstallExternalCMakeProject(${proj})
 
 else()
-    #mitkMacroEmptyExternalProject(${proj} "${proj_DEPENDENCIES}")
+
 endif()

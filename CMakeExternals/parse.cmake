@@ -24,7 +24,7 @@ if( MITK_USE_Python AND NOT MITK_USE_SYSTEM_PYTHON )
       STRING(REPLACE " " "\ " _install_step ${_install_step})
     endif()
     
-    ExternalProject_Add(${proj}
+    ExternalProject_Add(${proj} # where proj is parse
       LIST_SEPARATOR ${sep}
       URL https://pypi.python.org/packages/source/p/parse/parse-1.6.6.tar.gz
       URL_MD5 11bc8c60a30fe52db4ac9a827653d0ca

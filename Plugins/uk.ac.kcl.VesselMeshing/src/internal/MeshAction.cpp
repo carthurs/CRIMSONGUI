@@ -67,6 +67,7 @@ void MeshAction::Run(const QList<mitk::DataNode::Pointer>& selectedNodes)
             meshingTask, node, crimson::VascularModelingNodeTypes::Solid(), crimson::VesselMeshingNodeTypes::Mesh(), props);
         dataNodeTask->setDescription(std::string("Mesh ") + node->GetName());
         dataNodeTask->setSequentialExecutionTag(0);
+		dataNodeTask->setSilentFail(false);
 
         crimson::AsyncTaskManager::getInstance()->addTask(dataNodeTask, crimson::MeshingUtils::getMeshingTaskUID(node));
     }

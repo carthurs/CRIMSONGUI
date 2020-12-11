@@ -59,7 +59,8 @@ public:
 	* \brief  stores a pointer to C++ owned data object. For use in python-based boundary conditions that have the logic
 	implemented in C++
 	*/
-	virtual void setDataObject(QVariantList data){}; 
+	virtual void setDataObject(QVariantList data){}; //TODO: this is very dirty since it implies python code. abstract it?
+	//put wrapping down to FaceDataImpl and determine wrapper via if-else clause?
 
 	virtual void setDataUID(std::string dataUID){};
 

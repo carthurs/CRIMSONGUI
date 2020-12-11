@@ -7,17 +7,28 @@ if(DEFINED OCC_DIR AND NOT EXISTS ${OCC_DIR})
 message(FATAL_ERROR "OCC_DIR variable is defined but corresponds to non-existing directory")
 endif()
 
+# where Step is either BUILD or INSTALL
 macro(ONE_CONFIGURATION_BUILD_COMMAND out_var Config Step)
-set(${out_var}
-    ${CMAKE_COMMAND}
-      -DDESIRED_CONFIGURATION=${Config}
-      -DSTEP=${Step}
-      -DBINARY_DIR=<BINARY_DIR>
-      -DCMAKE_CFG_INTDIR=${CMAKE_CFG_INTDIR}
-      -P ${CMAKE_CURRENT_LIST_DIR}/BuildOneConfiguration.cmake)
+    #[AJM]  I think this just formats a command and stores it in out_var, it doesn't actually run it
+    #       Note that most of the varaibles set here are directly referenced in BuildOneConfiguration.cmake
+
+    # Note that Generator expressions <> are things that only the generator would know (different phase from ${} which are configuration)
+    set(${out_var}
+        ${CMAKE_COMMAND}
+        -DDESIRED_CONFIGURATION=${Config}
+        # [AJM] I am not completely sure what the STEP variable is for, it doesn't seem to have any meaning to CMake, but it is checked
+        #       by BuildOneConfiguration.cmake
+        -DSTEP=${Step}
+        -DBINARY_DIR=<BINARY_DIR>
+        -DCMAKE_CFG_INTDIR=${CMAKE_CFG_INTDIR}
+        #[AJM]  Note that -P just means "execute this script" https://cmake.org/cmake/help/latest/manual/cmake.1.html#run-a-script
+        #       I think this is referring to the script in CMakeExternals/BuildOneConfiguration.cmake.
+        -P ${CMAKE_CURRENT_LIST_DIR}/BuildOneConfiguration.cmake)
 endmacro()
 
+# [AJM] Where Config is either Debug or Release for this script's purposes
 macro(Add_OneConfiguration_ExternalProject Config)
+    # [AJM] format a command for build of Config {release, debug} and store it in _build_command
     ONE_CONFIGURATION_BUILD_COMMAND(_build_command ${Config} BUILD)
     ONE_CONFIGURATION_BUILD_COMMAND(_install_command ${Config} INSTALL)
     
@@ -27,9 +38,10 @@ macro(Add_OneConfiguration_ExternalProject Config)
         set(OtherConfig "Debug")
     endif()
 
-    ExternalProject_Add(
-        OCC_${Config}
-        LIST_SEPARATOR ${sep}
+    # [AJM] this bears a certain resemblance to C:\crcgmsb\CMakeExternals\Build\OCC_Release
+    message("External project " OCC_${Config} " is using an INSTALL_COMMAND=" ${_install_command} " and a BUILD_COMMAND=" ${_build_command})
+    ExternalProject_Add(OCC_${Config} # where Config is Debug or Release
+        LIST_SEPARATOR ${sep} #I think this is ^^, as set in SuperBuild.cmake
         DOWNLOAD_COMMAND ""
         SOURCE_DIR ${source_dir}
         BUILD_COMMAND ${_build_command}
@@ -89,7 +101,6 @@ if(NOT DEFINED OCC_DIR)
             LIST_SEPARATOR ${sep}
             URL ${OCC_URL} 
             DOWNLOAD_NAME opencascade-6.9.1.tgz
-            #URL_MD5 ba87fe9f5ca47e3dfd62aad7223f0e7f
             PATCH_COMMAND ${OCC_PATCH_COMMAND}
             CONFIGURE_COMMAND ""
             BUILD_COMMAND ""
@@ -104,7 +115,7 @@ if(NOT DEFINED OCC_DIR)
         Add_OneConfiguration_ExternalProject(Debug)
         Add_OneConfiguration_ExternalProject(Release)
 
-        ExternalProject_Add(${proj}
+        ExternalProject_Add(${proj} # Win32: where proj is "OCC"
             DOWNLOAD_COMMAND ""
             CONFIGURE_COMMAND ""
             BUILD_COMMAND ""
@@ -116,8 +127,7 @@ if(NOT DEFINED OCC_DIR)
         if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
             set(_tbb_postfix "_debug")
         endif()
-        ExternalProject_Add(
-            ${proj}
+        ExternalProject_Add(${proj} # Non-Win32: where proj is "OCC"
             URL ${OCC_URL}
             DOWNLOAD_NAME opencascade-6.9.1.tgz
             PATCH_COMMAND ${OCC_PATCH_COMMAND}
@@ -135,20 +145,19 @@ if(NOT DEFINED OCC_DIR)
                 "-D3RDPARTY_TBBMALLOC_LIBRARY:FILEPATH=${TBB_DIR}/lib/intel64/gcc4.4/libtbbmalloc${_tbb_postfix}.so.2"
 
 
-            CMAKE_CACHE_ARGS
-                ${ep_common_cache_args}
-            CMAKE_CACHE_DEFAULT_ARGS
-                ${ep_common_cache_default_args}
+            CMAKE_CACHE_ARGS ${ep_common_cache_args}
+            CMAKE_CACHE_DEFAULT_ARGS ${ep_common_cache_default_args}
             DEPENDS ${proj_DEPENDENCIES}
         )
         ExternalProject_Get_Property(OCC install_dir)
     endif()
 
     set(OCC_DIR "${install_dir}")
-    
-    #set(OCC_DIR ${ep_prefix})
-    #mitkFunctionInstallExternalCMakeProject(${proj})
 
 else()
-    #mitkMacroEmptyExternalProject(${proj} "${proj_DEPENDENCIES}")
+    # Note: OCC_DIR (which is used by FindOCC.cmake) set in SuperBuild.cmake in response to EXTERNAL_OCC_DIR
+    find_package(OCC REQUIRED)
+
+    # Need to set this otherwise SuperBuild.cmake will fail to find it and assume it didn't finish / doesn't exist
+    MacroEmptyExternalProject(${proj} "${proj_DEPENDENCIES}")
 endif()

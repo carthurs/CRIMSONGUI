@@ -1,11 +1,11 @@
+# Note: sets PROJECT_NAME to CRIMSON
+message("Entering Apps/CRIMSON/CMakeLists.txt")
 project(CRIMSON)
 
 set(_app_options)
 if(${MY_PROJECT_NAME}_SHOW_CONSOLE_WINDOW)
   list(APPEND _app_options SHOW_CONSOLE)
 endif()
-
-#mitkFunctionCreateWindowsBatchScript(JenkinsEnv.properties.in JenkinsEnv.properties release)
 
 # Create a cache entry for the provisioning file which is used to export
 # the file name in the MITKConfig.cmake file. This will keep external projects
@@ -24,6 +24,8 @@ set(_exclude_plugins
 
 QT5_ADD_RESOURCES(qrc_files splashscreen.qrc)
 
+# Note: Included in top level CMakeLists.txt script
+# defined in Cmake/crimsonFunctionCreateBlueBerryApplication
 crimsonFunctionCreateBlueBerryApplication(
   NAME ${MY_APP_NAME}
   SOURCES ${qrc_files} CRIMSON.cpp
@@ -38,6 +40,4 @@ install(FILES "${CMAKE_CURRENT_LIST_DIR}/icons/icon.ico" DESTINATION bin)
 include(DeployQt5)
 install_qt5_executable("bin/${MY_APP_NAME}${CMAKE_EXECUTABLE_SUFFIX}" "${Qt5Gui_PLUGINS};${Qt5Sql_PLUGINS};${Qt5Svg_PLUGINS}" "" "" "plugins" TRUE)
 
-
-
-
+message("End of Apps/CRIMSON/CMakeLists.txt")

@@ -177,6 +177,7 @@ void HierarchyManager::nodeAdded(const mitk::DataNode* node)
         nonConstNode->SetBoolProperty("pickable", true);
     }
 
+    // TODO: REMOVE TO OTHER LOCATION!
     if (nonConstNode->GetProperty("scalar visibility") != nullptr) {
         nonConstNode->SetBoolProperty("scalar visibility", false);
     }

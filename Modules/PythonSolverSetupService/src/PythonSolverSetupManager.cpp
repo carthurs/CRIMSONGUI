@@ -136,10 +136,77 @@ IBoundaryCondition::Pointer PythonSolverSetupManager::createBoundaryCondition(gs
     auto pythonOwnerBCSet = dynamic_cast<PythonBoundaryConditionSet*>(ownerBCSet.get());
     Expects(pythonOwnerBCSet != nullptr);
 
+	//IBoundaryCondition::Pointer test = dynamic_cast<IBoundaryCondition*>(_createSolverObject<PythonBoundaryCondition>("createBoundaryCondition", gsl::to_QString(name),
+	//	pythonOwnerBCSet->getPythonObject())
+	//	.GetPointer());
+
+	//auto pcmri2 = crimson::PCMRIData::New();
+	//auto wrappedPCMRI2 = PCMRIDataQtWrapper{ pcmri2.GetPointer() };
+
+	//auto pythBC = dynamic_cast<PythonBoundaryCondition*>(test.GetPointer());
+	//Expects(pythBC != nullptr);
+
+	//auto test2 = pythBC->getPythonObject();
+
+	//test->setDataObject(QVariantList{ QVariant::fromValue(wrappedPCMRI2) });
 	
+	//if (gsl::to_QString(name) == "PCMRI")
+	//{
+	//	//itk::SmartPointer<crimson::PCMRIData> pcmri = (itk::SmartPointer<crimson::PCMRIData>) PCMRIData::New();
+
+	//	auto pcmri = crimson::PCMRIData::New();
+
+	//	//pcmriNode->SetData(pcmri);
+	//	//pcmriNode->SetName("pcmriBC");
+	//	//pcmriNode->SetProperty("hidden object", true);
+
+	//	//std::unordered_set<mitk::DataNode*> potentialParents = HierarchyManager::getInstance()->findPotentialParents(pcmriNode, SolverSetupNodeTypes::PCMRIData());
+	//	//crimson::HierarchyManager::getInstance()->addNodeToHierarchy(pcmriNode, SolverSetupNodeTypes::PCMRIData(),
+	//	//	potentialParents.begin(), HierarchyManager::getInstance()->findFittingNodeType(potentialParents.begin()));
+
+	//	IBoundaryCondition::Pointer BC = dynamic_cast<IBoundaryCondition*>(_createSolverObjectWithCObject<PythonBoundaryCondition>("createBoundaryCondition", pcmri.GetPointer(), gsl::to_QString(name),
+	//		pythonOwnerBCSet->getPythonObject())
+	//		.GetPointer());
+	//	
+	//	//dynamic_cast<PythonBoundaryCondition*>(BC)->setDataObject(pcmri.GetPointer());
+	//	//auto wrappedPCMRI = PCMRIDataQtWrapper{ dynamic_cast<const PCMRIData*> (pcmri) };
+	//	
+	//	
+	//	//auto wrappedPCMRI = PCMRIDataQtWrapper{ pcmri.GetPointer() };
+
+	//	//TODO: call this inside MapAction after creating a pcmri map? and conenct the BC data object pointer to pcmri data object?
+	//	//BC->setDataObject(QVariantList{ QVariant::fromValue(wrappedPCMRI) });
+
+	//	//std::string uid;
+	//	//pcmriNode->GetStringProperty(crimson::HierarchyManager::nodeUIDPropertyName, uid);
+	//	//BC.get()->setObjectNodeUID(uid);
+
+	//	//TODO: if name = PCMRI, make new PCMRIData node, assign PCMRIData reference to newly created python object (call a function that sets the PCMRIData)
+	//	//QVariant::fromValue(MeshDataQtWrapper{meshData})
+	//	//save by nodeUID, get the object (QtWrapped) only by calling a get() method upon writting PCMRI BC in writeSolverSetup()
+	//	//void PythonSolverStudyData::setMeshNodeUID(gsl::cstring_span<> nodeUID) { _setStudyPartNodeUIDs("setMeshNodeUID", QVariantList{gsl::to_QString(nodeUID)}); }
+	//	/*void SolverSetupView::setMeshNodeForStudy(const mitk::DataNode* node)
+	//	{
+	//	_updateUI();
+	//	if (!node || !_currentSolverStudyNode) {
+	//	return;
+	//	}
+	//	std::string uid;
+	//	node->GetStringProperty(crimson::HierarchyManager::nodeUIDPropertyName, uid);
+	//	static_cast<ISolverStudyData*>(_currentSolverStudyNode->GetData())->setMeshNodeUID(uid);
+
+	//	return T::New(qvariant_cast<PythonQtObjectPtr>(pyBCObject)).GetPointer();
+	//	}*/
+	//	return BC;
+	//}
+	//else
+	//{
 		IBoundaryCondition::Pointer BC = dynamic_cast<IBoundaryCondition*>(_createSolverObject<PythonBoundaryCondition>("createBoundaryCondition", gsl::to_QString(name),
 			pythonOwnerBCSet->getPythonObject())
 			.GetPointer());
 		return BC;
+	//}
+	
+
 }
 }

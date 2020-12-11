@@ -6,7 +6,7 @@
 #
 macro(MacroEmptyExternalProject proj dependencies)
 
-  ExternalProject_Add(${proj}
+  ExternalProject_Add(${proj} #used in MacroEmptyExternalProject
     DOWNLOAD_COMMAND ""
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""

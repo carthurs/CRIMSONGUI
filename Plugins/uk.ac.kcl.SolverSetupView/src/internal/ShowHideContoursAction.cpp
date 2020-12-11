@@ -18,6 +18,7 @@ ShowHideContoursAction::~ShowHideContoursAction()
 
 void ShowHideContoursAction::setContourVisibility(mitk::DataNode* contourNode, bool show, mitk::RenderingManager* manager)
 {
+	//TODO: PCMRI rendering manager here???
     for (vtkRenderWindow* renderWindow : mitk::RenderingManager::GetInstance()->GetAllRegisteredRenderWindows()) {
         mitk::BaseRenderer* renderer = mitk::BaseRenderer::GetInstance(renderWindow);
         if (renderer && renderer->GetMapperID() == mitk::BaseRenderer::Standard3D) {
@@ -35,6 +36,7 @@ void ShowHideContoursAction::setContourVisibility(mitk::DataNode* contourNode, b
 
 void ShowHideContoursAction::setContourVisibility(mitk::DataNode* contourNode, bool show)
 {
+	//TODO: PCMRI rendering manager here???
 	for (vtkRenderWindow* renderWindow : mitk::RenderingManager::GetInstance()->GetAllRegisteredRenderWindows()) {
 		mitk::BaseRenderer* renderer = mitk::BaseRenderer::GetInstance(renderWindow);
 		if (renderer && renderer->GetMapperID() == mitk::BaseRenderer::Standard3D) {

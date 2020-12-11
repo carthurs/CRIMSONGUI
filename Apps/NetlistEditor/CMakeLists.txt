@@ -1,10 +1,7 @@
 project( CRIMSONBCT )
 cmake_minimum_required( VERSION 2.6 )
 
-set(
-  CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
-  "${CMAKE_SOURCE_DIR}/cmake/Modules/"
-)
+set( CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/" )
 set( CMAKE_BUILD_TYPE "Release" )
 
 set( PROJECT_VERSION_MAJOR 0 )
@@ -117,14 +114,8 @@ set( CPACK_SOURCE_IGNORE_FILES
   /\\\\.pc/
   "${CMAKE_SOURCE_DIR}/debian/"
 )
-set(
-  CPACK_PACKAGE_INSTALL_DIRECTORY
-  "${CPACK_PACKAGE_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}"
-)
-set(
-  CPACK_INSTALL_CMAKE_PROJECTS
-  ${CMAKE_CURRENT_BINARY_DIR};${PACKAGE_NAME};ALL;/
-)
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "${CPACK_PACKAGE_NAME}-${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}")
+set(CPACK_INSTALL_CMAKE_PROJECTS ${CMAKE_CURRENT_BINARY_DIR};${PACKAGE_NAME};ALL;/)
 
 
 if(WIN32 AND NOT UNIX)
@@ -137,14 +128,8 @@ if(WIN32 AND NOT UNIX)
   set( CPACK_NSIS_MODIFY_PATH ON )
   set( CPACK_GENERATOR NSIS ZIP )
   set( CPACK_SOURCE_GENERATOR ZIP )
-  set(
-    CPACK_NSIS_MUI_ICON
-    "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\gui\\\\images\\\\icon.ico"
-  )
-  set(
-    CPACK_NSIS_MUI_UNIICON
-    "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\gui\\\\images\\\\icon.ico"
-  )
+  set( CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\gui\\\\images\\\\icon.ico" )
+  set( CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\src\\\\gui\\\\images\\\\icon.ico" )
   
   # la variabile CPACK_PACKAGE_ICON vuole una bmp da 150x57 pixel
   # la variabile CPACK_NSIS_INSTALLER_MUI_ICON_CODE vuole una bmp da 164x314 pixel
@@ -174,8 +159,7 @@ else()
   set( CPACK_DEBIAN_PACKAGE_MAINTAINER "${PACKAGE_CHEF}" )
   set( CPACK_DEBIAN_PACKAGE_SECTION Electronics )
   set( CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION}+sid" )
-  set(
-    CPACK_DEBIAN_PACKAGE_DEPENDS
+  set( CPACK_DEBIAN_PACKAGE_DEPENDS
      "libstdc++6 (>=4.3.2-1.1),
       libqt4-core (>=4.6),
       libqt4-gui (>=4.6),

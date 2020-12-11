@@ -19,7 +19,7 @@ void uk_ac_kcl_CRIMSONApp_Activator::start(ctkPluginContext* context)
 
     PluginContext = context;
 
-    mitk::WorkbenchUtil::SetDepartmentLogoPreference(":/KCL-logo.png", context);
+    mitk::WorkbenchUtil::SetDepartmentLogoPreference(":/CRIMSON-watermark-logo.png", context);
 }
 
 void uk_ac_kcl_CRIMSONApp_Activator::stop(ctkPluginContext* context)

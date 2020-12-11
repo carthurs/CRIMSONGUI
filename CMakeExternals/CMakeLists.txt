@@ -1,12 +1,16 @@
+#[AJM]  I don't think this script is actually used, it seems like SuperBuild.cmake just 
+#       includes .cmake folders in this folder rather than adding a directory
+
+message(FATAL_ERROR "Entering possibly unused file CMakeExternals/CMakeLists.txt??")
+
 cmake_minimum_required(VERSION 2.9)
 
 project(ep-superbuild)
 
 include(ExternalProject)
 
-ExternalProject_Add(
-    ep_src
-    URL d:/1/ep/ep.zip
+ExternalProject_Add(ep_src # CMakeExternals/CMakeLists.txt: I don't think this is used
+    URL d:/1/ep/ep.zip # [AJM] this just seems like a nonsense path, I don't even have a D drive.
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
     BUILD_COMMAND ""
     CONFIGURE_COMMAND ""
@@ -31,8 +35,7 @@ macro(Add_OneConfiguration_ExternalProject Config)
     ONE_CONFIGURATION_BUILD_COMMAND(_build_command ${Config} BUILD)
     ONE_CONFIGURATION_BUILD_COMMAND(_install_command ${Config} INSTALL)
 
-    ExternalProject_Add(
-        ep_${Config}
+    ExternalProject_Add(ep_${Config} # CMakeExternals/CMakeLists.txt: I don't think this is used
         DOWNLOAD_COMMAND ""
         SOURCE_DIR ${source_dir}
         CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${install_dir}

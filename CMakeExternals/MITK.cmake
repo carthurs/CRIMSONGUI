@@ -1,3 +1,5 @@
+message("Entering ./CMakeExternals/MITK.cmake")
+message("CMAKE_MODULE_PATH a start is " ${CMAKE_MODULE_PATH})
 #-----------------------------------------------------------------------------
 # MITK
 #-----------------------------------------------------------------------------
@@ -112,11 +114,16 @@ if(NOT MITK_DIR)
   #-----------------------------------------------------------------------------
   # Create options to inject pre-build dependencies
   #-----------------------------------------------------------------------------
-  
-  # [AJM] NOTE: The foreach control variable has different scoping rules,
-  #             https://cmake.org/pipermail/cmake/2005-June/006729.html
-  #             I don't think this is an actual variable of its own, it just references... existing variables?
-  #             So there is no name collision / data overwriting issue with using proj here as a loop variable.
+  #[AJM] 
+  #   May be worth investigating why it's necessary to set all of these MITK_<proj>_DIR variables...
+  #   
+  #   NOTE:   The foreach control variable has different scoping rules,
+  #           https://cmake.org/pipermail/cmake/2005-June/006729.html
+  #           I don't think this is an actual variable of its own, it just references... existing variables?
+  #           So there is no name collision / data overwriting issue with using proj here as a loop variable.
+  #
+  #           So that means, MITK_CRIMSON_DIRECTORY or MITK_MITK_DIRECTORY is NOT set here...
+  #           Those variables wouldn't make much sense anyway.
   foreach(proj CTK DCMTK GDCM VTK ITK OpenCV CableSwig)
     if(MITK_USE_${proj})
       set(MITK_${proj}_DIR "${${proj}_DIR}" CACHE PATH "Path to ${proj} build directory")
@@ -142,7 +149,7 @@ if(NOT MITK_DIR)
   set(MITK_GIT_REPOSITORY "https://github.com/carthurs/MITK.git" CACHE STRING "The git repository for cloning MITK")
 
   # [AJM] Don't just pull whatever the latest is on the development branch, that will make it impossible to compile older versions of the program later on.
-  set(MITK_GIT_TAG "CRIMSON_2020.03.12" CACHE STRING "The git tag/hash to be used when cloning from MITK_GIT_REPOSITORY")
+  set(MITK_GIT_TAG "20201101_crimson_pro" CACHE STRING "The git tag/hash to be used when cloning from MITK_GIT_REPOSITORY")
   mark_as_advanced(MITK_SOURCE_DIR MITK_GIT_REPOSITORY MITK_GIT_TAG)
   
   #-----------------------------------------------------------------------------
@@ -158,6 +165,8 @@ if(NOT MITK_DIR)
   # Additional MITK CMake variables
   #-----------------------------------------------------------------------------
 
+  # [AJM] Maybe it's better just to simplify some of these "always true" if statements?
+  #       ... why is there even an option to build MITK without Qt? Is it even possible?
   if(MITK_USE_Qt5)
     find_package(Qt5 REQUIRED COMPONENTS Core)
     list(APPEND additional_mitk_cmakevars "-DQt5_DIR:PATH=${Qt5_DIR}" "-DCMAKE_PREFIX_PATH:PATH=${Qt5_DIR}")
@@ -194,16 +203,7 @@ if(NOT MITK_DIR)
        )
   endif()
 
-  # MITK Python only supports release builds, so we need to set the CMAKE_BUILD_TYPE accordingly
-  set(mitkBuildType ${CMAKE_BUILD_TYPE})
-  if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-    message("Debug builds are not supported for MITK Python, using RelWithDebInfo instead.")
-
-    set(mitkBuildType "RelWithDebInfo")
-  endif()
-  
-
-  ExternalProject_Add(${proj}
+  ExternalProject_Add(${proj} # where proj is MITK
     ${mitk_source_location}
     BINARY_DIR ${MITK_BINARY_DIR}
     # where ep_suffix is -cmake, set in SuperBuild.cmake; I think ep stands for "External Project"
@@ -216,7 +216,6 @@ if(NOT MITK_DIR)
       ${additional_mitk_cmakevars}
       -DBUILD_SHARED_LIBS:BOOL=ON
       -DBUILD_TESTING:BOOL=${MITK_BUILD_TESTING}
-      -DCMAKE_BUILD_TYPE:STRING=${mitkBuildType}
     CMAKE_CACHE_ARGS
       ${ep_common_cache_args}
     CMAKE_CACHE_DEFAULT_ARGS
@@ -224,6 +223,8 @@ if(NOT MITK_DIR)
     DEPENDS
       ${proj_DEPENDENCIES}
     )
+  
+  message("CMAKE_MODULE_PATH after ExternalProject_Add of MITK is " ${CMAKE_MODULE_PATH})
   
   if(MITK_USE_SUPERBUILD)
     set(MITK_DIR "${CMAKE_CURRENT_BINARY_DIR}/${MITK_BINARY_DIR}/MITK-build")
@@ -263,3 +264,7 @@ else()
   endif()
     
 endif()
+
+message("MITK_FOUND is " ${MITK_FOUND})
+message("CMAKE_MODULE_PATH at end is " ${CMAKE_MODULE_PATH})
+message("End of ./CMakeExternals/MITK.cmake")

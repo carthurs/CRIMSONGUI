@@ -14,8 +14,13 @@
 
 #include "SolverStudyUIDsTableModel.h"
 
+#include <AsyncTaskManager.h>
+#include <AsyncTaskWithResult.h>
+
+
 namespace crimson
 {
+class TaskStateObserver;
 class ISolverSetupManager;
 }
 
@@ -37,6 +42,9 @@ public:
 private slots:
     void writeSolverSetup();
 	void runSimulation();
+	void runLagrangianParticleTrackingAnalysis();
+	void setupLagrangianParticleTrackingAnalysis();
+	void finishedLagrangianParticleTrackingAnalysis(crimson::async::Task::State state);
     void loadSolution();
     void showSolution(bool show);
     void createSolverRoot();
@@ -48,6 +56,7 @@ private slots:
     void showMaterial();
     void exportMaterials();
     void setMeshNodeForStudy(const mitk::DataNode*);
+	void setParticleBolusNodeForStudy(const mitk::DataNode*);
     void setSolverParametersNodeForStudy(const mitk::DataNode*);
 
 private:
@@ -63,6 +72,8 @@ private:
     // Ui and main widget of this view
     Ui::SolverSetupWidget _UI;
 
+	void _setupAdvancedParticleTrackingOptionsUI();
+
     void _setCurrentRootNode(mitk::DataNode* node);
     void _setCurrentSolverRootNode(mitk::DataNode* node);
 
@@ -74,6 +85,8 @@ private:
     void _setCurrentSolverParametersNode(mitk::DataNode* node);
     void _setCurrentSolverStudyNode(mitk::DataNode* node);
     void _setupSolverStudyComboBoxes();
+
+	void _setupSimulationProblem(const bool isParticleProblem);
 
     void _selectDataNode(mitk::DataNode* node);
 
@@ -109,4 +122,47 @@ private:
 
     crimson::SolverStudyUIDsTableModel _solverStudyBCSetsModel;
     crimson::SolverStudyUIDsTableModel _solverStudyMaterialsModel;
+	crimson::SolverStudyUIDsTableModel _particleTrackingGeometriesModel;
+
+	crimson::TaskStateObserver* _particleSimulationTaskStateObserver = nullptr;
+
+	std::shared_ptr<crimson::async::TaskWithResult<bool>> createParticleTrackingTask(const bool runReductionStep,
+		const bool writeParticleConfigJson,
+		const bool convertFluidSimToHdf5,
+		const bool runActualParticleTrackingStep,
+		const std::string config_file);
+
+	bool _runReductionStep = true;
+	bool _writeParticleConfigJson = true;
+	bool _convertFluidSimToHdf5 = true;
+	bool _runActualParticleTrackingStep = true;
 };
+
+namespace detail {
+	bool checkCrimsonParticlesAvailable();
+
+	class ParticleTrackingTask : public crimson::async::TaskWithResult<bool>
+	{
+	public:
+		ParticleTrackingTask(const bool runReductionStep,
+			const bool writeParticleConfigJson,
+			const bool convertFluidSimToHdf5,
+			const bool runActualParticleTrackingStep,
+			const std::string config_file)
+			: _runReductionStep(runReductionStep)
+			, _writeParticleConfigJson(writeParticleConfigJson)
+			, _convertFluidSimToHdf5(convertFluidSimToHdf5)
+			, _runActualParticleTrackingStep(runActualParticleTrackingStep)
+			, _config_file(config_file) {};
+
+	private:
+
+		std::tuple<State, std::string> runTask() override;
+
+		const bool _runReductionStep;
+		const bool _writeParticleConfigJson;
+		const bool _convertFluidSimToHdf5;
+		const bool _runActualParticleTrackingStep;
+		const std::string _config_file;
+	};
+}

@@ -3,6 +3,8 @@
 #include <QmitkDataStorageTableModel.h>
 #include <HierarchyManager.h>
 
+#include "ImmutableRanges.h"
+
 namespace crimson
 {
 
@@ -32,5 +34,7 @@ private:
     mitk::DataNode* _solverStudyNode = nullptr;
     ISolverStudyData* _solverStudy = nullptr;
     HierarchyManager::NodeType _nodeType;
+
+	ImmutableValueRange<gsl::cstring_span<>> _getOwnedUIDs(const int columnIndex) const;
 };
 }

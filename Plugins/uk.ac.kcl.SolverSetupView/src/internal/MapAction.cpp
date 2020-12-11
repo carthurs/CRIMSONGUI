@@ -48,6 +48,9 @@
 
 #include <iostream>
 
+//#define _DEBUG
+//#ifdef _DEBUG
+//#endif // _DEBUG
 
 typedef itk::Image<short, 2>                                        ShortSliceType;
 typedef itk::Image<float, 2>                                        FloatSliceType;
@@ -62,6 +65,284 @@ typedef itk::DivideImageFilter <FloatImageType, FloatImageType, FloatImageType >
 typedef itk::MultiplyImageFilter <FloatImageType, FloatImageType >            MultipyScalingType;
 typedef itk::SubtractImageFilter <FloatImageType, FloatImageType, FloatImageType >   SubtractScalingType;
 
+//void gaussianSmooth2(mitk::Image::Pointer filteredImage, mitk::DataNode::Pointer node, double profileSmoothness, std::vector<mitk::DataNode*> contourNodes)
+//{
+//	MITK_INFO << contourNodes.size();
+//	for (int i = 0; i < contourNodes.size(); i++)
+//	{
+//		mitk::ImageTimeSelector::Pointer timeSelector = mitk::ImageTimeSelector::New();
+//		mitk::ImageSliceSelector::Pointer sliceSelector = mitk::ImageSliceSelector::New();
+//		sliceSelector->SetInput(dynamic_cast<mitk::Image*>(node->GetData()));
+//
+//		//check if it's a par/rec image
+//		int timeNr = 0;
+//		int numPhases = 0;
+//		if (dynamic_cast<mitk::Image*>(node->GetData())->GetPropertyList()->GetIntProperty("PAR.MaxNumberOfCardiacPhases", numPhases))
+//		{
+//			//the image is par/rec
+//			timeNr = 2 * numPhases + i;
+//		}
+//		else
+//			timeNr = i;
+//
+//		sliceSelector->SetTimeNr(timeNr);
+//		//MITK_INFO << timeNr;
+//		sliceSelector->SetSliceNr(0);
+//		sliceSelector->Update();
+//		mitk::Image::Pointer newImage = sliceSelector->GetOutput();
+//
+//		mitk::DataNode::Pointer contourNode = contourNodes.at(i);
+//
+//		if (1)
+//		{
+//			//mask the image
+//			mitk::PlanarFigure::Pointer contour = dynamic_cast<mitk::PlanarFigure*>(contourNode->GetData());
+//			mitk::PlanarFigureMaskGenerator::Pointer maskGenerator = mitk::PlanarFigureMaskGenerator::New();
+//			maskGenerator->SetPlanarFigure(contour);
+//			maskGenerator->SetInputImage(newImage);
+//			mitk::Image::Pointer mask = maskGenerator->GetMask();
+//			mitk::MaskImageFilter::Pointer masker = mitk::MaskImageFilter::New();
+//			masker->SetInput(newImage);
+//			masker->SetMask(mask);
+//			masker->OverrideOutsideValueOn();
+//			masker->SetOutsideValue(0);
+//			masker->Update();
+//			mitk::Image::Pointer newImageMasked = masker->GetOutput();
+//
+//
+//			//filter the masked image
+//			mitk::ImageReadAccessor readAccess(newImageMasked);
+//			const void* cPointer = readAccess.GetData();
+//
+//			ImageType::Pointer itkImage = ImageType::New();
+//			ImageType::Pointer itkImageOriginal = ImageType::New();
+//			CastToItkImage(newImageMasked, itkImage);
+//			CastToItkImage(newImage, itkImageOriginal);
+//
+//
+//#ifdef _DEBUG
+//			//filter for writing output images
+//			const unsigned int Dimension = 2;
+//			typedef short                                     InputPixelType;
+//			typedef unsigned char                             OutputPixelType;
+//			typedef itk::Image< InputPixelType, Dimension >   InputImageType;
+//			typedef itk::Image< OutputPixelType, Dimension >  OutputImageType;
+//			typedef itk::RescaleIntensityImageFilter< InputImageType, InputImageType >
+//				RescaleType;
+//			RescaleType::Pointer rescale = RescaleType::New();
+//			rescale->SetInput(itkImage);
+//			rescale->SetOutputMinimum(0);
+//			rescale->SetOutputMaximum(itk::NumericTraits< OutputPixelType >::max());
+//
+//			typedef itk::CastImageFilter< InputImageType, OutputImageType > FilterType;
+//			FilterType::Pointer filter = FilterType::New();
+//			filter->SetInput(rescale->GetOutput());
+//
+//			typedef itk::ImageFileWriter< OutputImageType > WriterType;
+//			WriterType::Pointer writer = WriterType::New();
+//			writer->SetFileName("./output/newImageMasked.png");
+//			writer->SetInput(filter->GetOutput());
+//			writer->Update();
+//
+//			typedef itk::ImageFileWriter< InputImageType > WriterTypeShort;
+//			WriterTypeShort::Pointer writerShort = WriterTypeShort::New();
+//			std::string filename = "./output/newImageMasked" + std::to_string(i) + ".mhd";
+//			writerShort->SetFileName(filename);
+//			writerShort->SetInput(itkImage);
+//			writerShort->Update();
+//
+//			filename = "./output/imageOriginal" + std::to_string(i) + ".mhd";
+//			writerShort->SetFileName(filename);
+//			writerShort->SetInput(itkImageOriginal);
+//			writerShort->Update();
+//#endif
+//
+//			GaussianFilterType::Pointer gaussianFilter = GaussianFilterType::New();
+//			gaussianFilter->SetInput(itkImage);
+//			gaussianFilter->SetVariance(profileSmoothness);
+//			gaussianFilter->UpdateLargestPossibleRegion();
+//			gaussianFilter->SetUseImageSpacingOff();
+//			gaussianFilter->SetNumberOfThreads(8);
+//			gaussianFilter->Update();
+//
+//
+//#ifdef _DEBUG
+//			writer->SetFileName("./output/gaussImage.png");
+//			rescale->SetInput(gaussianFilter->GetOutput());
+//			writer->Update();
+//			filename = "./output/gaussImage" + std::to_string(i) + ".mhd";
+//			writerShort->SetFileName(filename);
+//			writerShort->SetInput(gaussianFilter->GetOutput());
+//			writerShort->Update();
+//#endif
+//
+//			//filter the mask
+//			mitk::ImageReadAccessor readAccess2(mask);
+//			const void* cPointer2 = readAccess2.GetData();
+//
+//			ImageType::Pointer itkMask = ImageType::New();
+//			CastToItkImage(mask, itkMask);
+//			
+//
+//			//cast binary mask from short to float to enable Gaussian smoothing
+//			typedef itk::CastImageFilter< ImageType, ImageTypeMask > FilterMaskType;
+//			FilterMaskType::Pointer filterMask = FilterMaskType::New();
+//			filterMask->SetInput(itkMask);
+//
+//#ifdef _DEBUG
+//			typedef itk::ImageFileWriter< ImageTypeMask > WriterTypeFloat;
+//			WriterTypeFloat::Pointer writerFloat = WriterTypeFloat::New();
+//			filename = "./output/maskFloat" + std::to_string(i) + ".mhd";
+//			writerFloat->SetFileName(filename);
+//			writerFloat->SetInput(filterMask->GetOutput());
+//			writerFloat->Update();
+//			
+//
+//			writer->SetFileName("./output/mask.png");
+//			rescale->SetInput(itkMask);
+//			writer->Update();
+//#endif
+//
+//			GaussianMaskFilterType::Pointer gaussianFilterMask = GaussianMaskFilterType::New();
+//			gaussianFilterMask->SetInput(filterMask->GetOutput());
+//			gaussianFilterMask->SetVariance(profileSmoothness);
+//			gaussianFilterMask->UpdateLargestPossibleRegion();
+//			gaussianFilterMask->SetUseImageSpacingOff();
+//			gaussianFilterMask->SetNumberOfThreads(8);
+//			gaussianFilterMask->Update();
+//
+//#ifdef _DEBUG
+//			filename = "./output/maskGaussFloat" + std::to_string(i) + ".mhd";
+//			writerFloat->SetFileName(filename);
+//			writerFloat->SetInput(gaussianFilterMask->GetOutput());
+//			writerFloat->Update();
+//#endif
+//
+//			//divide filtered image with filtered mask
+//			DivideImageFilterType::Pointer divideImageFilter = DivideImageFilterType::New();
+//			divideImageFilter->SetInput1(gaussianFilter->GetOutput());
+//			divideImageFilter->SetInput2(gaussianFilterMask->GetOutput());
+//			divideImageFilter->Update();
+//
+//#ifdef _DEBUG
+//			writer->SetFileName("./output/divided.png");
+//			rescale->SetInput(divideImageFilter->GetOutput());
+//			writer->Update();
+//			filename = "./output/divided" + std::to_string(i) + ".mhd";
+//			writerShort->SetFileName(filename);
+//			writerShort->SetInput(divideImageFilter->GetOutput());
+//			writerShort->Update();
+//#endif
+//
+//			//make sure values which were divided by 0 are set back to 0
+//			MultiplyImageFilterType::Pointer multiplyFilter = MultiplyImageFilterType::New();
+//			multiplyFilter->SetInput1(divideImageFilter->GetOutput());
+//			multiplyFilter->SetInput2(itkMask);
+//			multiplyFilter->Update();
+//
+//			//Get the mean value of intensities inside the masked region
+//			typedef itk::BinaryImageToLabelMapFilter<ImageType> BinaryImageToLabelMapFilterType;
+//			BinaryImageToLabelMapFilterType::Pointer binaryImageToLabelMapFilter = BinaryImageToLabelMapFilterType::New();
+//			binaryImageToLabelMapFilter->SetInput(itkMask);
+//			binaryImageToLabelMapFilter->SetInputForegroundValue(1);
+//			binaryImageToLabelMapFilter->Update();
+//
+//			typedef itk::LabelMapToLabelImageFilter<BinaryImageToLabelMapFilterType::OutputImageType, ImageType> LabelMapToLabelImageFilterType;
+//			LabelMapToLabelImageFilterType::Pointer labelMapToLabelImageFilter = LabelMapToLabelImageFilterType::New();
+//			labelMapToLabelImageFilter->SetInput(binaryImageToLabelMapFilter->GetOutput());
+//			labelMapToLabelImageFilter->Update();
+//
+//			typedef itk::LabelStatisticsImageFilter< ImageType, ImageType > LabelStatisticsImageFilterType;
+//			LabelStatisticsImageFilterType::Pointer labelStatisticsImageFilter = LabelStatisticsImageFilterType::New();
+//			labelStatisticsImageFilter->SetLabelInput(labelMapToLabelImageFilter->GetOutput());
+//			labelStatisticsImageFilter->SetInput(multiplyFilter->GetOutput());
+//			labelStatisticsImageFilter->Update();
+//
+//			std::cout << "Number of labels: " << labelStatisticsImageFilter->GetNumberOfLabels() << std::endl;
+//			std::cout << std::endl;
+//
+//			typedef LabelStatisticsImageFilterType::ValidLabelValuesContainerType ValidLabelValuesType;
+//			typedef LabelStatisticsImageFilterType::LabelPixelType                LabelPixelType;
+//
+//			for (ValidLabelValuesType::const_iterator vIt = labelStatisticsImageFilter->GetValidLabelValues().begin();
+//				vIt != labelStatisticsImageFilter->GetValidLabelValues().end();
+//				++vIt)
+//			{
+//				if (labelStatisticsImageFilter->HasLabel(*vIt))
+//				{
+//					LabelPixelType labelValue = *vIt;
+//					std::cout << "min: " << labelStatisticsImageFilter->GetMinimum(labelValue) << std::endl;
+//					std::cout << "max: " << labelStatisticsImageFilter->GetMaximum(labelValue) << std::endl;
+//					std::cout << "median: " << labelStatisticsImageFilter->GetMedian(labelValue) << std::endl;
+//					std::cout << "mean: " << labelStatisticsImageFilter->GetMean(labelValue) << std::endl;
+//					std::cout << "sigma: " << labelStatisticsImageFilter->GetSigma(labelValue) << std::endl;
+//					std::cout << "variance: " << labelStatisticsImageFilter->GetVariance(labelValue) << std::endl;
+//					std::cout << "sum: " << labelStatisticsImageFilter->GetSum(labelValue) << std::endl;
+//					std::cout << "count: " << labelStatisticsImageFilter->GetCount(labelValue) << std::endl;
+//					//std::cout << "box: " << labelStatisticsImageFilter->GetBoundingBox( labelValue ) << std::endl; // can't output a box
+//					std::cout << "region: " << labelStatisticsImageFilter->GetRegion(labelValue) << std::endl;
+//					std::cout << std::endl << std::endl;
+//
+//				}
+//			}
+//
+//			typedef itk::MaskImageFilter< ImageType, ImageType > MaskFilterType;
+//			MaskFilterType::Pointer maskFilter = MaskFilterType::New();
+//			maskFilter->SetInput(divideImageFilter->GetOutput());
+//			maskFilter->SetMaskImage(itkMask);
+//			maskFilter->SetOutsideValue(labelStatisticsImageFilter->GetMean(1));
+//			maskFilter->Update();
+//
+//#ifdef _DEBUG
+//			writer->SetFileName("./output/finalResult.png");
+//			rescale->SetInput(maskFilter->GetOutput());
+//			writer->Update();
+//
+//			filename = "./output/finalResult" + std::to_string(i) + ".mhd";
+//			writerShort->SetFileName(filename);
+//			writerShort->SetInput(maskFilter->GetOutput());
+//			writerShort->Update();
+//#endif
+//
+//
+//			
+//			filteredImage->SetSlice(maskFilter->GetOutput()->GetBufferPointer(), 0, timeNr);
+//		}
+//		if (0)
+//		{
+//
+//			/*mitk::ImageReadAccessor readAccess(newImage, newImage->GetVolumeData(i));*/
+//
+//			mitk::ImageReadAccessor readAccess(newImage);
+//			const void* cPointer = readAccess.GetData();
+//
+//			ImageType::Pointer itkImage = ImageType::New();
+//			CastToItkImage(newImage, itkImage);
+//
+//			GaussianFilterType::Pointer gaussianFilter = GaussianFilterType::New();
+//			gaussianFilter->SetInput(itkImage);
+//			gaussianFilter->SetVariance(profileSmoothness);
+//			gaussianFilter->UpdateLargestPossibleRegion();
+//			gaussianFilter->SetUseImageSpacingOff();
+//			gaussianFilter->SetNumberOfThreads(8);
+//			/*gaussianFilter->SetFilterDimensionality(2);
+//			gaussianFilter->SetMaximumKernelWidth(3);*/
+//
+//			//typedef itk::SmoothingRecursiveGaussianImageFilter<
+//			//	ImageType, ImageType >  FilterType;
+//			//FilterType::Pointer gaussianFilter = FilterType::New();
+//			//gaussianFilter->SetInput(itkImage);
+//			//gaussianFilter->SetSigma(profileSmoothness);
+//
+//			gaussianFilter->Update();
+//
+//			filteredImage->SetSlice(gaussianFilter->GetOutput()->GetBufferPointer(), 0, timeNr);
+//
+//		}
+//
+//	}
+//
+//}
 
 FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mitk::DataNode::Pointer node, double profileSmoothness, std::vector<mitk::DataNode*> contourNodes)
 {
@@ -158,6 +439,20 @@ FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mi
 		FloatSliceType::Pointer newImageMasked = maskFilter->GetOutput();
 
 
+#ifdef _DEBUG
+		typedef itk::ImageFileWriter< FloatSliceType > WriterTypeFloat;
+		WriterTypeFloat::Pointer writerFloat = WriterTypeFloat::New();
+		std::string filename = "./output/newImageMasked" + std::to_string(contourIdx) + ".mhd";
+		writerFloat->SetFileName(filename);
+		writerFloat->SetInput(newImageMasked);
+		writerFloat->Update();
+
+		filename = "./output/maskFloat" + std::to_string(contourIdx) + ".mhd";
+		writerFloat->SetFileName(filename);
+		writerFloat->SetInput(filterMask->GetOutput());
+		writerFloat->Update();
+#endif
+
 		GaussianFilterType::Pointer gaussianFilter = GaussianFilterType::New();
 		gaussianFilter->SetInput(maskFilter->GetOutput());
 		gaussianFilter->SetVariance(profileSmoothness);
@@ -165,6 +460,14 @@ FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mi
 		gaussianFilter->SetUseImageSpacingOff();
 		gaussianFilter->SetNumberOfThreads(8);
 		gaussianFilter->Update();
+
+
+#ifdef _DEBUG
+		filename = "./output/gaussImage" + std::to_string(contourIdx) + ".mhd";
+		writerFloat->SetFileName(filename);
+		writerFloat->SetInput(gaussianFilter->GetOutput());
+		writerFloat->Update();
+#endif
 
 		//filter the mask
 		GaussianFilterType::Pointer gaussianFilterMask = GaussianFilterType::New();
@@ -175,6 +478,12 @@ FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mi
 		gaussianFilterMask->SetNumberOfThreads(8);
 		gaussianFilterMask->Update();
 
+#ifdef _DEBUG
+		filename = "./output/maskGaussFloat" + std::to_string(contourIdx) + ".mhd";
+		writerFloat->SetFileName(filename);
+		writerFloat->SetInput(gaussianFilterMask->GetOutput());
+		writerFloat->Update();
+#endif
 
 		//divide filtered image with filtered mask
 		DivideImageFilterType::Pointer divideImageFilter = DivideImageFilterType::New();
@@ -182,6 +491,12 @@ FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mi
 		divideImageFilter->SetInput2(gaussianFilterMask->GetOutput());
 		divideImageFilter->Update();
 
+#ifdef _DEBUG
+		filename = "./output/divided" + std::to_string(contourIdx) + ".mhd";
+		writerFloat->SetFileName(filename);
+		writerFloat->SetInput(divideImageFilter->GetOutput());
+		writerFloat->Update();
+#endif
 
 		//make sure values which were divided by 0 are set back to 0
 		MultiplyImageFilterType::Pointer multiplyFilter = MultiplyImageFilterType::New();
@@ -207,7 +522,10 @@ FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mi
 		labelStatisticsImageFilter->SetInput(multiplyFilter->GetOutput());
 		labelStatisticsImageFilter->Update();
 
-
+#ifdef _DEBUG
+		std::cout << "Number of labels: " << labelStatisticsImageFilter->GetNumberOfLabels() << std::endl;
+		std::cout << std::endl;
+#endif
 
 		typedef LabelStatisticsImageFilterType::ValidLabelValuesContainerType ValidLabelValuesType;
 		typedef LabelStatisticsImageFilterType::LabelPixelType                LabelPixelType;
@@ -219,6 +537,18 @@ FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mi
 			if (labelStatisticsImageFilter->HasLabel(*vIt))
 			{
 				LabelPixelType labelValue = *vIt;
+#ifdef _DEBUG
+				std::cout << "min: " << labelStatisticsImageFilter->GetMinimum(labelValue) << std::endl;
+				std::cout << "max: " << labelStatisticsImageFilter->GetMaximum(labelValue) << std::endl;
+				std::cout << "median: " << labelStatisticsImageFilter->GetMedian(labelValue) << std::endl;
+				std::cout << "mean: " << labelStatisticsImageFilter->GetMean(labelValue) << std::endl;
+				std::cout << "sigma: " << labelStatisticsImageFilter->GetSigma(labelValue) << std::endl;
+				std::cout << "variance: " << labelStatisticsImageFilter->GetVariance(labelValue) << std::endl;
+				std::cout << "sum: " << labelStatisticsImageFilter->GetSum(labelValue) << std::endl;
+				std::cout << "count: " << labelStatisticsImageFilter->GetCount(labelValue) << std::endl;
+				std::cout << "region: " << labelStatisticsImageFilter->GetRegion(labelValue) << std::endl;
+				std::cout << std::endl << std::endl;
+#endif
 
 			}
 		}
@@ -228,6 +558,12 @@ FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mi
 		maskFilter->SetOutsideValue(labelStatisticsImageFilter->GetMean(1));
 		maskFilter->Update();
 
+#ifdef _DEBUG
+		filename = "./output/finalResult" + std::to_string(contourIdx) + ".mhd";
+		writerFloat->SetFileName(filename);
+		writerFloat->SetInput(maskFilter->GetOutput());
+		writerFloat->Update();
+#endif
 
 		typedef itk::CastImageFilter< FloatSliceType, FloatImageType > CastFilterType;
 		CastFilterType::Pointer castFilter = CastFilterType::New();
@@ -255,6 +591,15 @@ FloatImageType::Pointer gaussianSmooth(FloatImageType::Pointer filteredImage, mi
 
 		contourIdx++;
 	}
+
+#ifdef _DEBUG
+	typedef itk::ImageFileWriter< FloatImageType > WriterTypeFloat;
+	WriterTypeFloat::Pointer writerFloat = WriterTypeFloat::New();
+	std::string filename = "./output/filtered.mhd";
+	writerFloat->SetFileName(filename);
+	writerFloat->SetInput(pasteFilter->GetOutput());
+	writerFloat->Update();
+#endif
 
 	return filteredImage.GetPointer();
 }
@@ -322,6 +667,14 @@ FloatImageType::Pointer calculateVelocities(mitk::Image::Pointer pcmriImage, mit
 	itkImageFloat = castToFloat->GetOutput();
 	itkImageFloat->DisconnectPipeline();
 
+#ifdef _DEBUG
+	typedef itk::ImageFileWriter< FloatImageType > WriterTypeFloat;
+	WriterTypeFloat::Pointer writerFloat = WriterTypeFloat::New();
+	writerFloat->SetInput(itkImageFloat);
+	std::string filename = "./output/castImage.mhd";
+	writerFloat->SetFileName(filename);
+	writerFloat->Update();
+#endif
 
 	std::string velocityCalculationType;
 
@@ -354,6 +707,12 @@ FloatImageType::Pointer calculateVelocities(mitk::Image::Pointer pcmriImage, mit
 
 		itkImageFloat = multiplyImageFilter->GetOutput();
 
+#ifdef _DEBUG
+		writerFloat->SetInput(itkImageFloat);
+		std::string filename3 = "./output/Philips.mhd";
+		writerFloat->SetFileName(filename3);
+		writerFloat->Update();
+#endif
 
 	}
 	else if (velocityCalculationType == "GE")
@@ -379,7 +738,7 @@ FloatImageType::Pointer calculateVelocities(mitk::Image::Pointer pcmriImage, mit
 			castToFloat->Update();
 
 			multiplyImageFilter->SetInput(castToFloat->GetOutput());
-			multiplyImageFilter->SetConstant(scale / 10); //divide by 10 to convert from cm to mm 
+			multiplyImageFilter->SetConstant(scale / 10); //multiply by 10 to convert from cm to mm TODO: check if we shouldn't in fact divide by 10!!!
 			multiplyImageFilter->Update();
 
 			divideImageFilter->SetInput1(itkImageFloat.GetPointer());
@@ -397,6 +756,13 @@ FloatImageType::Pointer calculateVelocities(mitk::Image::Pointer pcmriImage, mit
 
 			itkImageFloat = divideImageFilter->GetOutput();
 		}
+
+#ifdef _DEBUG
+		writerFloat->SetInput(itkImageFloat);
+		std::string filename3 = "./output/GE.mhd";
+		writerFloat->SetFileName(filename3);
+		writerFloat->Update();
+#endif
 
 	}
 	else if (velocityCalculationType == "Siemens")
@@ -426,6 +792,13 @@ FloatImageType::Pointer calculateVelocities(mitk::Image::Pointer pcmriImage, mit
 
 		itkImageFloat = subtractImageFilter->GetOutput();
 
+#ifdef _DEBUG
+		writerFloat->SetInput(itkImageFloat);
+		std::string filename3 = "./output/Siemens.mhd";
+		writerFloat->SetFileName(filename3);
+		writerFloat->Update();
+#endif
+
 	}
 
 	else if (velocityCalculationType == "Linear")
@@ -453,6 +826,12 @@ FloatImageType::Pointer calculateVelocities(mitk::Image::Pointer pcmriImage, mit
 
 		itkImageFloat = multiplyImageFilter2->GetOutput();
 
+#ifdef _DEBUG
+		writerFloat->SetInput(itkImageFloat);
+		std::string filename3 = "./output/Linear.mhd";
+		writerFloat->SetFileName(filename3);
+		writerFloat->Update();
+#endif
 	}
 
 	return itkImageFloat.GetPointer();
@@ -539,6 +918,19 @@ std::shared_ptr<crimson::CreateDataNodeAsyncTask> MapAction::Run(const mitk::Dat
 		contourModel3D.push_back(mesh->getNodeCoordinates(*it));
 	}
 
+#ifdef _DEBUG
+			{
+				std::ofstream file;
+				std::string filename = "./output/contourModel3D.txt";
+				file.open(filename, ofstream::out);
+				for (int i = 0; i < contourModel3D.size(); i++){
+					file << contourModel3D[i][0] << " " << contourModel3D[i][1] << " " << contourModel3D[i][2] << std::endl;
+				}
+				file.close();
+				std::cout << "output in " << filename << std::endl;
+			}
+#endif
+
 	//transform boundary model points to 2D
 
 	std::vector<mitk::Point2D> contourModel2D;
@@ -548,6 +940,19 @@ std::shared_ptr<crimson::CreateDataNodeAsyncTask> MapAction::Run(const mitk::Dat
 		plane->Map(*it, projectedPoint);
 		contourModel2D.push_back(projectedPoint);
 	}
+
+#ifdef _DEBUG
+			{
+				std::ofstream file;
+				std::string filename = "./output/contourModel2D.txt";
+				file.open(filename, ofstream::out);
+				for (int i = 0; i < contourModel2D.size(); i++){
+					file << contourModel2D[i][0] << " " << contourModel2D[i][1] << std::endl;
+				}
+				file.close();
+				std::cout << "output in " << filename << std::endl;
+			}
+#endif
 
 	//transfer vector of points to PlanarFigure
 
@@ -601,9 +1006,25 @@ std::shared_ptr<crimson::CreateDataNodeAsyncTask> MapAction::Run(const mitk::Dat
 	mitk::Image::Pointer filteredImage = dynamic_cast<mitk::Image*>(pcmriNodePhase->GetData())->Clone();
 	mitk::Image::Pointer filteredImageMagn = dynamic_cast<mitk::Image*>(pcmriNodeMagnitude->GetData())->Clone();
 
+
+
+	////TODO: add other props here! or just pass the whole property list
+	//
+	//int venc = 0;
+	//pcmriNodePhase->GetIntProperty("mapping.venc", venc);
+	//filteredImage->GetPropertyList()->SetIntProperty("mapping.venc", venc);
+
 	int cardiacFrequency = 0;
 	pcmriNodePhase->GetIntProperty("mapping.cardiacfrequency", cardiacFrequency);
 	filteredImage->GetPropertyList()->SetIntProperty("mapping.cardiacfrequency", cardiacFrequency);
+
+	//double venscale = 0;
+	//pcmriNodePhase->GetDoubleProperty("mapping.venscale", venscale);
+	//filteredImage->GetPropertyList()->SetDoubleProperty("mapping.venscale", venscale);
+
+	//bool magnitudemask = false;
+	//pcmriNodePhase->GetBoolProperty("mapping.magnitudemask", magnitudemask);
+	//filteredImage->GetPropertyList()->SetBoolProperty("mapping.magnitudemask", magnitudemask);
 
 	bool flipped = false;
 	pcmriNodeMagnitude->GetBoolProperty("mapping.imageFlipped", flipped);

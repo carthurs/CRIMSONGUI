@@ -1,0 +1,32 @@
+if(${MY_PROJECT_NAME}_USE_SUPERBUILD)
+  message(FATAL_ERROR "Unexpected use of non-superbuild CPackSetup in a superbuild.")
+endif()
+
+message("Entering ./CMake/NonSuperbuildCPackSetup.cmake")
+
+set(CPACK_PACKAGE_NAME "${MY_PROJECT_NAME}-${CRIMSON_MESHING_KERNEL}")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Cardiovascular Integrated Modelling & Simulation")
+set(CPACK_PACKAGE_VENDOR "King's College London")
+set(CPACK_CREATE_DESKTOP_LINKS "${MY_APP_NAME}")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${PROJECT_SOURCE_DIR}/LICENSE.txt")
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.txt")
+set(CPACK_PACKAGE_VERSION_MAJOR "${${MY_PROJECT_NAME}_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${${MY_PROJECT_NAME}_VERSION_MINOR}")
+
+# append revision number if available
+if(${MY_PROJECT_NAME}_REVISION_ID)
+  if(${MY_PROJECT_NAME}_WC_TYPE STREQUAL "git")
+    set(git_hash ${${MY_PROJECT_NAME}_REVISION_ID})
+    string(LENGTH "${git_hash}" hash_length)
+    if(hash_length GREATER 6)
+      string(SUBSTRING ${git_hash} 0 6 git_hash)
+    endif()
+    set(CPACK_PACKAGE_VERSION_PATCH "${${MY_PROJECT_NAME}_VERSION_PATCH}_r${git_hash}")
+  else()
+    set(CPACK_PACKAGE_VERSION_PATCH "${${MY_PROJECT_NAME}_VERSION_PATCH}_r${${MY_PROJECT_NAME}_REVISION_ID}")
+  endif()
+else()
+  set(CPACK_PACKAGE_VERSION_PATCH "${${MY_PROJECT_NAME}_VERSION_PATCH}")
+endif()
+
+message("End of ./CMake/NonSuperbuildCPackSetup.cmake")

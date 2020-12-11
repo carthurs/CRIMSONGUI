@@ -262,6 +262,12 @@ public slots:
         return _mesh->getNElements();
     }
 
+	QString getDataNodeName() const
+	{
+		Expects(_mesh != nullptr);
+		return QString::fromStdString(_mesh->getDataNodeName());
+	}
+
     QVector<double> getNodeCoordinates(int nodeIndex) const
     {
         Expects(_mesh != nullptr);

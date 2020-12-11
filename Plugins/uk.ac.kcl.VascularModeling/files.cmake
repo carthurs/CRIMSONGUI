@@ -24,9 +24,6 @@ set(INTERNAL_CPP_FILES
   ShowHideContoursAction.cpp
   ExportVesselsAction.cpp
   ImportVesselsAction.cpp
-  3rdParty/BestFit/BestFit.cpp
-  3rdParty/BestFit/Double.cpp
-  3rdParty/BestFit/Shapes.cpp
 )
 
 set(UI_FILES

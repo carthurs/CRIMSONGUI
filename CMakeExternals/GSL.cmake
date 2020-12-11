@@ -20,7 +20,7 @@ if(NOT DEFINED GSL_INCLUDE_DIR)
         set(_gsl_url https://github.com/rkhlebnikov/gsl-lite.git)
     endif()
 
-    ExternalProject_Add(${proj}
+    ExternalProject_Add(${proj} # where proj is GSL
       LIST_SEPARATOR ${sep}
       GIT_REPOSITORY ${_gsl_url}
 
@@ -32,8 +32,7 @@ if(NOT DEFINED GSL_INCLUDE_DIR)
 
     ExternalProject_Get_Property(${proj} source_dir)
     set(GSL_INCLUDE_DIR ${source_dir}/include)
-    #mitkFunctionInstallExternalCMakeProject(${proj})
 
 else()
-    #mitkMacroEmptyExternalProject(${proj} "${proj_DEPENDENCIES}")
+
 endif()

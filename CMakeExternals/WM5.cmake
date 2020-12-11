@@ -37,17 +37,15 @@ if (WIN32)
 else()
     set(WM5_BUILD_COMMAND "${CMAKE_MAKE_PROGRAM}" "CFG=${CMAKE_BUILD_TYPE}Dynamic" "--file=makefile.wm5" "--directory=<SOURCE_DIR>/LibCore" 
                   COMMAND "${CMAKE_MAKE_PROGRAM}" "CFG=${CMAKE_BUILD_TYPE}Dynamic" "--file=makefile.wm5" "--directory=<SOURCE_DIR>/LibMathematics")
-    #set(WM5_BUILD_COMMAND "pwd")
 endif()
 
 if(NOT DEFINED WM5_DIR)
     set(additional_args )
 
-    ExternalProject_Add(${proj}
+    ExternalProject_Add(${proj} # where proj is WM5
       LIST_SEPARATOR ${sep}
       URL http://www.isd.kcl.ac.uk/cafa/CRIMSON-superbuild/WildMagic5p13.zip
       DOWNLOAD_NAME WildMagic5p13.zip 
-      #URL_MD5 ba87fe9f5ca47e3dfd62aad7223f0e7f
       
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ${WM5_BUILD_COMMAND} 
@@ -57,9 +55,7 @@ if(NOT DEFINED WM5_DIR)
 
     ExternalProject_Get_Property(${proj} install_dir)
     set(WM5_DIR "${install_dir}/SDK")
-    #set(WM5_DIR ${ep_prefix})
-    #mitkFunctionInstallExternalCMakeProject(${proj})
 
 else()
-    #mitkMacroEmptyExternalProject(${proj} "${proj_DEPENDENCIES}")
+
 endif()

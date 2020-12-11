@@ -1,0 +1,26 @@
+if(CPACK_GENERATOR MATCHES "NSIS")
+
+  # set the package header icon for MUI
+  SET(CPACK_PACKAGE_ICON "@CRIMSON_SOURCE_DIR@\\icons\\icon.png")
+  # set the install/unistall icon used for the installer itself
+  # There is a bug in NSIS that does not handle full unix paths properly.
+  SET(CPACK_NSIS_MUI_ICON "@CRIMSON_SOURCE_DIR@\\icons\\icon.ico")
+  SET(CPACK_NSIS_MUI_UNIICON "@CRIMSON_SOURCE_DIR@\\icons\\icon.ico")
+
+  set(CPACK_NSIS_DISPLAY_NAME "CRIMSON - Cardiovascular Integrated Modelling & Simulation")
+
+  # tell cpack to create links to the doc files
+  SET(CPACK_NSIS_MENU_LINKS "http://www.crimson.software" "CRIMSON Web Site")
+
+  # tell cpack the executables you want in the start menu as links
+  SET(CPACK_PACKAGE_EXECUTABLES "CRIMSON;Start CRIMSON" CACHE INTERNAL "Collecting windows shortcuts to executables")
+
+  # tell cpack to create a desktop link to MainApp
+  SET(CPACK_CREATE_DESKTOP_LINKS "CRIMSON")
+  SET(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\icon.ico")
+  SET(CPACK_NSIS_HELP_LINK "http:\\\\www.crimson.software")
+  SET(CPACK_NSIS_URL_INFO_ABOUT "http:\\\\www.crimson.software")
+  SET(CPACK_NSIS_CONTACT christopher.arthurs@kcl.ac.uk)
+  SET(CPACK_NSIS_MODIFY_PATH ON)
+
+endif(CPACK_GENERATOR MATCHES "NSIS")

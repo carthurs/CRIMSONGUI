@@ -72,6 +72,28 @@ public:
     virtual void setMaterialNodeUIDs(ImmutableValueRange<gsl::cstring_span<>> nodeUIDs) = 0;
     ///@} 
 
+	///@{ 
+	/*!
+	* \brief   Gets the UID's of particle bolus mesh nodes used in the study.
+	*/
+	virtual gsl::cstring_span<> getParticleBolusMeshNodeUID() const = 0;
+	/*!
+	* \brief   Sets the UID's of particle bolus mesh nodes to use in the study.
+	*/
+	virtual void setParticleBolusMeshNodeUID(gsl::cstring_span<> nodeUID) = 0;
+	///@}
+
+	///@{ 
+	/*!
+	* \brief   Gets the UID's of particle bin mesh nodes used in the study.
+	*/
+	virtual ImmutableValueRange<gsl::cstring_span<>> getParticleBinMeshNodeUIDs() const = 0;
+	/*!
+	* \brief   Sets the UID's of particle bin mesh nodes to use in the study.
+	*/
+	virtual void setParticleBinMeshNodeUIDs(ImmutableValueRange<gsl::cstring_span<>> nodeUIDs) = 0;
+	///@} 
+
     /*!
      * \brief   Writes a solver setup.
      *
@@ -82,11 +104,16 @@ public:
      */
     virtual bool writeSolverSetup(const IDataProvider& dataProvider, const mitk::BaseData* vesselForestData,
                                   gsl::not_null<const mitk::BaseData*> solidModelData,
-                                  gsl::span<const SolutionData*> solutions) = 0;
+								  gsl::span<const SolutionData*> solutions, const bool setupParticleProblem) = 0;
 	/*!
 	* \brief   Runs the simulation using a flowsolver.
 	*/
 	virtual bool runFlowsolver() = 0;
+
+	/*!
+	* \brief   Gets the particle tracking simulation folder, and may do some additional internal path setup.
+	*/
+	virtual std::string setupParticleTrackingPathsAndGetParticleTrackingFolder() = 0;
 
     /*!
      * \brief   Loads the computed solution.

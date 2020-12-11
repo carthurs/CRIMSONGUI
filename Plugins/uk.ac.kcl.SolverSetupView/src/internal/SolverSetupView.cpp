@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <memory>
 
 #include <QMessageBox>
 
@@ -16,6 +17,8 @@
 
 #include <NodePredicateDerivation.h>
 #include <NodePredicateNone.h>
+
+#include <utils/TaskStateObserver.h>
 
 // Module includes
 #include <VesselPathAbstractData.h>
@@ -41,12 +44,16 @@
 #include <mitkVtkScalarModeProperty.h>
 #include <mitkTransferFunctionProperty.h>
 
+#include <ctkPopupWidget.h>
+
 #include <QmitkIOUtil.h>
 
 #include <usModule.h>
 #include <usModuleRegistry.h>
 #include <usModuleContext.h>
 #include <usServiceInterface.h>
+
+#include <crimsonparticles.h>
 
 using namespace crimson;
 
@@ -63,6 +70,7 @@ void SolverSetupView::RemoveNodeDeleter::operator()(mitk::DataNode* node)
 SolverSetupView::SolverSetupView()
     : _solverStudyBCSetsModel(SolverSetupNodeTypes::BoundaryConditionSet())
     , _solverStudyMaterialsModel(SolverSetupNodeTypes::Material())
+	, _particleTrackingGeometriesModel(VesselMeshingNodeTypes::Mesh())
 {
     _typeSelectionDialogUi.setupUi(&_typeSelectionDialog);
 
@@ -81,6 +89,52 @@ SolverSetupView::~SolverSetupView()
 
 void SolverSetupView::SetFocus() {}
 
+void SolverSetupView::_setupAdvancedParticleTrackingOptionsUI()
+{
+	ctkPopupWidget* popup = new ctkPopupWidget(_UI.particleAnalysisSettingsButton);
+	QVBoxLayout* popupLayout = new QVBoxLayout(popup);
+
+	// The popup for advanced option of controlling which particle tracking stages
+	// will be run
+	auto runReductionStepCheckBox = new QCheckBox(popup);
+	runReductionStepCheckBox->setText("Run fluid problem reduction step.");
+	runReductionStepCheckBox->setChecked(true);
+	popupLayout->addWidget(runReductionStepCheckBox);
+	connect(runReductionStepCheckBox, &QCheckBox::toggled, [this](bool checked) { _runReductionStep = checked; });
+
+	auto writeParticleConfigJsonCheckBox = new QCheckBox(popup);
+	writeParticleConfigJsonCheckBox->setText("Write a new particle_config.json using the current configuration.");
+	writeParticleConfigJsonCheckBox->setChecked(true);
+	popupLayout->addWidget(writeParticleConfigJsonCheckBox);
+	connect(writeParticleConfigJsonCheckBox, &QCheckBox::toggled, [this](bool checked) { _writeParticleConfigJson = checked; });
+
+	auto performFluidSimToHdf5CreationStepCheckBox = new QCheckBox(popup);
+	performFluidSimToHdf5CreationStepCheckBox->setText("Run fluid problem hdf5 file creation step.");
+	performFluidSimToHdf5CreationStepCheckBox->setChecked(true);
+	popupLayout->addWidget(performFluidSimToHdf5CreationStepCheckBox);
+	connect(performFluidSimToHdf5CreationStepCheckBox, &QCheckBox::toggled, [this](bool checked) { _convertFluidSimToHdf5 = checked; });
+
+	auto runActualParticleTrackingStepCheckBox = new QCheckBox(popup);
+	runActualParticleTrackingStepCheckBox->setText("Run actual particle tracking simulation step.");
+	runActualParticleTrackingStepCheckBox->setChecked(true);
+	popupLayout->addWidget(runActualParticleTrackingStepCheckBox);
+	connect(runActualParticleTrackingStepCheckBox, &QCheckBox::toggled, [this](bool checked) { _runActualParticleTrackingStep = checked; });
+
+	popup->setAlignment(Qt::AlignHCenter | Qt::AlignBottom);      // at the top left corner
+	popup->setHorizontalDirection(Qt::RightToLeft);               // open outside the parent
+	popup->setVerticalDirection(ctkBasePopupWidget::TopToBottom); // at the left of the spinbox sharing the top border
+	// Control the animation
+	popup->setAnimationEffect(ctkBasePopupWidget::FadeEffect); // could also be FadeEffect
+	popup->setOrientation(Qt::Horizontal);                     // how to animate, could be Qt::Vertical or Qt::Horizontal|Qt::Vertical
+	popup->setEasingCurve(QEasingCurve::OutQuart);             // how to accelerate the animation, QEasingCurve::Type
+	popup->setEffectDuration(100);                             // how long in ms.
+	// Control the behavior
+	popup->setAutoShow(false); // automatically open when the mouse is over the spinbox
+	popup->setAutoHide(true);  // automatically hide when the mouse leaves the popup or the spinbox.
+
+	connect(_UI.particleAnalysisSettingsButton, &QAbstractButton::clicked, [popup]() { popup->showPopup(); });
+}
+
 void SolverSetupView::CreateQtPartControl(QWidget* parent)
 {
     // create GUI widgets from the Qt Designer's .ui file
@@ -88,6 +142,18 @@ void SolverSetupView::CreateQtPartControl(QWidget* parent)
 
     connect(_UI.setupSolverButton, &QAbstractButton::clicked, this, &SolverSetupView::writeSolverSetup);
 	connect(_UI.runSimulationButton, &QAbstractButton::clicked, this, &SolverSetupView::runSimulation);
+	connect(_UI.setupLagrangianParticleTrackingAnalysisButton, &QAbstractButton::clicked, this, &SolverSetupView::setupLagrangianParticleTrackingAnalysis);
+
+	_particleSimulationTaskStateObserver = new crimson::TaskStateObserver(_UI.runLagrangianParticleTrackingAnalysisButton, _UI.cancelLagrangianParticleTrackingAnalysisButton, this);
+	connect(_particleSimulationTaskStateObserver, &crimson::TaskStateObserver::runTaskRequested, this, &SolverSetupView::runLagrangianParticleTrackingAnalysis);
+	connect(_particleSimulationTaskStateObserver, &crimson::TaskStateObserver::taskFinished, this, &SolverSetupView::finishedLagrangianParticleTrackingAnalysis);
+	
+	_particleSimulationTaskStateObserver->setEnabled(true);
+	const std::string task_id("Running Lagrangian particle tracking");
+	_particleSimulationTaskStateObserver->setPrimaryObservedUID(task_id);
+
+	_setupAdvancedParticleTrackingOptionsUI();
+
     connect(_UI.loadSolutionButton, &QAbstractButton::clicked, this, &SolverSetupView::loadSolution);
     connect(_UI.showSolutionButton, &QAbstractButton::toggled, this, &SolverSetupView::showSolution);
 
@@ -107,7 +173,13 @@ void SolverSetupView::CreateQtPartControl(QWidget* parent)
     _UI.solverParametersNodeComboBox->SetDataStorage(GetDataStorage());
     _UI.boundaryConditionSetsTableView->setModel(&_solverStudyBCSetsModel);
     _UI.materialsTableView->setModel(&_solverStudyMaterialsModel);
-
+	
+	_UI.particleBolusMeshComboBox->SetDataStorage(GetDataStorage());
+	_UI.particleMeshesTableView->setModel(&_particleTrackingGeometriesModel);
+	_UI.particleMeshesTableView->horizontalHeader()->setSortIndicatorShown(true);
+	_UI.particleMeshesTableView->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
+	_UI.particleMeshesTableView->setSortingEnabled(true);
+	
     // Initialize the UI
     _updateUI();
 }
@@ -150,6 +222,8 @@ void SolverSetupView::_updateUI()
     _UI.showSolutionButton->blockSignals(true);
     _UI.showSolutionButton->setChecked(_UI.solutionVisualizationWidget->getDataNode() != nullptr);
     _UI.showSolutionButton->blockSignals(false);
+
+	_UI.particleMeshesTableView->sortByColumn(0);
 }
 
 void SolverSetupView::OnSelectionChanged(berry::IWorkbenchPart::Pointer /*source*/, const QList<mitk::DataNode::Pointer>& nodes)
@@ -400,10 +474,15 @@ void SolverSetupView::_setCurrentSolverStudyNode(mitk::DataNode* node)
         disconnect(_UI.solverParametersNodeComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
                    &SolverSetupView::setSolverParametersNodeForStudy);
 
+		disconnect(_UI.particleBolusMeshComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
+			       &SolverSetupView::setParticleBolusNodeForStudy);
+
         _UI.meshNodeComboBox->SetPredicate(NodePredicateNone::New());
         _UI.solverParametersNodeComboBox->SetPredicate(NodePredicateNone::New());
         _solverStudyBCSetsModel.setSolverStudyNode(nullptr);
         _solverStudyMaterialsModel.setSolverStudyNode(nullptr);
+		_particleTrackingGeometriesModel.setSolverStudyNode(nullptr);
+		_UI.particleBolusMeshComboBox->SetPredicate(NodePredicateNone::New());
 
         _materialVisNodePtr.reset();
     }
@@ -414,8 +493,12 @@ void SolverSetupView::_setCurrentSolverStudyNode(mitk::DataNode* node)
         _setupSolverStudyComboBoxes();
         _UI.boundaryConditionSetsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
         _UI.boundaryConditionSetsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
-        _UI.materialsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+        
+		_UI.materialsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
         _UI.materialsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+		
+		_UI.particleMeshesTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+		_UI.particleMeshesTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     }
 }
 
@@ -729,8 +812,73 @@ void SolverSetupView::runSimulation() {
 	}
 }
 
+void SolverSetupView::setupLagrangianParticleTrackingAnalysis() {
+	const bool isParticleProblem = true;
+	_setupSimulationProblem(isParticleProblem);
+}
+
+std::shared_ptr<crimson::async::TaskWithResult<bool>> SolverSetupView::createParticleTrackingTask(const bool runReductionStep,
+	const bool writeParticleConfigJson,
+	const bool convertFluidSimToHdf5,
+	const bool runActualParticleTrackingStep,
+	const std::string config_file)
+{
+
+	return std::static_pointer_cast<crimson::async::TaskWithResult<bool>>(
+		std::make_shared<::detail::ParticleTrackingTask>(runReductionStep,
+		writeParticleConfigJson,
+		convertFluidSimToHdf5,
+		runActualParticleTrackingStep,
+		config_file)
+		);
+
+}
+
+void SolverSetupView::runLagrangianParticleTrackingAnalysis() {
+
+	if (!::detail::checkCrimsonParticlesAvailable())
+	{
+		return;
+	}
+
+	auto solverStudyData = static_cast<crimson::ISolverStudyData*>(_currentSolverStudyNode->GetData());
+
+	const std::string particle_tracking_simulation_folder = solverStudyData->setupParticleTrackingPathsAndGetParticleTrackingFolder();
+	
+	const bool got_config_file = (particle_tracking_simulation_folder.size() != 0);
+	if (got_config_file) {
+
+		std::shared_ptr<async::TaskWithResult<bool>> particleTrackingTask = createParticleTrackingTask(_runReductionStep,
+			_writeParticleConfigJson,
+			_convertFluidSimToHdf5,
+			_runActualParticleTrackingStep,
+			particle_tracking_simulation_folder + "\\particle_config.json");
+		const std::string task_id("Running Lagrangian particle tracking");
+		AsyncTaskManager::getInstance()->addTask(std::make_shared<QAsyncTaskAdapter>(particleTrackingTask), task_id);
+	}
+	else {
+		MITK_ERROR << "Failed to get particle simulation directory or particle_config.json file therein.\nDid you run the Setup Particle Analysis step, and then target that folder for particle simulation?";
+		QMessageBox::critical(nullptr, "Failed to find necessary files.",
+			"Particle simulation files not found.\nSee the log window for details.");
+	}
+}
+
+void SolverSetupView::finishedLagrangianParticleTrackingAnalysis(crimson::async::Task::State state) {
+	MITK_INFO << "Lagrangian particle tracking complete.";
+}
+
 void SolverSetupView::writeSolverSetup()
 {
+	const bool isParticleProblem = false;
+	_setupSimulationProblem(isParticleProblem);
+}
+
+void SolverSetupView::_setupSimulationProblem(const bool isParticleProblem)
+{
+	if (isParticleProblem && !::detail::checkCrimsonParticlesAvailable()) {
+		return;
+	}
+
     if (!_currentSolverSetupManager) {
         return;
     }
@@ -793,7 +941,7 @@ void SolverSetupView::writeSolverSetup()
         solutions.push_back(static_cast<const SolutionData*>(solutionNodePtr->GetData()));
     }
 
-    if (!solverStudyData->writeSolverSetup(dataProvider, vesselForestData, _currentSolidNode->GetData(), solutions)) {
+    if (!solverStudyData->writeSolverSetup(dataProvider, vesselForestData, _currentSolidNode->GetData(), solutions, isParticleProblem)) {
         QMessageBox::critical(nullptr, "Error writing solver setup",
                               "An error has occurred during the process of writing solver setup.\n"
                               "Please see log for details.");
@@ -869,6 +1017,7 @@ void SolverSetupView::showSolution(bool show)
 
     auto hm = crimson::HierarchyManager::getInstance();
 
+    // Todo: remove duplication with MeshAdaptView
     auto solverStudyData = static_cast<ISolverStudyData*>(_currentSolverStudyNode->GetData());
     auto meshNode = HierarchyManager::getInstance()->findNodeByUID(solverStudyData->getMeshNodeUID());
     auto meshData = static_cast<MeshData*>(meshNode->GetData());
@@ -901,6 +1050,7 @@ void SolverSetupView::showMaterial()
     auto hm = HierarchyManager::getInstance();
     mitk::DataNode* vesselForestNode = hm->getAncestor(_currentSolidNode, VascularModelingNodeTypes::VesselTree());
 
+    // TODO: remove duplication with writeSolverSetup
     for (auto materialNode : _solverStudyMaterialsModel.getCheckedNodes()) {
         _ensureApplyToAllWalls(materialNode);
     }
@@ -976,6 +1126,19 @@ void SolverSetupView::setMeshNodeForStudy(const mitk::DataNode* node)
     static_cast<ISolverStudyData*>(_currentSolverStudyNode->GetData())->setMeshNodeUID(uid);
 }
 
+
+void SolverSetupView::setParticleBolusNodeForStudy(const mitk::DataNode* node)
+{
+	_updateUI();
+	if (!node || !_currentSolverStudyNode) {
+		return;
+	}
+	std::string uid;
+	node->GetStringProperty(crimson::HierarchyManager::nodeUIDPropertyName, uid);
+	static_cast<ISolverStudyData*>(_currentSolverStudyNode->GetData())->setParticleBolusMeshNodeUID(uid);
+}
+
+
 void SolverSetupView::setSolverParametersNodeForStudy(const mitk::DataNode* node)
 {
     _updateUI();
@@ -991,8 +1154,11 @@ void SolverSetupView::_setupSolverStudyComboBoxes()
 {
     _materialVisNodePtr.reset();
 
+    // TODO: remove duplication
     auto solverStudyData = static_cast<ISolverStudyData*>(_currentSolverStudyNode->GetData());
 
+	disconnect(_UI.particleBolusMeshComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
+			   &SolverSetupView::setParticleBolusNodeForStudy);
     disconnect(_UI.meshNodeComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
                &SolverSetupView::setMeshNodeForStudy);
     disconnect(_UI.solverParametersNodeComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
@@ -1002,6 +1168,18 @@ void SolverSetupView::_setupSolverStudyComboBoxes()
         _currentSolverStudyNode->GetData()->RemoveObserver(_solverStudyObserverTag);
         _solverStudyObserverTag = -1;
     }
+
+	auto particleMeshPredicate = HierarchyManager::getInstance()->getPredicate(VesselMeshingNodeTypes::Mesh());
+	_UI.particleBolusMeshComboBox->SetPredicate(particleMeshPredicate);
+	auto particleBolusMeshUID = solverStudyData->getParticleBolusMeshNodeUID();
+
+	if (particleBolusMeshUID.size() != 0) {
+		mitk::DataNode* nodeToSelect = HierarchyManager::getInstance()->findNodeByUID(particleBolusMeshUID);
+		if (nodeToSelect) {
+			_UI.particleBolusMeshComboBox->SetSelectedNode(nodeToSelect);
+		}
+	}
+	setParticleBolusNodeForStudy(_UI.particleBolusMeshComboBox->GetSelectedNode());
 
     // Allowed meshes are the children of the root node
     auto meshPredicate = mitk::NodePredicateAnd::New(
@@ -1031,13 +1209,205 @@ void SolverSetupView::_setupSolverStudyComboBoxes()
     setSolverParametersNodeForStudy(_UI.solverParametersNodeComboBox->GetSelectedNode());
 
     connect(_UI.meshNodeComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this, &SolverSetupView::setMeshNodeForStudy);
+	connect(_UI.particleBolusMeshComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this, &SolverSetupView::setParticleBolusNodeForStudy);
     connect(_UI.solverParametersNodeComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
             &SolverSetupView::setSolverParametersNodeForStudy);
 
     _solverStudyBCSetsModel.setSolverStudyNode(_currentSolverStudyNode);
     _solverStudyMaterialsModel.setSolverStudyNode(_currentSolverStudyNode);
+	_particleTrackingGeometriesModel.setSolverStudyNode(_currentSolverStudyNode);
 
     auto modifiedCommand = itk::SimpleMemberCommand<SolverSetupView>::New();
     modifiedCommand->SetCallbackFunction(this, &SolverSetupView::_solverStudyNodeModified);
     _solverStudyObserverTag = _currentSolverStudyNode->GetData()->AddObserver(itk::ModifiedEvent(), modifiedCommand);
+}
+
+namespace detail {
+	bool checkCrimsonParticlesAvailable()
+	{
+		if (crimsonparticles::is_available() == crimsonparticles::ReturnCode::NotAvailable)
+		{
+			MITK_ERROR << "Lagrangian Particle Tracking not found on this computer." << std::endl;
+			MITK_ERROR << "Please acquire a suitable executable. Contact CRIMSON Technologies for advice." << std::endl;
+
+			QMessageBox::critical(nullptr, "Particle Tracking Not Available",
+				"Lagrangian Particle Tracking is not available on this computer.\n"
+				"Please see log window for details.");
+
+			return false;
+		}
+		else
+		{
+			MITK_INFO << "Lagrangian Particle Tracking is available." << std::endl;
+			return true;
+		}
+	}
+
+	bool callIfEnabledAndReportFailure(const bool enabled,
+		const std::function<crimsonparticles::ReturnCode(const std::string)> task,
+		const std::string config_filename,
+		const std::string humanReadableTaskInfo)
+	{
+		if (enabled) {
+			MITK_INFO << "Running " << humanReadableTaskInfo << ".";
+			crimsonparticles::ReturnCode return_code = task(config_filename);
+			const bool failure = crimsonparticles::error_occurred(return_code);
+			return failure;
+		}
+		else {
+			MITK_INFO << "Skipping " << humanReadableTaskInfo << ", as per user request.";
+		}
+
+		const bool failure = false;
+		return failure;
+	}
+
+	std::tuple<async::Task::State, std::string> ParticleTrackingTask::runTask()
+	{
+		if (!checkCrimsonParticlesAvailable())
+		{
+			return std::make_tuple(State_Failed, std::string("Lagrangian Particle Tracking not available.\nSee log window for details."));
+		}
+
+		crimsonparticles::ReturnCode docker_desktop_check_return_code = crimsonparticles::is_docker_server_running(_config_file);
+		if (docker_desktop_check_return_code == crimsonparticles::ReturnCode::Ok)
+		{
+			MITK_INFO << "Docker Desktop is running." << std::endl;
+		}
+		else if (docker_desktop_check_return_code == crimsonparticles::ReturnCode::CwdWriteFailure)
+		{
+			MITK_ERROR << "Could not write to the current folder.\nTry running from a folder in which you have write permissions.\nUse the flag --help to see options." << std::endl;
+			setResult(false);
+			return std::make_tuple(State_Failed, std::string("Failure writing to the selected folder\nSee the log window for details."));
+		}
+		else if (docker_desktop_check_return_code == crimsonparticles::ReturnCode::StatusRetrievalFailed)
+		{
+			MITK_ERROR << "No exit status was available. Do you have a suitable Lagrangian particle tracking executable in place on your system?" << std::endl;
+			setResult(false);
+			return std::make_tuple(State_Failed, std::string("Failure getting exit status of particle tracking executable.\nSee the log window for details."));
+		}
+		else if (docker_desktop_check_return_code == crimsonparticles::ReturnCode::NotRunning)
+		{
+			MITK_ERROR << "Docker Desktop does not seem to be running. Please start it from your start menu, and try again. Download and install it if necessary (requires Windows 10 Pro). A Lagrangian particles Docker image is also required." << std::endl;
+			setResult(false);
+			return std::make_tuple(State_Failed, std::string("Docker Destkop is not running. See log window for details."));
+		}
+		else
+		{
+			MITK_ERROR << "An unknown error occurred running Lagrangian particle tracking. Please ensure that you have Docker running, a Lagrangian particles Docker image installed, and a working particle tracking binary installed. Contact the developers for support." << std::endl;
+			setResult(false);
+			return std::make_tuple(State_Failed, std::string("An unknown error occurred. See log window for details."));
+		}
+
+		bool failure;
+		failure = crimsonparticles::error_occurred(crimsonparticles::remove_existing_logfile(_config_file));
+		if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure removing existing logfile.")); }
+
+		const crimsonparticles::ReturnCode system_check_return_code = crimsonparticles::check_system(_config_file);
+		if (system_check_return_code == crimsonparticles::ReturnCode::Ok)
+		{
+			MITK_INFO << "System check passed successfully.";
+		}
+		else if (system_check_return_code == crimsonparticles::ReturnCode::RequestedTooManyCpuCores)
+		{
+			MITK_ERROR << "Requested more CPU cores for the particle simulation than Docker is configured to provide."
+				" Recommend using one fewer core than Docker has available. Please either reduce the number of cores"
+				" you requested in Solver Parameters and re-run Setup Particle Analysis, or configure Docker Desktop"
+				" to use more cores. Note that if your CPU supports hyperthreading, only half as many cores as you"
+				" assign in the Docker Desktop configuration are physical cores, and so you should not request more"
+				" than half that number in your CRIMSON Solver Setup.";
+			setResult(false);
+			return std::make_tuple(State_Failed, std::string("Requested too many CPU cores.\n See the log window for details."));
+		}
+
+		if (isCancelling()) {
+			const std::string cancellation_message("Lagrangian particle tracking cancelled by user.");
+			MITK_INFO << cancellation_message;
+			return std::make_tuple(State_Cancelled, cancellation_message);
+		}
+
+		failure |= callIfEnabledAndReportFailure(_runReductionStep, crimsonparticles::run_multivispostsolver, _config_file, "fluid problem reduction step");
+		if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure during fluid problem reduction step.")); }
+
+		if (isCancelling()) {
+			const std::string cancellation_message("Lagrangian particle tracking cancelled by user, after the fluid problem reduction step.");
+			MITK_INFO << cancellation_message;
+			return std::make_tuple(State_Cancelled, cancellation_message);
+		}
+
+		failure |= crimsonparticles::error_occurred(crimsonparticles::run_mesh_extract(_config_file));
+		if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure during mesh extraction.")); }
+
+	{
+		auto writeConfigForFluidProblemFunction = std::bind(crimsonparticles::write_particle_config_json_for_mesh_extraction,
+			std::placeholders::_1,
+			crimsonparticles::FLUID_PROBLEM);
+
+		failure |= callIfEnabledAndReportFailure(_writeParticleConfigJson, writeConfigForFluidProblemFunction,
+			_config_file, "creation of particle_config.json for fluid problem");
+		if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure during writing of particle_config.json")); }
+
+		if (isCancelling()) {
+			const std::string cancellation_message("Lagrangian particle tracking cancelled by user, after the particle_config.json was written.");
+			MITK_INFO << cancellation_message;
+			return std::make_tuple(State_Cancelled, cancellation_message);
+		}
+	}
+
+	failure |= crimsonparticles::error_occurred(crimsonparticles::extract_fluid_mesh(_config_file));
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure extracting fluid mesh.")); }
+	failure |= crimsonparticles::error_occurred(crimsonparticles::write_particle_config_json_for_mesh_extraction(_config_file, crimsonparticles::BOLUS_OR_BIN));
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure writing patricle_config.json for mesh extraction.")); }
+	failure |= crimsonparticles::error_occurred(crimsonparticles::extract_particle_mesh(_config_file));
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure extracting particle mesh.")); }
+
+	failure |= callIfEnabledAndReportFailure(_convertFluidSimToHdf5, crimsonparticles::convert_fluid_sim_to_hdf5,
+		_config_file, "creation of hdf5 file for fluid problem");
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure during hdf5 fluid simulation file creation.")); }
+
+	if (isCancelling()) {
+		const std::string cancellation_message("Lagrangian particle tracking cancelled by user, after the fluid problem hdf5 file creation step.");
+		MITK_INFO << cancellation_message;
+		return std::make_tuple(State_Cancelled, cancellation_message);
+	}
+
+	failure |= crimsonparticles::error_occurred(crimsonparticles::emplace_particle_config_json(_config_file));
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure placing particle_config.json")); }
+	failure |= crimsonparticles::error_occurred(crimsonparticles::extract_bin_meshes(_config_file));
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure extracting particle bin meshes.")); }
+
+	if (isCancelling()) {
+		const std::string cancellation_message("Lagrangian particle tracking cancelled by user, before the Lagrangian particle tracking step.");
+		MITK_INFO << cancellation_message;
+		return std::make_tuple(State_Cancelled, cancellation_message);
+	}
+
+	failure |= callIfEnabledAndReportFailure(_runActualParticleTrackingStep, crimsonparticles::run_particle_tracking,
+		_config_file, "particle tracking simulation");
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure running Lagrangian particle tracking step.")); }
+
+	if (isCancelling()) {
+		const std::string cancellation_message("Lagrangian particle tracking cancelled by user, after the Lagrangian particle tracking step.");
+		MITK_INFO << cancellation_message;
+		return std::make_tuple(State_Cancelled, cancellation_message);
+	}
+
+	failure |= crimsonparticles::error_occurred(crimsonparticles::extract_final_data(_config_file));
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure extracting final timestep particle state.")); }
+	failure |= crimsonparticles::error_occurred(crimsonparticles::finish(_config_file));
+	if (failure) { setResult(false); return std::make_tuple(State_Failed, std::string("Failure during finalisation of particle tracking.")); }
+
+
+	auto boolToYesNo = [](const bool mybool){return mybool ? std::string("yes") : std::string("no"); };
+	MITK_INFO << "===================================================";
+	MITK_INFO << "===== User-defined configuration that was used: ===";
+	MITK_INFO << "===================================================";
+	MITK_INFO << "* Fluid problem reduction step was run - " << boolToYesNo(_runReductionStep);
+	MITK_INFO << "* Master particle_config.json was created - " << boolToYesNo(_writeParticleConfigJson);
+	MITK_INFO << "* Fluid problem hdf5 file was created - " << boolToYesNo(_convertFluidSimToHdf5);
+	MITK_INFO << "* Actual particle simulation was performed - " << boolToYesNo(_runActualParticleTrackingStep);
+	MITK_INFO << "===================================================";
+
+	return std::make_tuple(State_Finished, std::string("Particles task finished."));
+	}
 }

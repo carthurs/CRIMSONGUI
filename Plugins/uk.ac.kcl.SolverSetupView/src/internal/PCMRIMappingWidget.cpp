@@ -370,6 +370,7 @@ void PCMRIMappingWidget::_removeCancelInteractionShortcut()
 	_cancelInteractionShortcut = nullptr;
 }
 
+
 void PCMRIMappingWidget::_createCancelInteractionShortcutPoint()
 {
 	// Create a QShortcut for Esc key press
@@ -467,6 +468,11 @@ void PCMRIMappingWidget::setCurrentNode(mitk::DataNode* node)
 			reinitAllContourGeometriesOnVesselPathChange();
 		}
 
+		//TODO
+		//// Cancel a loft preview task if necessary
+		//crimson::AsyncTaskManager::getInstance()->cancelTask(
+		//    crimson::PCMRIUtils::getPreviewLoftingTaskUID(node));
+
 	}
 
 	_currentNode = const_cast<mitk::DataNode*>(node);
@@ -501,6 +507,13 @@ void PCMRIMappingWidget::setCurrentNode(mitk::DataNode* node)
 
 	if (_ResliceView && _currentSolidNode)
 		_ResliceView->setCurrentSolidNode(_currentSolidNode);
+
+	//TODO
+	//_mapTaskStateObserver->setPrimaryObservedUID(crimson::PCMRIUtils::getMappingTaskUID(_currentNode));
+
+
+	//_loftPreviewTaskStateObserver->setPrimaryObservedUID(
+	//    crimson::PCMRIUtils::getPreviewLoftingTaskUID(_currentNode));
 
 	_updateUI();
 	_fillContourThumbnailsWidget();
@@ -565,6 +578,7 @@ void PCMRIMappingWidget::updateCurrentContour()
 			node->GetFloatProperty("mapping.parameterValue", param);
 
 			//check if planar geometries are parallel in case PCMRI image selection has changed
+			//TODO: implement persistence regarding PCMRI image change and what happens to contours when another image is selected!!!
 			if (timePos != param || !planarFigurePlaneGeometry->IsParallel(rendererPlaneGeometry)
 				//||
 				//!(planarFigureTimeGeometry->DistanceFromPlane(rendererTimeGeometry) < planeThickness / 3.0)
@@ -592,8 +606,21 @@ void PCMRIMappingWidget::updateCurrentContour()
 		}
 	}
 
-	_setCurrentContourNode(newContourNode);
+	//do not make this contour visible because it was not scrolled to (used in interpolation of all contours)
+	//if (visible)
+		_setCurrentContourNode(newContourNode);
+	//else
+	//{
+	//	if (newContourNode) {
+	//		_addPlanarFigureInteractor(newContourNode);
 
+	//		//TODO: not sure we really need this??
+	//		auto planarFigure = static_cast<mitk::PlanarFigure*>(newContourNode->GetData());
+	//		if (!planarFigure->IsFinalized()) {
+	//			_contourTypeToButtonMap[planarFigure->GetNameOfClass()]->setChecked(true);
+	//		}
+	//	}
+	//}
 	_setSegmentationNodes(newRefImageNode, newWorkingImageNode);
 
 	_updateUI();
@@ -604,6 +631,48 @@ void PCMRIMappingWidget::updateCurrentContour()
 
 
 }
+//
+//void PCMRIMappingWidget::updateCurrentPcmriPoint()
+//{
+//	mitk::DataNode* newPcmriPointNode = nullptr;
+//
+//	if (!_ResliceView || !_currentNode) {
+//		_setCurrentPcmriPointNode(nullptr);
+//		_updateUI();
+//		return;
+//	}
+//
+//	mitk::DataStorage::SetOfObjects::ConstPointer nodes = crimson::PCMRIUtils::getPcmriPointNodes(_currentNode);
+//
+//	for (const mitk::DataNode::Pointer& node : *nodes) {
+//		// Find the point lying in the current time slice
+//
+//		if (node == _nodeBeingDeleted) {
+//			continue;
+//		}
+//
+//		float timePos = _ResliceView->getCurrentParameterValue();
+//		float param = 0;
+//		node->GetFloatProperty("mapping.parameterValue", param);
+//
+//		//TODO: implement persistence regarding PCMRI image change and what happens to contours when another image is selected!!!
+//		if (timePos != param) {
+//			continue;
+//		}
+//
+//		newPcmriPointNode = node;
+//
+//		break;
+//	}
+//
+//	_setCurrentPcmriPointNode(newPcmriPointNode);
+//
+//	_updateUI();
+//
+//	_ResliceView->getPCMRIRenderer()->GetRenderingManager()->RequestUpdateAll();
+//
+//
+//}
 
 void PCMRIMappingWidget::updateCurrentPcmriPoint()
 {
@@ -735,6 +804,7 @@ void PCMRIMappingWidget::cancelInteractionPoints(bool undoingPlacement)
 	}
 }
 
+//TODO: use equivalent of ContourModelingView::currentNodeChanged for when MRA and PCMRI selection changes
 
 void PCMRIMappingWidget::_connectContourObservers(mitk::DataNode* node)
 {
@@ -761,6 +831,13 @@ void PCMRIMappingWidget::_connectSegmentationObservers(mitk::DataNode* segmentat
 	_segmentationObserverTags[segmentationNode] = segmentationNode->GetData()->AddObserver(itk::ModifiedEvent(), command);
 }
 
+// void PCMRIMappingWidget::_connectPointSetObservers(mitk::DataNode* node)
+// {
+// 	auto pointAddedCommand = crimson::ConstMemberCommand<PCMRIMappingWidget>::New();
+// 	pointAddedCommand->SetCallbackFunction(this, &PCMRIMappingWidget::_pointAdded);
+// 	_pointSetObserverTags[node].tags[PointSetObserverTags::PointAdded] =
+// 		node->GetData()->AddObserver(mitk::PointSetAddEvent(), pointAddedCommand);
+// }
 
 void PCMRIMappingWidget::_disconnectContourObservers(mitk::DataNode* node)
 {
@@ -780,6 +857,15 @@ void PCMRIMappingWidget::_disconnectSegmentationObservers(mitk::DataNode* segmen
 	}
 }
 
+// void PCMRIMappingWidget::_disconnectPointSetObservers(mitk::DataNode* node)
+// {
+// 	if (_pointSetObserverTags.find(node) != _pointSetObserverTags.end()) {
+// 		for (unsigned long tag : _pointSetObserverTags[node].tags) {
+// 			node->GetData()->RemoveObserver(tag);
+// 		}
+// 		_pointSetObserverTags.erase(node);
+// 	}
+// }
 
 void PCMRIMappingWidget::_connectAllContourObservers(mitk::DataStorage::SetOfObjects::ConstPointer contourNodes)
 {
@@ -806,6 +892,12 @@ void PCMRIMappingWidget::_disconnectAllContourObservers()
 	}
 	_segmentationObserverTags.clear();
 
+	//for (const std::pair<mitk::DataNode*, PointSetObserverTags>& tagPair : _pointSetObserverTags) {
+	// 	for (unsigned long tag : tagPair.second.tags) {
+	// 		tagPair.first->GetData()->RemoveObserver(tag);
+	// 	}
+	// }
+	// _pointSetObserverTags.clear();
 }
 
 void PCMRIMappingWidget::_fillContourThumbnailsWidget()
@@ -1055,6 +1147,30 @@ void PCMRIMappingWidget::addPcmriPoint(bool add)
 	_updateUI();
 }
 
+// void PCMRIMappingWidget::addPcmriPoint(bool add)
+// {
+// 	if (add) {
+// 		mitk::PointSet::Pointer newPoint;
+// 		bool pointRemoved = false;
+// 		if (_currentPcmriPointNode != nullptr) {
+// 			_setCurrentPcmriPointNode(_currentPcmriPointNode);
+// 		}
+// 		else
+// 		{ 
+// 			bool emptyPointCreated = false;
+// 			if (newPoint.IsNull()) {
+// 				emptyPointCreated = true;
+// 				newPoint = mitk::PointSet::New();
+// 			}
+// 			_setCurrentPcmriPointNode(_addPcmriPointNode(newPoint.GetPointer()));
+// 		}
+// 		setToolInformation_Point("point.PCMRI");
+// 	}
+// 	else {
+// 		cancelInteractionPoints();
+// 	}
+// 	_updateUI();
+// }
 
 void PCMRIMappingWidget::addMraPoint(bool add)
 {
@@ -1086,6 +1202,7 @@ void PCMRIMappingWidget::addMraPoint(bool add)
 
 mitk::DataNode* PCMRIMappingWidget::_addPlanarFigure(mitk::PlanarFigure::Pointer figure, bool addInteractor)
 {
+	//TODO: make this work on pcmri instead of vessel reslice
 	// Add the data node for a new planar figure
 	auto newPlanarFigureNode = mitk::DataNode::New();
 	newPlanarFigureNode->SetData(figure);
@@ -1112,6 +1229,7 @@ mitk::DataNode* PCMRIMappingWidget::_addPlanarFigure(mitk::PlanarFigure::Pointer
 		crimson::VascularModelingNodeTypes::Contour());
 
 	// And assign the parameter value
+	//TODO: check if it returns the correct value of time
 	crimson::PCMRIUtils::assignPlanarFigureParameter(_currentPCMRINode, newPlanarFigureNode, _ResliceView->getPCMRIRenderer());
 
 	newPlanarFigureNode->SetVisibility(true);
@@ -1119,6 +1237,7 @@ mitk::DataNode* PCMRIMappingWidget::_addPlanarFigure(mitk::PlanarFigure::Pointer
 	return newPlanarFigureNode;
 }
 
+//TODO: can we somehow abstract this??
 mitk::DataNode* PCMRIMappingWidget::_addPcmriPointNode(mitk::PointSet::Pointer point, bool addInteractor)
 {
 	// Add the data node for a new planar point
@@ -1307,9 +1426,20 @@ void PCMRIMappingWidget::navigateToContour(const mitk::DataNode* node)
 
 void PCMRIMappingWidget::nodeRemoved(const mitk::DataNode* node)
 {
+	// if (_currentNode == node) {
+	// 	setCurrentNode(nullptr);
+	// }
 
 	_nodeBeingDeleted = node;
 
+	//QWidget::disconnect(_UI.pcmriImageComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
+	//	&PCMRIMappingWidget::setPCMRIImageForMapping);
+	//QWidget::disconnect(_UI.pcmriPhaseComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
+	//	&PCMRIMappingWidget::setPCMRIImagePhaseForMapping);
+	//QWidget::disconnect(_UI.mraImageComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
+	//	&PCMRIMappingWidget::setMRAImageForMapping);
+	//QWidget::disconnect(_UI.meshNodeComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
+	//	&PCMRIMappingWidget::setMeshNodeForMapping);
 
 	if (node == _currentPCMRINode) {
 		_setCurrentContourNode(nullptr);
@@ -1410,6 +1540,7 @@ void PCMRIMappingWidget::_addPointInteractor(mitk::DataNode* node, mitk::BaseRen
 {
 	bool isInteractivePoint = false;
 	if (node->GetBoolProperty("mapping.interactivePoint", isInteractivePoint) && isInteractivePoint) {
+		//node->SetVisibility(false); //make it invisible evreywhere but in the window where it is being placed
 		node->SetSelected(true, renderer);
 		node->SetVisibility(true, renderer);
 		renderer->RequestUpdate();
@@ -1479,6 +1610,7 @@ void PCMRIMappingWidget::mappingFinished(crimson::async::Task::State state)
 		PCMRIDataNode->GetStringProperty(crimson::HierarchyManager::nodeUIDPropertyName, uid);
 		dynamic_cast<IBoundaryCondition*>(_currentNode->GetData())->setDataUID(uid);
 
+		//_currentNode->SetStringProperty("mapping.pcmrinode", uid.c_str());
 
 		PCMRIDataNode->SetVisibility(_ResliceView->getPCMRIRenderer(), false);
 
@@ -1490,7 +1622,7 @@ void PCMRIMappingWidget::mappingFinished(crimson::async::Task::State state)
 	_updateUI();
 }
 
-
+//TODO: fix geometry generation here
 std::pair<mitk::DataNode::Pointer, mitk::DataNode::Pointer>
 PCMRIMappingWidget::_createSegmentationNodes(mitk::Image* image, const mitk::PlaneGeometry* sliceGeometry,
 mitk::PlanarFigure* figureToFill)
@@ -1550,6 +1682,8 @@ mitk::DataNode* PCMRIMappingWidget::createSegmented(bool startNewUndoGroup)
 	cancelInteraction();
 	assert(_currentSegmentationWorkingImageNode == nullptr);
 
+	//mitk::DataStorage::SetOfObjects::ConstPointer imageNodes =
+	//	crimson::HierarchyManager::getInstance()->getDataStorage()->GetSources(_currentPCMRINode, mitk::TNodePredicateDataType<mitk::Image>::New(), false);
 	if (!_currentPCMRINode) {
 		return nullptr;
 	}
@@ -1562,6 +1696,7 @@ mitk::DataNode* PCMRIMappingWidget::createSegmented(bool startNewUndoGroup)
 
 	mitk::BaseRenderer* renderer = _ResliceView->getPCMRIRenderer();
 
+	//TODO: change to get a plane geometry for a time step
 	const mitk::PlaneGeometry* geometry = _ResliceView->getPlaneGeometry(_ResliceView->getCurrentParameterValue());
 	contour->SetPlaneGeometry(const_cast<mitk::PlaneGeometry*>(geometry));
 
@@ -1626,6 +1761,46 @@ void PCMRIMappingWidget::_removeCurrentMraPoint()
 }
 
 
+// void PCMRIMappingWidget::_removePoint(mitk::PointSet::Pointer pointSet, mitk::PointSetDataInteractor::Pointer pointSetInteractor,
+// 	const int index, const int slice)
+// {
+// 	if (index >= 0)
+// 	{
+// 		mitk::PointSet::PointType pt = pointSet->GetPoint(index);
+// 		mitk::Point2D mitkPoint2D;
+// 		mitk::Point3D mitkPoint3D;
+
+// 		//display coordinates not known, so set to 0
+// 		mitkPoint2D.Fill(0);
+// 		//fill the 3D point with the known coordinates of the point
+// 		mitk::FillVector3D(mitkPoint3D, pt[0], pt[1], pt[2]);
+
+// 		////create an event for the selection
+// 		//mitk::PositionEvent selectEvent(NULL, 0, 0, 0, mitk::Key_unknown, mitkPoint2D, mitkPoint3D);
+
+// 		////create a state event in order to send the events to the interactor
+// 		//mitk::StateEvent *stateEvent = new mitk::StateEvent(mitk::EIDLEFTMOUSEBTN, &selectEvent);
+
+// 		////if an other point is selected, then deselect it and then select the desired point
+// 		//for (int i = 0; i < 2; i++)
+// 		//	if (!pointSet->GetSelectInfo(index))
+// 		//		pointSetInteractor->HandleEvent(stateEvent);
+
+// 		////and now remove the point if it was selected
+// 		//if (pointSet->GetSelectInfo(index))
+// 		//{
+// 		//	mitk::PositionEvent deleteEvent(NULL, 0, 0, 0, mitk::Key_Delete, mitkPoint2D, mitkPoint3D);
+// 		//	stateEvent->Set(mitk::EIDDELETE, &deleteEvent);
+// 		//	pointSetInteractor->HandleEvent(stateEvent);
+// 		//}
+
+// 		//TODO: make sure slice is actually time in ms
+// 		mitk::PointOperation* doOp = new mitk::PointOperation(mitk::OpREMOVE, slice, mitkPoint3D, index);
+// 		pointSet->ExecuteOperation(doOp);
+// 	}
+// }
+
+
 void PCMRIMappingWidget::_setSegmentationNodes(mitk::DataNode* refNode, mitk::DataNode* workNode)
 {
 	if (_currentSegmentationReferenceImageNode == refNode && _currentSegmentationWorkingImageNode == workNode) {
@@ -1635,6 +1810,7 @@ void PCMRIMappingWidget::_setSegmentationNodes(mitk::DataNode* refNode, mitk::Da
 	if (_ResliceView && _currentSegmentationWorkingImageNode) {
 		for (mitk::BaseRenderer* rend : _ResliceView->getAllResliceRenderers()) {
 			_currentSegmentationWorkingImageNode->SetVisibility(false, rend);
+			//_currentSegmentationReferenceImageNode->SetVisibility(false, rend);
 		}
 	}
 
@@ -1710,6 +1886,7 @@ void PCMRIMappingWidget::_setCurrentPcmriPointNode(mitk::DataNode* node)
 	_currentPcmriPointNode = node;
 
 	if (_currentPcmriPointNode != nullptr && _ResliceView) {
+		//_addPointInteractor(_currentPcmriPointNode, _ResliceView->getPCMRIRenderer());
 		_currentPcmriPointNode->SetVisibility(true, _ResliceView->getPCMRIRenderer());
 	}
 }
@@ -1740,9 +1917,19 @@ void PCMRIMappingWidget::_setCurrentMraPointNode(mitk::DataNode* node)
 
 	_currentMraPointNode = node;
 	if (_currentMraPointNode != nullptr && _ResliceView) {
+		//_currentMraPointNode->SetSelected(true, _ResliceView->getResliceRenderer());
 		_currentMraPointNode->SetVisibility(true, _ResliceView->getResliceRenderer());
 	}
 
+	//if (_currentMraPointNode != nullptr) {
+	//	_addPointInteractor(_currentMraPointNode, _ResliceView->getResliceRenderer());
+
+	//	 auto point = static_cast<mitk::PointSet*>(_currentMraPointNode->GetData());
+	//	 if (point->GetSize() == 0) {
+	//	 	_UI.MRAPointButton->setChecked(true);
+	//	}
+	//}
+	//updateCurrentContourInfo();
 }
 
 void PCMRIMappingWidget::updateContourSmoothnessFromUI()
@@ -1811,8 +1998,10 @@ void PCMRIMappingWidget::_updateContourFromSegmentation(mitk::DataNode* contourN
 		return;
 	}
 
+	//TODO: use this to extract contour points
 	_createSmoothedContourFromVtkPolyData(contourSurf->GetVtkPolyData(), contour, _getContourSmoothnessFromNode(contourNode));
 
+	//mitk::RenderingManager::GetInstance()->RequestUpdateAll();
 	if (_ResliceView)
 		_ResliceView->getPCMRIRenderer()->GetRenderingManager()->RequestUpdateAll();
 }
@@ -2063,6 +2252,8 @@ void PCMRIMappingWidget::reinitAllContourGeometries(ContourGeometyReinitType rei
 
 		// Re-create segmentation images from the updated contours
 		std::pair<mitk::DataNode*, mitk::DataNode*> oldSegmentationNodes = _getSegmentationNodes(contourNode);
+		//mitk::DataStorage::SetOfObjects::ConstPointer imageNodes =
+		//	crimson::HierarchyManager::getInstance()->getDataStorage()->GetSources(_currentPCMRINode, mitk::TNodePredicateDataType<mitk::Image>::New(), false);
 
 		if (oldSegmentationNodes.first != nullptr && _currentPCMRINode) {
 			std::pair<mitk::DataNode::Pointer, mitk::DataNode::Pointer> newSegmentationNodes =
@@ -2118,6 +2309,20 @@ void PCMRIMappingWidget::_figurePlacementCancelled(const itk::Object* contourDat
 
 	_contourTypeToButtonMap[contourData->GetNameOfClass()]->setChecked(true);
 }
+
+// void PCMRIMappingWidget::_pointAdded(const itk::Object* pointSetData)
+// {
+// 	if (!_currentPcmriPointNode || _currentPcmriPointNode->GetData() != pointSetData) {
+// 		return;
+// 	}
+
+// 	//if there was already a point in that time slice, delete it
+// 	mitk::PointSet* pointSet = const_cast<mitk::PointSet*>(static_cast<const mitk::PointSet*>(pointSetData));
+// 	if (pointSet->GetSize(_ResliceView->getCurrentParameterValue()) > 1)
+// 	{
+// 		_removePoint(static_cast<mitk::PointSet::Pointer>(pointSet), static_cast<mitk::PointSetDataInteractor*>(_currentPcmriPointNode->GetDataInteractor().GetPointer()), 0, _ResliceView->getCurrentParameterValue());
+// 	}
+// }
 
 void PCMRIMappingWidget::duplicateContour()
 {
@@ -2322,7 +2527,15 @@ void PCMRIMappingWidget::_interpolateContourOne(mitk::DataNode* contourNodes[2],
 
 	//check if a contour with this parameter already exists (if we passed it in the function) and remove it before proceeding
 	bool contourRemoved = false;
+	/*if (_allContours) {
 
+		if (!contourNode || contourNode == _nodeBeingDeleted) {
+			return;
+		}
+
+		crimson::HierarchyManager::getInstance()->getDataStorage()->Remove(contourNode);
+		contourRemoved = true;
+	}*/
 
 	if (_currentContourNode) {
 		_removeCurrentContour(); // Might have side effect of changing the selection
@@ -2502,6 +2715,15 @@ void PCMRIMappingWidget::interpolateAllContours()
 			parameter++;
 		}
 
+		//for (int parameter = 0; parameter < nSlices; parameter++)
+		//{
+		//	auto it = std::find_if(contourNodesAll.begin(), contourNodesAll.end(), 
+		//		[](const mitk::DataNode* contourNode, int parameter) { float nodeParam; contourNode->GetFloatProperty("mapping.parameterValue", nodeParam); return nodeParam == parameter; });
+		//	if (*it == nullptr)
+		//	{
+		//		contourNodesAll = crimson::PCMRIUtils::getContourNodesSortedByParameter(_currentPCMRINode);
+		//	}			
+		//}
 	}
 
 	else
@@ -2655,6 +2877,7 @@ void PCMRIMappingWidget::updateCurrentContourInfo()
 
 void PCMRIMappingWidget::_requestThumbnail(mitk::DataNode::ConstPointer node)
 {
+	//TODO: what time does this return?
 	mitk::SliceNavigationController* tnc;
 	if (_ResliceView)
 		tnc = _ResliceView->getPCMRIRenderer()->GetRenderingManager()->GetTimeNavigationController();
@@ -2782,7 +3005,12 @@ void PCMRIMappingWidget::setPCMRIImageForMapping(const mitk::DataNode* node)
 		
 
 		//it seems that all the objects in the storage are by default set as visible in a new renderer window
+		//TODO: check what reinitialize and global initialize do
 
+	/*	berry::IWorkbenchPartSite* site = berry::PlatformUI::GetWorkbench()->GetActiveWorkbenchWindow()
+			->GetActivePage()->GetActivePart()->GetSite().GetPointer();
+		auto page = berry::PlatformUI::GetWorkbench()->GetActiveWorkbenchWindow()->GetActivePage()
+			->FindView("org.mitk.views.SolverSetupView")->GetSite()->GetPage();*/
 		auto page = berry::PlatformUI::GetWorkbench()->GetActiveWorkbenchWindow()->GetActivePage();
 		mitk::IRenderWindowPart* renderPart = dynamic_cast<mitk::IRenderWindowPart*>(page->GetActiveEditor().GetPointer());
 		QmitkStdMultiWidgetEditor* linkedRenderWindowPart = dynamic_cast<QmitkStdMultiWidgetEditor*>(renderPart);
@@ -2916,6 +3144,7 @@ void PCMRIMappingWidget::setPCMRIImagePhaseForMapping(const mitk::DataNode* node
 void PCMRIMappingWidget::_setupPCMRIMappingComboBoxes()
 {
 
+	//TODO: load previoudly selected PCMRI, MRA and MESH nodes if their UIDs were stored as props!!!!1
 	//disconnect possible existing connections
 	QWidget::disconnect(_UI.pcmriImageComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
 		&PCMRIMappingWidget::setPCMRIImageForMapping);
@@ -2926,8 +3155,12 @@ void PCMRIMappingWidget::_setupPCMRIMappingComboBoxes()
 	QWidget::disconnect(_UI.meshNodeComboBox, &QmitkDataStorageComboBox::OnSelectionChanged, this,
 		&PCMRIMappingWidget::setMeshNodeForMapping);
 
+	// Allowed meshes are the children of the root node
+	//auto meshPredicate = mitk::NodePredicateAnd::New(
+	//    HierarchyManager::getInstance()->getPredicate(VesselMeshingNodeTypes::Mesh()),
+	//    NodePredicateDerivation::New(_currentRootNode, true, crimson::HierarchyManager::getInstance()->getDataStorage()));
 
-	auto meshPredicate = HierarchyManager::getInstance()->getPredicate(VesselMeshingNodeTypes::Mesh()); 
+	auto meshPredicate = HierarchyManager::getInstance()->getPredicate(VesselMeshingNodeTypes::Mesh()); //TODO: change to upper version to include only meshes that are children of current image
 
 	_UI.meshNodeComboBox->SetPredicate(meshPredicate);
 
@@ -3005,6 +3238,7 @@ void PCMRIMappingWidget::updateSelectedFace(mitk::PlaneGeometry::Pointer plane)
 {
 	if (plane && _ResliceView){
 		_ResliceView->updateMRARendering(plane.GetPointer());
+		//updateCurrentMraPoint();
 		_updateUI();
 	}
 	else
@@ -3140,6 +3374,35 @@ void PCMRIMappingWidget::_flipPCMRIImage(bool flag)
 		pcmriImagePhase->Update();
 		_currentPCMRIPhaseNode->Modified();
 
+		////rotate the contours as well
+		//if (!nodes->empty())
+		//{
+		//	for (const mitk::DataNode::Pointer& node : *nodes) {
+		//		auto contour = dynamic_cast<mitk::PlanarFigure*>(node->GetData());
+		//		auto timeGeometryContour = _getFlippedGeometry(node);
+		//		contour->SetClonedTimeGeometry(timeGeometryContour);
+		//		node->Update();
+
+		//		if (_getSegmentationNodes(node).first)
+		//		{
+		//			mitk::DataNode* segmNode = _getSegmentationNodes(node).first;
+		//			auto contourSegmImage = static_cast<mitk::Image*>(segmNode->GetData());
+		//			auto timeGeometryContourImage = _getFlippedGeometry(segmNode);
+		//			contourSegmImage->SetClonedTimeGeometry(timeGeometryContourImage);
+		//			_getSegmentationNodes(node).first->Update();
+		//		}
+
+		//		if (_getSegmentationNodes(node).second)
+		//		{
+		//			mitk::DataNode* refNode = _getSegmentationNodes(node).second;
+		//			auto contourRefImage = static_cast<mitk::Image*>(refNode->GetData());
+		//			auto timeGeometryContourImageRef = _getFlippedGeometry(refNode);
+		//			contourRefImage->SetClonedTimeGeometry(timeGeometryContourImageRef);
+		//			_getSegmentationNodes(node).second->Update();
+		//		}
+		//	}
+		//}
+
 		//rotate the pcmri landmark
 		if (nodePcmri)
 		{
@@ -3161,6 +3424,115 @@ void PCMRIMappingWidget::_flipPCMRIImage(bool flag)
 
 	}
 }
+
+//void PCMRIMappingWidget::_flipPCMRIImage(bool flag)
+//{
+//	if (_currentPCMRINode)
+//	{
+//		mitk::Image::Pointer pcmriImage = dynamic_cast<mitk::Image*>(_currentPCMRINode->GetData());
+//		auto geometry = pcmriImage->GetGeometry();
+//		auto timeGeometry = pcmriImage->GetTimeGeometry();
+//
+//		mitk::Image::Pointer pcmriImagePhase = dynamic_cast<mitk::Image*>(_currentPCMRIPhaseNode->GetData());
+//		auto geometryPhase = pcmriImagePhase->GetGeometry();
+//		auto timeGeometryPhase = pcmriImagePhase->GetTimeGeometry();
+//
+//		mitk::DataStorage::SetOfObjects::ConstPointer nodes =
+//			crimson::PCMRIUtils::getContourNodes(_currentPCMRINode);
+//		mitk::DataNode::Pointer nodePcmri = crimson::PCMRIUtils::getPcmriPointNode(_currentPCMRINode);
+//
+//		mitk::Vector3D yAxis;
+//		yAxis[0] = 0;
+//		yAxis[1] = 1;
+//		yAxis[2] = 0;
+//
+//		mitk::Vector3D zAxis;
+//		zAxis[0] = 0;
+//		zAxis[1] = 1;
+//		zAxis[2] = 1;
+//
+//		auto center = geometry->GetCenter();
+//		mitk::RotationOperation* op = new mitk::RotationOperation(mitk::OpROTATE, geometry->GetCenter(), geometry->GetAxisVector(0), 180);
+//		mitk::RotationOperation* op2 = new mitk::RotationOperation(mitk::OpROTATE, geometry->GetCenter(), geometry->GetAxisVector(2), 180);
+//
+//		timeGeometry->ExecuteOperation(op);
+//		timeGeometry->ExecuteOperation(op2);
+//
+//		pcmriImage->SetTimeGeometry(timeGeometry);
+//
+//		pcmriImage->Update();
+//		_currentPCMRINode->Modified();
+//
+//		//rotate the contours as well
+//		if (!nodes->empty())
+//		{
+//			for (const mitk::DataNode::Pointer& node : *nodes) {
+//				auto timeGeometryContour = dynamic_cast<mitk::PlanarFigure*>(node->GetData())->GetTimeGeometry();
+//				timeGeometryContour->ExecuteOperation(op);
+//				timeGeometryContour->ExecuteOperation(op2);
+//				node->Update();
+//
+//				if (_getSegmentationNodes(node).first)
+//				{
+//					mitk::DataNode* segmNode = _getSegmentationNodes(node).first;
+//					auto timeGeometryContourSegmImage = static_cast<mitk::Image*>(segmNode->GetData())->GetTimeGeometry();
+//					timeGeometryContourSegmImage->ExecuteOperation(op);
+//					timeGeometryContourSegmImage->ExecuteOperation(op2);
+//					_getSegmentationNodes(node).first->Update();
+//				}
+//
+//				if (_getSegmentationNodes(node).second)
+//				{
+//					mitk::DataNode* refNode = _getSegmentationNodes(node).second;
+//					auto timeGeometryContourRefImage = static_cast<mitk::Image*>(refNode->GetData())->GetTimeGeometry();
+//					timeGeometryContourRefImage->ExecuteOperation(op);
+//					timeGeometryContourRefImage->ExecuteOperation(op2);
+//					_getSegmentationNodes(node).second->Update();
+//				}
+//			}
+//		}
+//
+//		//rotate the pcmri landmark
+//		if (nodePcmri)
+//		{
+//			auto timeGeometryPoint = dynamic_cast<mitk::PointSet*>(nodePcmri->GetData())->GetTimeGeometry();
+//			timeGeometryPoint->ExecuteOperation(op);
+//			timeGeometryPoint->ExecuteOperation(op2);
+//			nodePcmri->Update();
+//		}
+//
+//		delete op;
+//		delete op2;
+//
+//
+//		if (pcmriImagePhase != pcmriImage)
+//		{
+//			auto centerPhase = geometryPhase->GetCenter();
+//			op = new mitk::RotationOperation(mitk::OpROTATE, geometryPhase->GetCenter(), geometryPhase->GetAxisVector(0), 180);
+//			timeGeometryPhase->ExecuteOperation(op);
+//			delete op;
+//			op2 = new mitk::RotationOperation(mitk::OpROTATE, geometryPhase->GetCenter(), geometryPhase->GetAxisVector(2), 180);
+//			timeGeometryPhase->ExecuteOperation(op2);
+//			delete op2;
+//
+//			pcmriImagePhase->SetTimeGeometry(timeGeometryPhase);
+//
+//			pcmriImagePhase->Update();
+//			_currentPCMRIPhaseNode->Modified();
+//		}
+//
+//		if (_ResliceView)
+//			_ResliceView->getPCMRIRenderer()->GetRenderingManager()->RequestUpdateAll();
+//
+//		mitk::RenderingManager::GetInstance()->RequestUpdateAll();
+//		mitk::RenderingManager::GetInstance()->RequestUpdateAll(mitk::RenderingManager::REQUEST_UPDATE_3DWINDOWS);
+//		
+//		//set the flag for persistance
+//		_currentPCMRINode->SetBoolProperty("mapping.imageFlipped", flag);
+//		_currentPCMRIPhaseNode->SetBoolProperty("mapping.imageFlipped", flag);
+//
+//	}
+//}
 
 void PCMRIMappingWidget::editCardiacfrequency()
 {
@@ -3263,7 +3635,6 @@ void PCMRIMappingWidget::editRescaleIntercept()
 
 void PCMRIMappingWidget::editVelocityCalculationType()
 {
-	MITK_INFO << _UI.manufacturerTabs->currentIndex();
 	switch (_UI.manufacturerTabs->currentIndex())
 	{
 		//Linear transformation

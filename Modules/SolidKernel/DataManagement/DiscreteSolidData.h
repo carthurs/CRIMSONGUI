@@ -23,7 +23,7 @@ namespace crimson {
 class DiscreteSolidDataIO;
 
 /*!
- * \brief   DiscreteSolidData represents a solid model stored as a pDiscreteModel
+ * \brief   DiscreteSolidData represents a solid model stored as a GeomSim(MeshSim) pDiscreteModel
  *  shape.
  */
 class SolidKernel_EXPORT DiscreteSolidData : public SolidData

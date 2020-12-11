@@ -170,6 +170,7 @@ void ResliceView::SetFocus()
 {
 	mraManager->GetInstance()->SetRenderWindowFocus(d->renderWindow->GetVtkRenderWindow());
 	pcmriManager->GetInstance()->SetRenderWindowFocus(d->renderWindowPCMRI->GetVtkRenderWindow());
+    //d->renderWindow->GetRenderer()->SetFocused(true);
 }
 
 void ResliceView::CreateQtPartControl(QWidget *parent)
@@ -189,6 +190,7 @@ void ResliceView::CreateQtPartControl(QWidget *parent)
     d->resliceWidgetVisibilityButton->setCheckable(true);
     d->resliceWidgetVisibilityButton->setChecked(true);
     hLayout->addWidget(d->resliceWidgetVisibilityButton);
+    //connect(d->resliceWidgetVisibilityButton, &QAbstractButton::clicked, this, &ResliceView::_updateGeometryNodeInDataStorage);
 
 	d->reslicePlane = new QComboBox();
 	d->reslicePlane->setToolTip(tr("Select the plane of the 2D PC-MRI data"));
@@ -240,6 +242,7 @@ void ResliceView::CreateQtPartControl(QWidget *parent)
 	d->renderWindowPCMRI->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	renderWindowsLayout->addWidget(d->renderWindowPCMRI);
 
+
 	
     // Connect time events
 	mitk::SliceNavigationController* timeNavigationController = pcmriManager->GetInstance()->GetTimeNavigationController();
@@ -274,7 +277,8 @@ void ResliceView::CreateQtPartControl(QWidget *parent)
 	connect(d->reslicePlane, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &ResliceView::_changeReslicePlane);
 
     _setResliceViewEnabled(false); //not visible until a node of NodeType is selected
-    initializeCurrentNode(); 
+    initializeCurrentNode(); //OnSelectionChanged(GetSite()->GetPart(), GetDataManagerSelection()); 
+    //_updateGeometryNodeInDataStorage(); //for the reslice plane in 3D view
 }
 
 mitk::BaseRenderer* ResliceView::getResliceRenderer() const
@@ -320,7 +324,7 @@ mitk::PlaneGeometry* ResliceView::getPlaneGeometry(float t) const
 	planeGeometry->SetReferenceGeometry(planeGeometry);
 	return planeGeometry;
 }
-
+//call this after box->on selection changed?
 void ResliceView::_setResliceViewEnabled(bool enabled)
 {
     d->timeSlider->setEnabled(enabled);
@@ -329,23 +333,30 @@ void ResliceView::_setResliceViewEnabled(bool enabled)
 	d->renderWindowPCMRI->setEnabled(enabled);
 	d->renderWindowPCMRI->setVisible(enabled);
 }
+//modify this to be called after pcmri combo box->on selection changed? split into separate functions for PCMRI and MRA
 void ResliceView::currentNodeChanged(mitk::DataNode*)
 {
     _setResliceViewEnabled(currentNode()); 
+	//TODO: remove this check?
     if (currentNode()) {
+        //currentNode()->SetSelected(true, d->renderWindow->GetRenderer());
+        //currentNode()->SetSelected(true, d->renderWindowPCMRI->GetRenderer());
 
         float resliceWindowSize = 50;
 
         _setupRendererSlices();
     }
 
+    //_updateGeometryNodeInDataStorage();
 }
 
+//TODO: is this function necessary? since the images are not going to change like vessel paths?
 void ResliceView::currentNodeModified()
 {
 	_setResliceViewEnabled(currentNode());
 
 	d->reinitVesselDrivenGeometryTimer.start(200);
+    //_updateGeometryNodeInDataStorage();
 }
 
 void ResliceView::forceReinitGeometry()
@@ -412,6 +423,16 @@ void ResliceView::_setupPCMRISlices(const mitk::DataNode* node)
 		pcmriPointNode->SetVisibility(true);
 	}
 
+	//set PCMRI contours visible, if they exist
+	//mitk::DataStorage::SetOfObjects::ConstPointer visibleNodes =
+	//	crimson::PCMRIUtils::getContourNodes(currentPCMRINode);
+	//if (!visibleNodes->empty())
+	//{
+	//	for (const mitk::DataNode::Pointer& node : *visibleNodes) {
+	//		node->SetVisibility(true, d->renderWindowPCMRI->GetRenderer());
+	//	}
+	//}
+	
 	float resliceWindowSize = 50;
 
 	mitk::ScalarType paramDelta;
@@ -506,6 +527,9 @@ void ResliceView::_setupMRASlice(const mitk::DataNode* node)
 
 	//get the image from the combo box and pass it directly
 	std::tie(paramDelta, referenceImageSpacing, timeSteps) = crimson::PCMRIUtils::getResliceGeometryParameters(currentMRANode);
+	//    mitk::TimeBounds timeBounds;
+	//    timeBounds[0] = 0;
+	//    timeBounds[1] = 0;
 
 
 	if (currentMRANode.IsNotNull()) {
@@ -538,6 +562,9 @@ void ResliceView::_setupMRASlice(const mitk::DataNode* node)
 			updateMRARendering(plane.GetPointer());
 		}
 	}
+
+
+	//mitk::RenderingManager::GetInstance()->InitializeView(d->renderWindow->GetVtkRenderWindow());
 
 	d->renderWindow->GetRenderer()->GetCameraController()->Fit();
 }
@@ -592,6 +619,7 @@ void ResliceView::_syncSliderWithStepperC(const itk::Object* o, const itk::Event
     // const_cast due to lack of itkGetConstMacro() in the mitk::Stepper
     auto stepper = const_cast<mitk::Stepper*>(static_cast<const mitk::Stepper*>(o));
 
+    // TODO: check from which render window does this signal come from
 	int numberOfCardiacPhases = 0;
 	if (currentPCMRINode)
 	{
@@ -608,9 +636,13 @@ void ResliceView::_syncSliderWithStepperC(const itk::Object* o, const itk::Event
 		}
 	}
 
+	//d->timeSlider->setRange(0, numberOfCardiacPhases - 1);
+
 	d->timeSlider->setRange(0, stepper->GetSteps() - 1);
 	d->timeSlider->setValue(stepper->GetPos());
 
+	//emit sliceChanged((stepper->GetPos())); //this is for PCMRIMappingWidget to know how to adjust segmentation tools
+	//d->savedSlicePositions[currentNode()] = stepper->GetPos();
     auto timeGeometry = d->renderWindowPCMRI->GetRenderer()->GetSliceNavigationController()->GetInputWorldTimeGeometry();
     if (timeGeometry) {
         // Avoid saving slice ID's if they come from geometry replacement upon global reinit

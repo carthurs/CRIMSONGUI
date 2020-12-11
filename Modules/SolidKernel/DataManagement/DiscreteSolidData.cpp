@@ -37,8 +37,13 @@ namespace crimson
 
 	DiscreteSolidData::~DiscreteSolidData() {}
 
+    // where surface seems to be a lofted surface
     void DiscreteSolidData::fromSurface(mitk::Surface::Pointer surface) {
         // Triangulate first
+        // vtkTriangleFilter "convert[s] input polygons and strips to triangles"
+        //
+        // I think PassVerts and PassLines is off by default, so the results of this filter will
+        // only contain triangulated polygons and triangle strips
         vtkNew<vtkTriangleFilter> triangleFilter;
         triangleFilter->SetInputData(surface->GetVtkPolyData());
         triangleFilter->Update();
@@ -82,34 +87,87 @@ namespace crimson
         }
 
         // Find planar faces
+
+        // [AJM]    sorry, even if it deviates from the established style I had to split this up with newlines 
+        //          to be able to read this, it just looked like (({{{[[<(({{{[<[(({{ to me
+        //
+        // be careful with vector<...> (std::vector, a collection of something) vs Wm5::Vector3d (one 3d point)
+
         auto coordsToVector = [](double* c) {
             return Wm5::Vector3d(c[0], c[1], c[2]);
         };
 
+        // where points[cellId] = the points in that cell
+        // I think the cell is... all of the polygons on the surface
         std::unordered_map<int, std::vector<Wm5::Vector3d>> points;
 
         for (int cellId = 0; cellId < surface->GetVtkPolyData()->GetNumberOfCells(); ++cellId) {
+            // where the meaning of a "cell" is not well documented
+            // "vtkPolyData represents a geometric structure consisting of vertices, lines, polygons, and/or triangle strips."
+            // I am pretty sure a 'cell' here refers to a polygon, one entry in the loft's surface
             vtkSmartPointer<vtkCell> cell = surface->GetVtkPolyData()->GetCell(cellId);
+
+            // ptID is more of a point index from the looks of it, not a "point ID".
             for (int ptId = 0; ptId < cell->GetNumberOfPoints(); ++ptId) {
-                points[faceIdArray->GetTuple1(cellId)].push_back(coordsToVector(
-                    surface->GetVtkPolyData()->GetPoints()->GetPoint(cell->GetPointId(ptId))
-                ));
+                points[faceIdArray->GetTuple1(cellId)].push_back(
+                    // where the vector returned is a straight conversion of a raw pointer of 3 doubles to a Wm5 3d point
+                    coordsToVector(
+                        // where the return value of GetPoint is literally a raw pointer to 3 doubles
+                        surface->GetVtkPolyData()->GetPoints()->GetPoint(
+                            // "for cell point i, return the actual point ID"
+                            // so GetPointId returns the actual point ID that GetPoint needs
+                            cell->GetPointId(ptId)
+                        )
+                    )
+                );
             }
         }
 
+        // where isFlat[cellId] = (whether all points of the cell are close enough to the surface of the plane)
         std::unordered_map<int, bool> isFlat;
-        boost::transform(points, std::inserter(isFlat, isFlat.end()), [](const std::unordered_map<int, std::vector<Wm5::Vector3d>>::value_type& idPtsPair) {
-            const std::vector<Wm5::Vector3d>& pts = idPtsPair.second;
-            Wm5::Plane3d plane = Wm5::OrthogonalPlaneFit3(pts.size(), pts.data());
+        boost::transform
+        (
+            // iterate over points and insert the result of the lambda into the isFlat map
+            points, 
+            std::inserter(isFlat, isFlat.end() ), 
 
-            for (double distance : pts | boost::adaptors::transformed([&](const Wm5::Vector3d& p) { return plane.DistanceTo(p); })) {
-                if (distance > 1e-3) {
-                    return std::make_pair(idPtsPair.first, false);
+            []
+                (
+                    // map<int, vector<3d points>>::value_type
+                    // reduces to pair<const key_type,mapped_type>,
+                    // in this case pair<int, std::vector<Wm5::Vector3d>>
+                    // where int is a cell Id and points is the list of points in that cell
+                    const std::unordered_map<
+                                                int, 
+                                                std::vector<Wm5::Vector3d>
+                                            >::value_type& idPtsPair
+                ) 
+            {
+                const std::vector<Wm5::Vector3d>& pts = idPtsPair.second;
+                Wm5::Plane3d plane = Wm5::OrthogonalPlaneFit3(pts.size(), pts.data());
+
+                // for each point in the cell, calculate the distance from that point to the surface of the plane
+                for (
+                        double distance : pts | boost::adaptors::transformed
+                        (
+                            [&](const Wm5::Vector3d& p) 
+                            { 
+                                return plane.DistanceTo(p); 
+                            }
+                        )
+                    ) 
+                {
+                    if (distance > 1e-3) 
+                    {
+                        // consider any point farther away from the surface of the plane than this to be
+                        // evidence that the cell is not flat
+                        return std::make_pair(idPtsPair.first, false);
+                    }
                 }
-            }
             
-            return std::make_pair(idPtsPair.first, true);
-        });
+                return std::make_pair(idPtsPair.first, true);
+            }
+        );
 
         // Now create faceIdentifierMap
         for (int modelFaceIndex = 0; modelFaceIndex <= range[1] - range[0]; ++modelFaceIndex) {

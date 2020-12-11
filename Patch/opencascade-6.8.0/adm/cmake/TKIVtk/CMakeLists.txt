@@ -1,3 +1,5 @@
+message("Entering ./Patch/opencascade-6.8.0/adm/cmake/TKIVtk/CMakeLists.txt")
+
 project(TKIVtk)
 
 if (WIN32)
@@ -300,22 +302,27 @@ ELSE()
 ENDIF()
 
 if ("${USED_TOOLKITS}" STREQUAL "" OR DEFINED TurnONtheTKIVtk)
- add_library( TKIVtk SHARED ${TKIVtk_USED_SRCFILES} )
+  add_library( TKIVtk SHARED ${TKIVtk_USED_SRCFILES} )
 
- set_property(TARGET TKIVtk PROPERTY FOLDER Visualization)
+  set_property(TARGET TKIVtk PROPERTY FOLDER Visualization)
+  message("Installing TKIVtk, RUNTIME DESTINATION is " "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/bin${BUILD_POSTFIX}")
 
- install( TARGETS TKIVtk
+  install( TARGETS TKIVtk # (Just this target)
                                  RUNTIME DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/bin${BUILD_POSTFIX}"
                                  ARCHIVE DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/lib${BUILD_POSTFIX}"
                                  LIBRARY DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/lib${BUILD_POSTFIX}")
 
- if (MSVC)
-  install( FILES  ${CMAKE_BINARY_DIR}/out/bind/Debug/TKIVtk.pdb CONFIGURATIONS Debug
-                                  DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/bin${BUILD_POSTFIX}")
- endif()
+  if (MSVC)
+    install( FILES  ${CMAKE_BINARY_DIR}/out/bind/Debug/TKIVtk.pdb
+              CONFIGURATIONS Debug
+              DESTINATION "${INSTALL_DIR}/${OS_WITH_BIT}/${COMPILER}/bin${BUILD_POSTFIX}"
+            )
+  endif()
 
 
- set_target_properties( TKIVtk PROPERTIES COMPILE_FLAGS "${TKIVtk_PRECOMPILED_DEFS}" )
- include_directories( ${TKIVtk_COMPILER_DIRECTORIES} )
- target_link_libraries( TKIVtk ${TKIVtk_USED_LIBS} )
+  set_target_properties( TKIVtk PROPERTIES COMPILE_FLAGS "${TKIVtk_PRECOMPILED_DEFS}" )
+  include_directories( ${TKIVtk_COMPILER_DIRECTORIES} )
+  target_link_libraries( TKIVtk ${TKIVtk_USED_LIBS} )
 endif()
+
+message("End of ./Patch/opencascade-6.8.0/adm/cmake/TKIVtk/CMakeLists.txt")
