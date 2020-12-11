@@ -113,6 +113,30 @@ The build process will primarily use the Output and Error List windows, we recom
   - Click the "Local Windows Debugger" button with the green triangle to launch CRIMSON
   - You may get pop-ups informing you that the project is out of date, and asking if you want to rebuild. Click "No"
   - If you get a pop-up informing you that the debugging information is missing and asking if you want to continue, click "Yes"
+  
+## Packaging
+- Build PACKAGE target in crimson.sln
+ - Expected failure: finding tkernel.dll
+- Add C:/crmh/sb/CMakeExternals/Install/OCC_src/win64/vc12/bin;C:/crmh/sb/CMakeExternals/Build/QtPropertyBrowser/bin/Release to set(DIRS in C:\crmh\sb\CRIMSON-build\Apps\CRIMSON\cmake_install.cmake (edit your paths to match your CIRMSON source directory, rather than "crmh" here
+- Again, build PACKAGE target in crimson.sln
+ - Expected failure:
+ ```
+   1>  Please check C:/crmh/sb/CRIMSON-build/_CPack_Packages/win64/NSIS/NSISOutput.log for  errors
+   1>EXEC : CPack error : Problem compressing the directory
+   1>EXEC : CPack error : Error when generating package: CRIMSON
+ ```
+- Edit C:\crmh\sb\CRIMSON-build\_CPack_Packages\win64\NSIS\project.nsi (adjust to match your CRIMSON source directory) to comment out the following lines:
+```
+   ; !macro RemoveSection SecName
+   ;   ;  This macro is used to call section's Remove_... macro
+   ;   ;from the uninstaller.
+   ;   ;Input: section index constant name specified in Section command.
+   ;   !insertmacro "Remove_${${SecName}}"
+   ; !macroend
+ ```
+- Call the nsis packager manually from powershell (ensure you have NSIS installed at the location shown in the following, and again, adjust the other paths to match your CRIMSON source directory)
+ - &"C:\Program Files (x86)\NSIS\makensis.exe"  C:\crmh\sb\CRIMSON-build\_CPack_Packages\win64\NSIS\project.nsi
+- installer will be here  C:\crmh\sb\CRIMSON-build\_CPack_Packages\win64\NSIS\
 
 ## Adding flowsolver to your CRIMSON build
  - Run the flowsolver installer. 
