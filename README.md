@@ -115,6 +115,42 @@ The build process will primarily use the Output and Error List windows, we recom
   - If you get a pop-up informing you that the debugging information is missing and asking if you want to continue, click "Yes"
   
 ## Packaging
+
+### Software Required for Packaging
+#### PostgreSQL 9.5.21
+Crimson does not use this, but Qt requires this for the packaging to work
+
+1. Download it from their website
+2. Extract this zip file to a location of your choice, e.g. 
+```
+C:\_FILES\lib\pgsql
+```
+3. Add the bin folder of the extracted directory to PATH, e.g.
+```
+C:\_FILES\lib\pgsql\bin 
+```
+
+#### MySQL 5.7.29
+Crimson does not use this, but Qt requires this for the packaging to work
+
+1. Download it from their website
+2. Extract this zip file to a location of your choice, e.g. 
+```
+C:\_FILES\lib\mysql-5.7.29
+```
+3. Add the lib directory of the extracted directory to PATH, e.g.
+```
+C:\_FILES\lib\mysql-5.7.29\lib
+```
+
+#### NSIS 3.05
+This is needed for packaging, the Crimson installer is an NSIS installer.
+
+1. Download NSIS from their website.
+2. Install using all default settings
+3. Add `C:\Program Files (x86)\NSIS\Bin` to `PATH`
+
+### Packaging Procedure
 - Build PACKAGE target in crimson.sln
  - Expected failure: finding tkernel.dll
 - Add C:/crmh/sb/CMakeExternals/Install/OCC_src/win64/vc12/bin;C:/crmh/sb/CMakeExternals/Build/QtPropertyBrowser/bin/Release to set(DIRS in C:\crmh\sb\CRIMSON-build\Apps\CRIMSON\cmake_install.cmake (edit your paths to match your CIRMSON source directory, rather than "crmh" here
