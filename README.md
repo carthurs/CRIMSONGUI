@@ -50,7 +50,7 @@ Get the source code via git by cloning into the root folder selected above by fo
 	
 	![CMake image](./Documentation/Images/cmake3.PNG "An expected error")
 	
- - The large window in the centre now contains pairs of variable names and values colored red, some of which need to be manually set for a successful build. Find a variable `Qt5\_DIR` and set it to `C:/Qt/Qt5.7.0/5.7/msvc2013_64/lib/cmake/Qt5` (assuming that you installed Qt in the default directory `C:/Qt`, otherwise replace the `Qt` part by the path which you chose during Qt installation - you may have to adjust this path slightly, sometimes it has `Qt5.7.0` as one of the folders; sometimes it does not).
+ - The large window in the centre now contains pairs of variable names and values colored red, some of which need to be manually set for a successful build. Find a variable `Qt5_DIR` and set it to `C:/Qt/Qt5.7.0/5.7/msvc2013_64/lib/cmake/Qt5` (assuming that you installed Qt in the default directory `C:/Qt`, otherwise replace the `Qt` part by the path which you chose during Qt installation - you may have to adjust this path slightly, sometimes it has `Qt5.7.0` as one of the folders; sometimes it does not).
  - Change `CMAKE_BUILD_TYPE` as desired (`Release`, `Debug` or `RelWithDebInfo`). `Release` is recommended. Leave other variables as they are. Caution - ensure that before you build in Visual Studio, you set the same mode in the toolbar at the top. Again, `Release` is very strongly recommended.
  - Press "Configure".
  - Additional variables that can be modified appear now. You need to manually specify the locations of flowsolver and presolver:
