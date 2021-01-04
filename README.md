@@ -55,9 +55,8 @@ Get the source code via git by cloning into the root folder selected above by fo
  - Press "Configure".
  - Additional variables that can be modified appear now. You need to manually specify the locations of flowsolver and presolver:
  	- NOTE: For the lines below, replace `C:/CRIMSON/sb` with your own custom location of CRIMSON superbuild folder as necessary.
-	- If you are using MeshSim, set `MeshSim_URL`. Browse for the zip file containing MeshSim, it will have a name like `10.0-170128_win.zip` or `10.0-170128_lin.zip`. This zip file contains proprietary, closed source code and is not provided in this repository. The zip file can be placed anywhere on your computer, CRIMSON will automatically extract it and put its contents in the right directory for you.
 	- For `flowsolver_folder` browse for or enter e.g. `C:/CRIMSON/sb/CMakeExternals/Source/flowsolver`
-	     - Note: This is simply a stub folder for where CRIMSON expects flowsolver files to be located. Actual flowsolver files are copied there after running the separate flowsolver installer.
+	     - Note: This is simply a stub folder for where CRIMSON expects flowsolver files to be located. Actual flowsolver files are copied there after running the separate flowsolver installer. If this option is not available in cmake-gui, then you do not need to set it.
 	- For `presolver_executable` manually type in e.g. `C:/CRIMSON/sb/CMakeExternals/Source/presolver/presolver.exe`. Note that this file will not exist right now, it will be created later on in the build process.
 		
 	- Be careful if you fill in these variables by copy/pasting paths from Windows Explorer, the paths must contain only forward slashes (`'/'`), **back slashes (`'\'`) will not work**.
