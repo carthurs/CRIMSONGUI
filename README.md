@@ -50,14 +50,13 @@ Get the source code via git by cloning into the root folder selected above by fo
 	
 	![CMake image](./Documentation/Images/cmake3.PNG "An expected error")
 	
- - The large window in the centre now contains pairs of variable names and values colored red, some of which need to be manually set for a successful build. Find a variable `Qt5\_DIR` and set it to `C:/Qt/Qt5.7.0/5.7/msvc2013_64/lib/cmake/Qt5` (assuming that you installed Qt in the default directory `C:/Qt`, otherwise replace the `Qt` part by the path which you chose during Qt installation - you may have to adjust this path slightly, sometimes it has `Qt5.7.0` as one of the folders; sometimes it does not).
+ - The large window in the centre now contains pairs of variable names and values colored red, some of which need to be manually set for a successful build. Find a variable `Qt5_DIR` and set it to `C:/Qt/Qt5.7.0/5.7/msvc2013_64/lib/cmake/Qt5` (assuming that you installed Qt in the default directory `C:/Qt`, otherwise replace the `Qt` part by the path which you chose during Qt installation - you may have to adjust this path slightly, sometimes it has `Qt5.7.0` as one of the folders; sometimes it does not).
  - Change `CMAKE_BUILD_TYPE` as desired (`Release`, `Debug` or `RelWithDebInfo`). `Release` is recommended. Leave other variables as they are. Caution - ensure that before you build in Visual Studio, you set the same mode in the toolbar at the top. Again, `Release` is very strongly recommended.
  - Press "Configure".
  - Additional variables that can be modified appear now. You need to manually specify the locations of flowsolver and presolver:
  	- NOTE: For the lines below, replace `C:/CRIMSON/sb` with your own custom location of CRIMSON superbuild folder as necessary.
-	- If you are using MeshSim, set `MeshSim_URL`. Browse for the zip file containing MeshSim, it will have a name like `10.0-170128_win.zip` or `10.0-170128_lin.zip`. This zip file contains proprietary, closed source code and is not provided in this repository. The zip file can be placed anywhere on your computer, CRIMSON will automatically extract it and put its contents in the right directory for you.
 	- For `flowsolver_folder` browse for or enter e.g. `C:/CRIMSON/sb/CMakeExternals/Source/flowsolver`
-	     - Note: This is simply a stub folder for where CRIMSON expects flowsolver files to be located. Actual flowsolver files are copied there after running the separate flowsolver installer.
+	     - Note: This is simply a stub folder for where CRIMSON expects flowsolver files to be located. Actual flowsolver files are copied there after running the separate flowsolver installer. If this option is not available in cmake-gui, then you do not need to set it.
 	- For `presolver_executable` manually type in e.g. `C:/CRIMSON/sb/CMakeExternals/Source/presolver/presolver.exe`. Note that this file will not exist right now, it will be created later on in the build process.
 		
 	- Be careful if you fill in these variables by copy/pasting paths from Windows Explorer, the paths must contain only forward slashes (`'/'`), **back slashes (`'\'`) will not work**.
