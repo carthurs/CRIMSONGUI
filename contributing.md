@@ -21,4 +21,4 @@ In short, when you submit code changes, your submissions are understood to be un
 By contributing, you agree that your contributions will be licensed under the same [license](LICENSE.txt) that covers the project.
 
 ## Report issues using Github's [issue tracker](https://github.com/carthurs/CRIMSONFlowsolver/issues)
-Report bugs and other issues by [opening a new issue](https://github.com/carthurs/CRIMSONGUI/issues/new/choose); it's that easy!
+Report bugs and other issues by [opening a new issue](https://github.com/carthurs/CRIMSONGUI/issues/new/choose).
