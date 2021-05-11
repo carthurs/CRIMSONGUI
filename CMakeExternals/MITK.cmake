@@ -142,7 +142,7 @@ if(NOT MITK_DIR)
   set(MITK_GIT_REPOSITORY "https://github.com/carthurs/MITK.git" CACHE STRING "The git repository for cloning MITK")
 
   # [AJM] Don't just pull whatever the latest is on the development branch, that will make it impossible to compile older versions of the program later on.
-  set(MITK_GIT_TAG "CRIMSON_2020.03.12" CACHE STRING "The git tag/hash to be used when cloning from MITK_GIT_REPOSITORY")
+  set(MITK_GIT_TAG "CRIMSON_2021.05" CACHE STRING "The git tag/hash to be used when cloning from MITK_GIT_REPOSITORY")
   mark_as_advanced(MITK_SOURCE_DIR MITK_GIT_REPOSITORY MITK_GIT_TAG)
   
   #-----------------------------------------------------------------------------

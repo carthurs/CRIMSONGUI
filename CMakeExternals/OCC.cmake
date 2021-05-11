@@ -78,7 +78,7 @@ if(NOT DEFINED OCC_DIR)
             )
 
 
-    set(OCC_URL http://www.isd.kcl.ac.uk/cafa/CRIMSON-superbuild/opencascade-6.9.1.tgz)
+    set(OCC_URL https://github.com/CRIMSONCardiovascularModelling/OCC/archive/refs/tags/6.9.1.tar.gz)
     set(OCC_PATCH_COMMAND  ${PATCH_COMMAND} -N -p1 -i ${CMAKE_CURRENT_LIST_DIR}/OCC_6.9.1.patch)
     
     if (WIN32)
@@ -88,7 +88,7 @@ if(NOT DEFINED OCC_DIR)
         ExternalProject_Add(OCC_src
             LIST_SEPARATOR ${sep}
             URL ${OCC_URL} 
-            DOWNLOAD_NAME opencascade-6.9.1.tgz
+            DOWNLOAD_NAME OCC-6.9.1.tar.gz
             #URL_MD5 ba87fe9f5ca47e3dfd62aad7223f0e7f
             PATCH_COMMAND ${OCC_PATCH_COMMAND}
             CONFIGURE_COMMAND ""

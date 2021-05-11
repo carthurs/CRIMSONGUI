@@ -45,8 +45,8 @@ if(NOT DEFINED WM5_DIR)
 
     ExternalProject_Add(${proj}
       LIST_SEPARATOR ${sep}
-      URL http://www.isd.kcl.ac.uk/cafa/CRIMSON-superbuild/WildMagic5p13.zip
-      DOWNLOAD_NAME WildMagic5p13.zip 
+      URL https://github.com/CRIMSONCardiovascularModelling/WildMagic5/archive/refs/tags/p13.tar.gz
+      DOWNLOAD_NAME WildMagic5-p13.tar.gz
       #URL_MD5 ba87fe9f5ca47e3dfd62aad7223f0e7f
       
       CONFIGURE_COMMAND ""
