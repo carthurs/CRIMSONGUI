@@ -37,7 +37,7 @@ Please note that the CRIMSON build procedure has been tested and is supported fo
 
 1. Acquire the source
 ```
-git clone https://github.com/CRIMSONCardiovascularModelling/crimson_gui_private.git
+git clone https://github.com/carthurs/CRIMSONGUI.git
 ```
 
 2. I renamed the directory to crimson, for me I put it in `C:\crimson`
