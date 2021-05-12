@@ -50,27 +50,27 @@ Configure 1:
 6. Click configure
 7. For the generator, choose `Visual Studio 12 2013 Win64`, leave everything else at defaults then click finish
 8. It will error out
-9. Check `CMAKE_BUILD_TYPE`, it must be `Release` if you are intending to package an installer. Use `Debug` builds for development.
-10. Make sure that `CRIMSON_MESHING_KERNEL` is `CGALVMTK`
-11. Check `CRIMSON_BUILD_TRIAL_VERSION` if you are making a trial release (we distribute trial releases through the mailing list). The expiration date is set automatically in the code using expiration dates, you do not need to edit this manually.
-12. Set `Qt5_DIR` to `C:/Qt/Qt5.7.0/5.7/msvc2013_64/lib/cmake/Qt5`
+9. Check `CMAKE_BUILD_TYPE`, use `Debug` builds for development.
+10. Check `CRIMSON_BUILD_TRIAL_VERSION` if you are making a trial release (we distribute trial releases through the mailing list). The expiration date is set automatically in the code using expiration dates, you do not need to edit this manually.
+11. Set `Qt5_DIR` to `C:/Qt/Qt5.7.0/5.7/msvc2013_64/lib/cmake/Qt5`
 
 Configure 2:
 
-13. Click configure again
-14. For `presolver_executable`, manually type in something like  `C:/cr/CMakeExternals/Source/presolver/presolver.exe` (note forward slashes)
-15. For `presolver_url`, browse for the presolver zip file you downloaded earlier, the path should be something like `C:/_FILES/Installs/presolver_win.zip`
-16. Hit configure again, it will succeed
-17. Click Generate
+12. Click configure again
+13. For `presolver_executable`, manually type in something like  `C:/cr/CMakeExternals/Source/presolver/presolver.exe` (note forward slashes)
+14. For `presolver_url`, browse for the presolver zip file you downloaded earlier, the path should be something like `C:/_FILES/Installs/presolver_20210317_1442.zip`
+15. Hit configure again, it should succeed
+16. Click Generate
 
 	
 ### Build your project in Visual Studio
 
 #### Notes:
 
-The solution generated for Visual Studio at this time is primarily just to compile the project and run the generated cmake scripts, to browse the source use a text editor of your choice, e.g., [Visual Studio Code](https://code.visualstudio.com/).
-
-The build process will primarily use the Output and Error List windows, we recommend having both of these windows pinned/docked. If the Output and Error windows are visible, it's possible to double click on an error in the Error window and immediately go to the console output that caused the error in the Output window.
+- The superbuild solution at `C:\cd\CRIMSON-superbuild.sln` is primarily just to compile Crimson's dependencies.
+- After the superbuild is done, there will be a solution in `C:\cr\CRIMSON-build\CRIMSON.sln` which will be more useful for editing code and building specific Crimson components.
+- The build process will primarily use the Output and Error List windows, we recommend having both of these windows pinned/docked.
+- If the Output and Error windows are visible, it's possible to double click on an error in the Error window and immediately go to the console output that caused the error in the Output window.
 
 #### Build Process:
  - Open the build folder of the project which you have previously created (in our example this is "C:\CRIMSON\sb").
