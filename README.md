@@ -1,4 +1,4 @@
-# Crimson GUI Compiling and Packaging
+# Crimson GUI Compilation Process
 
 ## 1. [System Requirements and Required Software](Documentation/SystemRequirementsAndRequiredSoftware.md)
 ## 2. [Build Configuration](Documentation/BuildConfiguration.md)
