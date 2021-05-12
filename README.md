@@ -11,6 +11,7 @@ Before building CRIMSON software itself you will need to download and install th
  - CMake - 3.13.0 (https://cmake.org/download/)
  - Qt - 5.7 (exactly) - archived here: https://umich.app.box.com/s/kcvgbavtyy1y6yubgang5l7re4xso2fa - download the msvc2013 64 bit windows installer executable: qt-opensource-windows-x86-msvc2013_64-5.7.0.exe. During installation, amongst the components under 5.7, you only need "msvc2013 64-bit", "Qt WebEngine" and "Qt Script"
  - Visual Studio - VS2013 (tested with Update 5)
+ - Download the [Presolver executable](https://umich.box.com/s/pa5s9ua248g79mbd2er47j4keyd6v6j4), put the zip file somewhere on your hard drive, you don't need to extract it.
 
 For installing the above software follow the instructions as provided by their publisher.
 
