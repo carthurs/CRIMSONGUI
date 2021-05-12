@@ -17,51 +17,51 @@ For installing the above software follow the instructions as provided by their p
 Please note that the CRIMSON build procedure has been tested and is supported for the versions of software mentioned above. While it might be possible to succesfully build CRIMSON using other versions of Git, CMake or Visual Studio it is not necessary that the CRIMSON build steps as described below would be sufficient, so proceed at your own responsibility.
 
 ## Building CRIMSON
-### Setup the project directory
-Create a root folder in which the source code and build will be stored.
-The root folder for the project should be as short as possible (due to some limitations of the Windows command line). 
-For example, a source folder like "C:\CRIMSON" and a build folder like "C:\CRIMSON\sb" should be good enough.
+#### Keep the build directory as short as possible
 
-### Get the source code via Git
-Get the source code via git by cloning into the root folder selected above by following these steps:
+- I usually keep the source code in a directory like `C:\crimson`
+- I build to a directory like `C:\cr`, because it is very easy to hit the max path limit in Windows
 
- - Open the Windows Command Prompt (Windows key - type "cmd" - press Enter).
- - Change the current working directory to the location of project root directory. e.g. for root directory "C:\CRIMSON" type 
-	``cd c:\CRIMSON``
-	into the command prompt and press Enter.
- - Type 
-	``git clone https://github.com/carthurs/CRIMSONGUI.git .``
-	(Notice the dot at the end of the above command, it is there intentionally!) and press "Enter". You will need to adjust the repository URL if you are getting it from somewhere else.
+### Notes about cmake-gui
+- CMake expects forward slashes (‘/’) for all directory and file paths, not back slashes (‘\’), which are what is usually used on Windows.
+    - **That means that you should not just copy/paste paths from Windows Explorer into CMake.**
+    - If you use CMake’s built in file browser, it will auto-correct the slashes
+    - One trick is to paste a path into the file browser, hit enter, and select that and CMake will correct the paths for you.
+    - The file browser will not let you specify directories that don’t exist, though (like the presolver), in that case you will just have to type it out and rely on CMake’s autocomplete.
+- In cmake-gui, if you click anywhere on the right side of the table in the configuration options on a boolean option (not just on the checkbox), CMake will toggle that option
+    - **So be very careful about accidentally clicking in this area**, it may take 5 hours for you to find out that you accidentally clicked something, most of the check boxes will completely break the build if you accidentally enable or disable something
 
-### Generate project files with CMake
- - In the root folder of the CRIMSON project create a new folder for the build, e.g. `C:\CRIMSON\sb`
- - Open the CMake desktop app, `cmake-gui`.
- - Under "Where is the source code" enter the path to the CRIMSON root folder (e.g. `C:\CRIMSON`)
- - Under "Where to build the binaries" enter the path to the CRIMSON build folder you created just recently (e.g. `C:\CRIMSON\sb`)
+### Conventions used in this guide:
+- In the instructions that follow this page, I will refer to a build that takes place in `C:\cr\`, if you see `C:\cr` and you built to a different directory, adjust that path to the path that you used.
 
- ![Folders image](./Documentation/Images/folders.png "Specifying source and build directories")
+1. Acquire the source
+```
+git clone https://github.com/CRIMSONCardiovascularModelling/crimson_gui_private.git
+```
 
- - Press "Configure"
- - In the new window that pops up, under "Specify the generator for this project" select "Visual Studio 12 2013 Win64". Leave the remaining settings as they are and press "Finish".
-	
-	![CMake image](./Documentation/Images/cmake2.PNG "Specify project generator")
-	
- - An error message pops up. Press okay to continue.
-	
-	![CMake image](./Documentation/Images/cmake3.PNG "An expected error")
-	
- - The large window in the centre now contains pairs of variable names and values colored red, some of which need to be manually set for a successful build. Find a variable `Qt5_DIR` and set it to `C:/Qt/Qt5.7.0/5.7/msvc2013_64/lib/cmake/Qt5` (assuming that you installed Qt in the default directory `C:/Qt`, otherwise replace the `Qt` part by the path which you chose during Qt installation - you may have to adjust this path slightly, sometimes it has `Qt5.7.0` as one of the folders; sometimes it does not).
- - Change `CMAKE_BUILD_TYPE` as desired (`Release`, `Debug` or `RelWithDebInfo`). `Release` is recommended. Leave other variables as they are. Caution - ensure that before you build in Visual Studio, you set the same mode in the toolbar at the top. Again, `Release` is very strongly recommended.
- - Press "Configure".
- - Additional variables that can be modified appear now. You need to manually specify the locations of flowsolver and presolver:
- 	- NOTE: For the lines below, replace `C:/CRIMSON/sb` with your own custom location of CRIMSON superbuild folder as necessary.
-	- For `flowsolver_folder` browse for or enter e.g. `C:/CRIMSON/sb/CMakeExternals/Source/flowsolver`
-	     - Note: This is simply a stub folder for where CRIMSON expects flowsolver files to be located. Actual flowsolver files are copied there after running the separate flowsolver installer. If this option is not available in cmake-gui, then you do not need to set it.
-	- For `presolver_executable` manually type in e.g. `C:/CRIMSON/sb/CMakeExternals/Source/presolver/presolver.exe`. Note that this file will not exist right now, it will be created later on in the build process.
-		
-	- Be careful if you fill in these variables by copy/pasting paths from Windows Explorer, the paths must contain only forward slashes (`'/'`), **back slashes (`'\'`) will not work**.
- - Press "Configure"
- - Press "Generate"
+2. I renamed the directory to crimson, for me I put it in `C:\crimson`
+3. Start cmake-gui (you should be able to start that from “run”, win+R)
+4. For the source directory choose `C:/crimson`
+5. For the build directory, make a directory named `c:/cr`
+
+Configure 1:
+
+6. Click configure
+7. For the generator, choose `Visual Studio 12 2013 Win64`, leave everything else at defaults then click finish
+8. It will error out
+9. Check `CMAKE_BUILD_TYPE`, it must be `Release` if you are intending to package an installer. Use `Debug` builds for development.
+10. Make sure that `CRIMSON_MESHING_KERNEL` is `CGALVMTK`
+11. Check `CRIMSON_BUILD_TRIAL_VERSION` if you are making a trial release (we distribute trial releases through the mailing list). The expiration date is set automatically in the code using expiration dates, you do not need to edit this manually.
+12. Set `Qt5_DIR` to `C:/Qt/Qt5.7.0/5.7/msvc2013_64/lib/cmake/Qt5`
+
+Configure 2:
+
+13. Click configure again
+14. For `presolver_executable`, manually type in something like  `C:/cr/CMakeExternals/Source/presolver/presolver.exe` (note forward slashes)
+15. For `presolver_url`, browse for the presolver zip file you downloaded earlier, the path should be something like `C:/_FILES/Installs/presolver_win.zip`
+16. Hit configure again, it will succeed
+17. Click Generate
+
 	
 ### Build your project in Visual Studio
 
