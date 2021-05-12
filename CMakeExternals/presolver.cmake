@@ -1,6 +1,8 @@
 #-----------------------------------------------------------------------------
-# OpenCascade
+# Presolver (download only)
 #-----------------------------------------------------------------------------
+
+message("Start of CMakeExternals/Presolver.cmake")
 
 # Sanity checks
 if(DEFINED presolver_DIR AND NOT EXISTS ${presolver_DIR})
@@ -14,21 +16,25 @@ set(presolver_DEPENDS ${proj})
 if(NOT DEFINED presolver_DIR)
     set(additional_args )
     
-    set(presolver_url "")
-    if (WIN32)            
-        set(presolver_url http://www.isd.kcl.ac.uk/cafa/CRIMSON-superbuild/presolver_win.zip)
+    # In the Superbuild the presolver is just downloaded
+    if (WIN32)
+        # NOTE: For the scalar UI this version is much too old, do not use this.
+        # old URL: http://www.isd.kcl.ac.uk/cafa/CRIMSON-superbuild/presolver_win.zip)
         set(presolver_download_name presolver_win.zip)
     else ()
-        set(presolver_url http://www.isd.kcl.ac.uk/cafa/CRIMSON-superbuild/presolver_lin.tar.gz)
+        # NOTE: For the scalar UI this version is much too old, do not use this.
+        # old URL:  http://www.isd.kcl.ac.uk/cafa/CRIMSON-superbuild/presolver_lin.tar.gz)
         set(presolver_download_name presolver_lin.tar.gz)
     endif()
 
+    set(presolver_url "replace/me/with/path/to/presolver_win.zip-NOTFOUND" CACHE FILEPATH  
+        "Path (or URL) where the (MinGW built) presolver_win.zip or presolver_lin.tar.gz can be found. This zip file should contain the presolver executable.")
+
+    message("presolver_url is " ${presolver_url})
     ExternalProject_Add(${proj}
       LIST_SEPARATOR ${sep}
       URL ${presolver_url}
       DOWNLOAD_NAME ${presolver_download_name}
-      #URL_MD5 ba87fe9f5ca47e3dfd62aad7223f0e7f
-      #PATCH_COMMAND patch -N -p1 -i ${CMAKE_CURRENT_LIST_DIR}/presolver_6.9.0.patch
       
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
@@ -38,10 +44,6 @@ if(NOT DEFINED presolver_DIR)
 
     ExternalProject_Get_Property(${proj} source_dir)
     find_program(presolver_executable presolver PATHS ${source_dir} NO_DEFAULT_PATH)
-    
-    #set(presolver_DIR ${ep_prefix})
-    #mitkFunctionInstallExternalCMakeProject(${proj})
-
-else()
-    #mitkMacroEmptyExternalProject(${proj} "${proj_DEPENDENCIES}")
 endif()
+
+message("End of CMakeExternals/Presolver.cmake")
